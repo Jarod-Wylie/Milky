@@ -1,6 +1,6 @@
 <template>
     <div>
-        HOI
+        Hoi
     </div>
 </template>
 
