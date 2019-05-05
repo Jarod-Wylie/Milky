@@ -1,6 +1,6 @@
 <template>
     <div>
-        HOI
+        
         <div>
             <button @click="draw">draw</button>
       </div>
@@ -9,6 +9,20 @@
 
 <script>
     export default {
+
+        data(){
+
+            return{
+
+            }
+        
+        },
+
+        props:{
+            x: Number,
+            y: Number,
+
+        },
 
         methods:{
 
