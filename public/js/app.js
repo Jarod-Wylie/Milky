@@ -1907,11 +1907,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 var width = window.innerWidth;
 var height = window.innerHeight;
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      ani: false,
+      degree: 0,
       amp: 100,
       origin: 650,
       max: 100,
@@ -1944,7 +1954,7 @@ var height = window.innerHeight;
   mounted: function mounted() {
     var vm = this;
     var amplitude = 100;
-    var period = 10; // in ms
+    var period = 1000; // in ms
 
     var centerX = this.$refs.ord.getStage().attrs.x;
     var centerY = this.$refs.ord.getStage().attrs.y;
@@ -1953,8 +1963,14 @@ var height = window.innerHeight;
     console.log("mounted"); // example of Konva.Animation
 
     var anim = new Konva.Animation(function (frame) {
-      circ.setX(vm.amp * Math.sin(2 * Math.PI / period) + centerX);
-      circ.setY(vm.amp * Math.cos(2 * Math.PI / period) + centerY);
+      if (vm.ani == true) {
+        radians = frame.time * 2 * 3.14 / period;
+      } else {
+        var radians = vm.degree * 0.0174532925;
+      }
+
+      circ.setX(vm.amp * Math.sin(radians) + centerX);
+      circ.setY(vm.amp * Math.cos(radians) + centerY);
     }, circ.getLayer());
     anim.start();
   },
@@ -1963,6 +1979,9 @@ var height = window.innerHeight;
       this.amp = prompt("Enter a number 1 - 100");
       console.log(this.amp);
     },
+    changeDegree: function changeDegree() {
+      this.degree = prompt("Enter a number 1 - 100");
+    },
     distance: function distance() {
       var dist = prompt("Enter a number 1 - 100");
       dist = parseInt(dist);
@@ -1970,7 +1989,7 @@ var height = window.innerHeight;
       this.list.push({
         x: dist,
         y: 100
-      }); // ctx.rotate(330* Math.PI / 180);
+      });
     },
     handleClick: function handleClick(evt) {
       var stage = evt.target.getStage();
@@ -1987,7 +2006,8 @@ var height = window.innerHeight;
       var y = mousePos.y;
       this.writeMessage('x: ' + x + ', y: ' + y);
     }
-  }
+  } //     frame.time * 2 * 3.14) / period
+
 });
 
 /***/ }),
@@ -49284,6 +49304,26 @@ var render = function() {
       _vm._v(" "),
       _c("div", [
         _c("button", { on: { click: _vm.changeAmp } }, [_vm._v("Change Amp")])
+      ]),
+      _vm._v(" "),
+      _c("div", [
+        _c("button", { on: { click: _vm.changeDegree } }, [
+          _vm._v("Change Degree")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", [
+        _c(
+          "button",
+          {
+            on: {
+              click: function($event) {
+                _vm.ani = !_vm.ani
+              }
+            }
+          },
+          [_vm._v("Orbit on")]
+        )
       ]),
       _vm._v(" "),
       _c(

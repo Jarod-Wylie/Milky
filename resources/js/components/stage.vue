@@ -8,6 +8,14 @@
     <div>
         <button @click="changeAmp">Change Amp</button>
     </div>
+    
+    <div>
+        <button @click="changeDegree">Change Degree</button>
+    </div>
+
+    <div>
+        <button @click="ani = !ani">Orbit on</button>
+    </div>
 
     <!-- Stage can report x and y coordinate values of mouse
      position and will render a blue square at position mouse is clicked-->
@@ -63,6 +71,8 @@ const height = window.innerHeight;
 
             return {
             
+            ani: false,
+            degree: 0,
             amp: 100,
             origin: 650,
 
@@ -102,7 +112,7 @@ const height = window.innerHeight;
             
             const vm = this;
             const amplitude = 100;
-            const period = 10;
+            const period = 1000;
             // in ms
             const centerX = this.$refs.ord.getStage().attrs.x;
             
@@ -115,12 +125,21 @@ const height = window.innerHeight;
 
             // example of Konva.Animation
             const anim = new Konva.Animation(function(frame) {
+
+
+            if(vm.ani == true){
+                radians = (frame.time * 2 * 3.14) / period;
+            }
+            else{
+                var radians = vm.degree * 0.0174532925;
+            }
+
             circ.setX(
-                vm.amp * Math.sin((2 * Math.PI) / period) + centerX
+                vm.amp * Math.sin(radians) + centerX
             );
             
             circ.setY(
-                vm.amp * Math.cos((2 * Math.PI) / period) + centerY
+                vm.amp * Math.cos(radians) + centerY
             );
             
             }, circ.getLayer());
@@ -135,12 +154,17 @@ const height = window.innerHeight;
                 console.log(this.amp);
             },
 
+            changeDegree(){
+                this.degree = prompt("Enter a number 1 - 100");
+
+            },
+
             distance(){
                 var dist = prompt("Enter a number 1 - 100");
                 dist = parseInt(dist);
                 dist += this.origin;
                 this.list.push({x: dist, y: 100});
-                // ctx.rotate(330* Math.PI / 180);
+
                 
             },
 
@@ -164,6 +188,10 @@ const height = window.innerHeight;
         }
         
     }
+
+
+//     frame.time * 2 * 3.14) / period
+
 </script>
 
 <style>
