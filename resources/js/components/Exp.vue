@@ -2,9 +2,9 @@
   <div>
         
         
-    <stage2>
+    <superMBH>
         
-    </stage2>
+    </superMBH>
     
   </div>
 </template>
