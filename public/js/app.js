@@ -1920,6 +1920,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     xC: Number,
@@ -1927,7 +1928,8 @@ __webpack_require__.r(__webpack_exports__);
     ord: Object,
     kX: Number,
     kY: Number,
-    ampC: Number
+    ampC: Number,
+    degreeC: Number
   },
   data: function data() {
     return {
@@ -1949,8 +1951,7 @@ __webpack_require__.r(__webpack_exports__);
         fill: "brown",
         kX: obj.nuX,
         kY: obj.nuY
-      }); // Sets the conditon in
-
+      });
       this.inMotion = true;
     },
     // Updates each object in the list of moons a planet has
@@ -1958,43 +1959,39 @@ __webpack_require__.r(__webpack_exports__);
       for (var planet in this.list) {
         this.list[planet].kX = obj.nuX;
         this.list[planet].kY = obj.nuY;
-      } //   console.log("moon moving now", obj);
-
+      }
     }
   },
   mounted: function mounted() {
     console.log("planet mounted");
     var vm = this;
     var planet = this.$refs.orb.getStage();
-    console.log("Planet:", planet.attrs); // const amplitude = 100;
-
-    vm.amp = planet.attrs.amplitude;
-    console.log("amp:", vm.amp);
-    var period = 200 * vm.amp / 1.5; //small period = fast speed
-    //large period = slow speed
-
-    var radians = 1;
+    var centerX = planet.attrs.x;
+    var centerY = planet.attrs.y;
     var obj = {
       nuX: 0,
       nuY: 0
-    }; //sets the starting origin for the planet to orbit around
-
-    var centerX = planet.attrs.x;
-    var centerY = planet.attrs.y;
-    console.log("ord:", this.$refs.orb.getStage()); // Animation of the planet begins here
+    };
+    var radians = planet.attrs.start * (Math.PI / 180);
+    console.log('radians:', radians);
+    vm.amp = planet.attrs.amplitude;
+    var period = 200 * vm.amp / 1.5; //small period = fast speed
+    //large period = slow speed
+    //sets the starting origin for the planet to orbit around
+    // Animation of the planet begins here
 
     var anim = new Konva.Animation(function (frame) {
       //Updates the origin the planet orbits around
       var centerX = planet.attrs.trackX;
       var centerY = planet.attrs.trackY; // Calculating the changing radians by frame
 
-      radians = frame.time * 2 * Math.PI / period; // passes orbit path to an object to pass to addPlanet() -> move() -> child
+      radians = radians + 60 * 2 * Math.PI / period; // passes orbit path to an object to pass to addPlanet() -> move() -> child
 
       obj.nuX = vm.amp * Math.sin(radians) + centerX;
       obj.nuY = vm.amp * Math.cos(radians) + centerY; //Calculates the orbit path
 
       planet.setX(vm.amp * Math.sin(radians) + parseInt(centerX));
-      planet.setY(vm.amp * Math.cos(radians) + parseInt(centerY)); // If a planet is desired by user initiated addPlanet() once
+      planet.setY(vm.amp * Math.cos(radians) + parseInt(centerY)); // If a planet is desired by user initiated execute addPlanet() once
 
       if (vm.satelites) {
         vm.addPlanet(obj);
@@ -2213,8 +2210,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     xC: Number,
@@ -2225,7 +2220,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      degree: 360,
       amp: 0,
       list: [],
       satelites: false,
@@ -2233,32 +2227,37 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log('Sun Mounted');
+    console.log("Sun Mounted");
     var vm = this;
     var sun = this.$refs.orb.getStage();
+    var centerX = sun.attrs.x;
+    var centerY = sun.attrs.y;
     vm.amp = sun.attrs.amplitude;
-    var period = 200 * vm.amp / 1.5;
-    var radians = 90;
-    console.log("attrs", sun.attrs); // nuX and nuY are temporary attributes that pass out of the
+    var period = 200 * vm.amp / 1.5; // Translates degrees -> radians and is the where the sun first starts its orbit
+
+    var radians = sun.attrs.start * (Math.PI / 180); // console.log('radians of beggining:', radians);
+    // console.log("attrs",sun.attrs);
+    // nuX and nuY are temporary attributes that pass out of the
     // animation frame into the addPlanet() and move()
 
     var obj = {
       nuX: 0,
       nuY: 0
-    };
-    var centerX = sun.attrs.x;
-    var centerY = sun.attrs.y; // console.log("Amplitude", ampC);
+    }; // Animation of Sun starts here
 
     var anim = new Konva.Animation(function (frame) {
-      radians = frame.time * 2 * Math.PI / period;
       sun.setX(vm.amp * Math.sin(radians) + centerX);
-      sun.setY(vm.amp * Math.cos(radians) + centerY);
+      sun.setY(vm.amp * Math.cos(radians) + centerY); // object object that keeps track of x and y positons to pass to the Sun's planets
+
       obj.nuX = vm.amp * Math.sin(radians) + centerX;
-      obj.nuY = vm.amp * Math.cos(radians) + centerY;
+      obj.nuY = vm.amp * Math.cos(radians) + centerY; // radians = (frame.time * 2 * Math.PI) / period;
+
+      radians = radians + 60 * 2 * Math.PI / period; // checks for desired planets
 
       if (vm.satelites) {
         vm.addPlanet(obj);
-      }
+      } // Allows this sun's x and y to be known by its children
+
 
       if (vm.inMotion) {
         vm.move(obj);
@@ -2269,7 +2268,11 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     // Pushes to list to make planet object
     addPlanet: function addPlanet(obj) {
-      var amp = parseInt(prompt("How far away is this planet?"));
+      // add: 
+      //amplitude - distance away from black hole
+      var amp = parseInt(prompt("How far away is this star?")); // degree - where in is the planet in it's orbit right now
+
+      var degree = parseInt(prompt("Where is it right now in it's orbit?"));
       this.satelites = false;
       console.log("hoi", obj.nuX);
       this.list.push({
@@ -2277,8 +2280,9 @@ __webpack_require__.r(__webpack_exports__);
         y: obj.nuY,
         kX: obj.nuX,
         kY: obj.nuY,
-        amplitude: amp
-      }); // Sets the conditon in 
+        amplitude: amp,
+        start: degree
+      }); // Sets the conditon in
 
       this.inMotion = true;
     },
@@ -2364,7 +2368,7 @@ var height = window.innerHeight;
   data: function data() {
     return {
       ani: false,
-      degree: 0,
+      degree: 270,
       amp: 100,
       origin: {
         x: 650,
@@ -2402,26 +2406,26 @@ var height = window.innerHeight;
       var vm = this;
       var amplitude = 100;
       var period = 10000;
-      var radians = 0;
       var centerX = this.$refs.ord.getStage().attrs.x;
-      var centerY = this.$refs.ord.getStage().attrs.y;
+      var centerY = this.$refs.ord.getStage().attrs.y; // Formula to translate degrees selceted by user to radians. see changeDegree()
+
+      var radians = vm.degree * (Math.PI / 180);
       var circ = this.$refs.circ.getStage();
       var anim = new Konva.Animation(function (frame) {
-        radians = frame.time * 2 * Math.PI / period;
+        // Calculates object's position in its orbit
         circ.setX(vm.amp * Math.sin(radians) + centerX);
-        circ.setY(vm.amp * Math.cos(radians) + centerY);
+        circ.setY(vm.amp * Math.cos(radians) + centerY); // retains the original degree->radian set in the data to begin motion from
+        // rather than: radians = (frame.time * 2 * Math.PI) / period;
 
-        if (vm.paused) {
-          console.log("pausing:", vm.paused);
-          anim.stop();
-        } else {
-          anim.start();
-        }
+        radians = radians + 60 * 2 * Math.PI / period;
       }, circ.getLayer());
       anim.start();
     },
     addSun: function addSun() {
-      var amp = parseInt(prompt("How far away is this star?"));
+      // add: 
+      //amplitude - distance away from black hole
+      var amp = parseInt(prompt("How far away is this star?")); // degree - where in is the planet in it's orbit right now
+
       var degree = parseInt(prompt("Where is it right now in it's orbit?"));
       this.list.push({
         x: this.origin.x,
@@ -49779,10 +49783,11 @@ var render = function() {
             x: _vm.xC,
             y: _vm.yC,
             radius: 8,
-            fill: "red",
             amplitude: _vm.ampC,
+            start: _vm.degreeC,
             trackX: _vm.kX,
-            trackY: _vm.kY
+            trackY: _vm.kY,
+            fill: "red"
           }
         },
         on: {
@@ -49964,7 +49969,8 @@ var render = function() {
             yC: item.y,
             kX: item.kX,
             kY: item.kY,
-            ampC: item.amplitude
+            ampC: item.amplitude,
+            degreeC: item.start
           }
         })
       })

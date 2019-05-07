@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       ani: false,
-      degree: 0,
+      degree: 270,
       amp: 100,
       origin: { x: 650, y: 450 },
 
@@ -106,32 +106,39 @@ export default {
       const vm = this;
       const amplitude = 100;
       const period = 10000;
-      var radians = 0;
 
       const centerX = this.$refs.ord.getStage().attrs.x;
       const centerY = this.$refs.ord.getStage().attrs.y;
 
+      // Formula to translate degrees selceted by user to radians. see changeDegree()
+      var radians = vm.degree * (Math.PI/180);
+
+
       const circ = this.$refs.circ.getStage();
+      
 
       const anim = new Konva.Animation(function(frame) {
-        radians = (frame.time * 2 * Math.PI) / period;
 
+        // Calculates object's position in its orbit
         circ.setX(vm.amp * Math.sin(radians) + centerX);
         circ.setY(vm.amp * Math.cos(radians) + centerY);
 
-        if (vm.paused) {
-          console.log("pausing:", vm.paused);
-          anim.stop();
-        } else {
-          anim.start();
-        }
+        // retains the original degree->radian set in the data to begin motion from
+        // rather than: radians = (frame.time * 2 * Math.PI) / period;
+        radians = radians + (((60 * 2 * Math.PI)) / period);
+        
       }, circ.getLayer());
 
       anim.start();
     },
 
     addSun() {
+
+      // add: 
+      //amplitude - distance away from black hole
       var amp = parseInt(prompt("How far away is this star?"));
+
+      // degree - where in is the planet in it's orbit right now
       var degree = parseInt(prompt("Where is it right now in it's orbit?"))
 
       this.list.push({

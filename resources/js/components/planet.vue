@@ -9,10 +9,11 @@
         x:xC,
         y:yC,
         radius: 8,
-        fill: 'red',
         amplitude: ampC,
+        start: degreeC,
         trackX: kX,
         trackY: kY,
+        fill: 'red',
     }"
     />
     <!-- Child of Planet and the props being passed to it -->
@@ -37,6 +38,7 @@ export default {
     kX: Number,
     kY: Number,
     ampC: Number,
+    degreeC: Number,
   },
 
   data() {
@@ -49,6 +51,7 @@ export default {
   },
 
   methods: {
+
     // Pushes to list to make planet object
     addPlanet(obj) {
       this.satelites = false;
@@ -62,7 +65,7 @@ export default {
         kY: obj.nuY
       });
 
-      // Sets the conditon in
+
       this.inMotion = true;
     },
 
@@ -73,7 +76,6 @@ export default {
         this.list[planet].kY = obj.nuY;
       }
 
-      //   console.log("moon moving now", obj);
     }
   },
 
@@ -81,25 +83,22 @@ export default {
     console.log("planet mounted");
     const vm = this;
     const planet = this.$refs.orb.getStage();
+    var centerX = planet.attrs.x;
+    var centerY = planet.attrs.y;
 
-    console.log("Planet:",planet.attrs);
-    // const amplitude = 100;
+    var obj = { nuX: 0, nuY: 0 };
+    var radians = planet.attrs.start * (Math.PI / 180);
+
+    console.log('radians:', radians);
 
     vm.amp = planet.attrs.amplitude;
-    console.log("amp:", vm.amp);
+
     const period = ((200 * vm.amp)/1.5);
     //small period = fast speed
     //large period = slow speed
 
-    var radians = 1;
-    var obj = { nuX: 0, nuY: 0 };
-
-
     //sets the starting origin for the planet to orbit around
-    var centerX = planet.attrs.x;
-    var centerY = planet.attrs.y;
 
-    console.log("ord:", this.$refs.orb.getStage());
 
 
     // Animation of the planet begins here
@@ -110,18 +109,18 @@ export default {
       var centerY = planet.attrs.trackY;
 
       // Calculating the changing radians by frame
-      radians = (frame.time * 2 * Math.PI) / period;
+      radians = radians + (60 * 2 * Math.PI) / period;
 
       // passes orbit path to an object to pass to addPlanet() -> move() -> child
       obj.nuX = vm.amp * Math.sin(radians) + centerX;
       obj.nuY = vm.amp * Math.cos(radians) + centerY;
 
-
       //Calculates the orbit path
       planet.setX(vm.amp * Math.sin(radians) + parseInt(centerX));
       planet.setY(vm.amp * Math.cos(radians) + parseInt(centerY));
 
-      // If a planet is desired by user initiated addPlanet() once
+
+      // If a planet is desired by user initiated execute addPlanet() once
       if (vm.satelites) {
         vm.addPlanet(obj);
       }
