@@ -30,9 +30,12 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 Vue.component('Exp', require('./components/Exp.vue').default);
 
-Vue.component('butt', require('./components/butt.vue').default);
+Vue.component('orbiter', require('./components/orbiter.vue').default);
+Vue.component('planet', require('./components/planet.vue').default);
 
 Vue.component('stage', require('./components/stage.vue').default);
+
+Vue.component('stage2', require('./components/stage2.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

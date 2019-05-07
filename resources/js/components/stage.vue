@@ -1,21 +1,16 @@
 <template>
     <div>
-        Stage Set
-    <div>
-        <button @click="distance">How far away?</button>
-    </div>
-    
-    <div>
-        <button @click="changeAmp">Change Amp</button>
-    </div>
-    
-    <div>
-        <button @click="changeDegree">Change Degree</button>
-    </div>
 
-    <div>
-        <button @click="ani = !ani">Orbit on</button>
-    </div>
+        <h1>Orbit Lab</h1>
+        <div>
+            <button @click="distance">How far away?</button>
+            <button @click="changeAmp">Change Amp</button>
+            <button @click="changeDegree">Change Degree</button>
+            <button @click="ani = !ani">Orbit on</button>
+        </div>
+
+
+
 
     <!-- Stage can report x and y coordinate values of mouse
      position and will render a blue square at position mouse is clicked-->
@@ -49,14 +44,16 @@
                 fill: 'black'
             }" />
 
-            
-     
+            <orbiter></orbiter>
+
+                 
       </v-layer>
 
       
     </v-stage>
 
     </div>
+
 </template>
 
 <script>
@@ -95,7 +92,7 @@ const height = window.innerHeight;
             
             center: {
                 x: 300,
-                y: 100,
+                y: 200,
                 radius: 10,
                 fill: 'black',
                 

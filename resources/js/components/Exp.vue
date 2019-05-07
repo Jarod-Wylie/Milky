@@ -2,9 +2,9 @@
   <div>
         
         
-    <stage>
+    <stage2>
         
-    </stage>
+    </stage2>
     
   </div>
 </template>
