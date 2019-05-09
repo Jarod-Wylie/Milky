@@ -36,5 +36,6 @@ Route::get('/editObj/{id}', 'GalaxyController@edit');
 Route::patch('/editObj/{id}', 'GalaxyController@update');
 Route::delete('/editObj/{id}', 'GalaxyController@destroy');
 Route::get('/systems', 'GalaxyController@index');
+Route::get('/planets', 'GalaxyController@planetsIndex');
 
 

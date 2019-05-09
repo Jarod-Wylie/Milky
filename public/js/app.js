@@ -1887,7 +1887,7 @@ var height = window.innerHeight;
       this.text = message;
     },
     handleMouseMove: function handleMouseMove(event) {
-      console.log('systems', this.systems);
+      // console.log('systems', this.systems)
       var mousePos = this.$refs.stage.getStage().getPointerPosition();
       var x = mousePos.x;
       var y = mousePos.y;
@@ -2325,7 +2325,11 @@ __webpack_require__.r(__webpack_exports__);
       list: [],
       planets: [],
       satelites: false,
-      inMotion: false
+      inMotion: false,
+      temp: {
+        x: 650,
+        y: 450
+      }
     };
   },
   mounted: function mounted() {
@@ -50185,10 +50189,10 @@ var render = function() {
           ref: "satelite",
           refInFor: true,
           attrs: {
-            xC: item.x,
-            yC: item.y,
-            kX: item.kX,
-            kY: item.kY,
+            xC: _vm.temp.x,
+            yC: _vm.temp.y,
+            kX: _vm.temp.x,
+            kY: _vm.temp.y,
             ampC: item.XCoordinate,
             degreeC: item.YCoordinate
           }

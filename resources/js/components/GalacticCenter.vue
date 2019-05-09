@@ -80,7 +80,7 @@ export default {
     },
 
     handleMouseMove(event) {
-      console.log('systems', this.systems)
+      // console.log('systems', this.systems)
       const mousePos = this.$refs.stage.getStage().getPointerPosition();
       const x = mousePos.x;
       const y = mousePos.y;

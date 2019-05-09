@@ -2,7 +2,9 @@
 namespace App\Http\Controllers;
 use App\User;
 use App\System;
+use App\Planet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 class GalaxyController extends Controller
 { 
     public function index()
@@ -11,10 +13,16 @@ class GalaxyController extends Controller
         //             ->select('systems.id', 'systems.name', 'systems.XCoordinate', 'systems.YCoordinate', 'planets.id as satelite', 'planets.name as sateliteName', 'planets.XCoordinate as sateliteX', 'planets.YCoordinate as sateliteY')
         //             ->get();
         // return json_encode($systems);
-
+        Log::debug('getting systems');
         $systems = System::all();
         return $systems;
 
+    }
+
+    public function planetsIndex()
+    {
+        $planets = Planet::all();
+        return $planets;
     }
 
     public function create()

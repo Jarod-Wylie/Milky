@@ -30,10 +30,10 @@
         v-for="item in planets"
         ref="satelite"
         :key="item.id"
-        :xC="item.x"
-        :yC="item.y"
-        :kX="item.kX"
-        :kY="item.kY"
+        :xC="temp.x"
+        :yC="temp.y"
+        :kX="temp.x"
+        :kY="temp.y"
         :ampC="item.XCoordinate"
         :degreeC="item.YCoordinate"
         ></planet>
@@ -56,7 +56,8 @@
         list: [],
         planets: [],
         satelites: false,
-        inMotion: false
+        inMotion: false,
+        temp: {x:650, y:450},
         };
     },
 
