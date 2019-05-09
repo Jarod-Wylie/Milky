@@ -11,6 +11,18 @@ for hosting the original ordinate for spawning stars.-->
 
 <template>
   <div>
+
+
+      
+<!--       
+      <h1 
+      v-for="system in systems"
+      :key="system">
+      System: {{ system.x }}</h1> -->
+
+
+
+
     <h1>Orbit Lab</h1>
     <div>
       <button @click="distance">How far away?</button>
@@ -66,8 +78,8 @@ export default {
       origin: { x: 650, y: 450 },
 
       stageSize: {
-        width: width,
-        height: 900
+        width: 1000,
+        height: 1000
       },
       flip: true,
 
@@ -90,12 +102,29 @@ export default {
 
       paused: false,
 
-      circ: {}
+      circ: {},
+
+      systems: [],
+
+      index: 0,
     };
   },
 
   mounted() {
     this.start();
+
+
+
+    axios
+    .get('/systems')
+    .then(response => this.systems = (response.data));
+    // .then(response => console.log('home:', response.data));
+
+
+    
+
+
+
   },
 
   computed: {},
@@ -116,7 +145,6 @@ export default {
 
       const circ = this.$refs.circ.getStage();
       
-
       const anim = new Konva.Animation(function(frame) {
 
         // Calculates object's position in its orbit
@@ -177,11 +205,14 @@ export default {
     },
 
     handleMouseMove(event) {
+      console.log('Systems array', this.systems[0]);
       const mousePos = this.$refs.stage.getStage().getPointerPosition();
       const x = mousePos.x;
       const y = mousePos.y;
       this.writeMessage("x: " + x + ", y: " + y);
     },
+
+    
 
   }
 };

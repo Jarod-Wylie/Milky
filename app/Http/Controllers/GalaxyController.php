@@ -7,8 +7,14 @@ class GalaxyController extends Controller
 { 
     public function index()
     {
+        // $systems = System::leftJoin('planets', 'systems.id', '=','planets.system_id')
+        //             ->select('systems.id', 'systems.name', 'systems.XCoordinate', 'systems.YCoordinate', 'planets.id as satelite', 'planets.name as sateliteName', 'planets.XCoordinate as sateliteX', 'planets.YCoordinate as sateliteY')
+        //             ->get();
+        // return json_encode($systems);
+
         $systems = System::all();
-        return view('/home', ['systems' => $systems]);
+        return $systems;
+
     }
 
     public function create()
@@ -18,17 +24,18 @@ class GalaxyController extends Controller
     }
     public function store()
     {
-        $systems = new System();
+        $system = new System();
         
         request()->validate([
             'name' => 'required',
             'XCoordinate' => 'required',
             'YCoordinate' => 'required',
         ]);
-        $systems->name = request('name');
-        $systems->XCoordinate = request('XCoordinate');
-        $systems->YCoordinate = request('YCoordinate');
-        $systems->save();
+        $system->name = request('name');
+        $system->XCoordinate = request('XCoordinate');
+        $system->YCoordinate = request('YCoordinate');
+        $system->save();
+
         return redirect('home');
     }
  

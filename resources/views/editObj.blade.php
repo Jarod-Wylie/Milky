@@ -9,7 +9,7 @@ HOI
 
         <div class="control">
             <input 
-            class="form-control" type="text" class="input" name="name" placeholder="Color Name" value="{{ $systems->name }}">
+            class="form-control" type="text" class="input" name="name" placeholder="Name of System" value="{{ $systems->name }}">
             
             <button type="submit">UPDATE</button>
         </div>

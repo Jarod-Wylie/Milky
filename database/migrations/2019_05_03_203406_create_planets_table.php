@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSystemsTable extends Migration
+class CreatePlanetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,16 @@ class CreateSystemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('systems', function (Blueprint $table) {
+        Schema::create('planets', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('name');
             $table->bigInteger('XCoordinate');
             $table->bigInteger('YCoordinate');
+            $table->unsignedBigInteger('systems_id')->nullable();
             $table->timestamps();
-        });
 
-    //     Schema::table('systems',function (Blueprint $table) {
-    //         $table->foreign('planets_id')->references('name')->on('planets');
-    // });
-    
+            $table->foreign('systems_id')->references('id')->on('systems');
+        });
     }
 
     /**
@@ -34,6 +32,6 @@ class CreateSystemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('systems');
+        Schema::dropIfExists('planets');
     }
 }

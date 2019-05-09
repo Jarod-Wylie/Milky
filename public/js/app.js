@@ -1793,17 +1793,105 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
-      x: 500,
-      y: 350,
-      message: "trying to draw circle."
-    };
+    return {};
   },
   methods: {
     draw: function draw() {
       console.log(this.message);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/GalacticCenter.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/GalacticCenter.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var width = window.innerWidth;
+var height = window.innerHeight;
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      stageSize: {
+        width: 10000,
+        height: 1000
+      },
+      center: {
+        x: 650,
+        y: 450,
+        radius: 10,
+        fill: "black"
+      },
+      text: "",
+      systems: []
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/systems').then(function (response) {
+      return _this.systems = response.data;
+    }); // .then(response => console.log('home:', response.data));
+  },
+  methods: {
+    writeMessage: function writeMessage(message) {
+      this.text = message;
+    },
+    handleMouseMove: function handleMouseMove(event) {
+      console.log('systems', this.systems);
+      var mousePos = this.$refs.stage.getStage().getPointerPosition();
+      var x = mousePos.x;
+      var y = mousePos.y;
+      this.writeMessage("x: " + x + ", y: " + y);
     }
   }
 });
@@ -2210,6 +2298,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     xC: Number,
@@ -2222,12 +2323,20 @@ __webpack_require__.r(__webpack_exports__);
     return {
       amp: 0,
       list: [],
+      planets: [],
       satelites: false,
       inMotion: false
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/planets').then(function (response) {
+      return _this.planets = response.data;
+    }); // .then(response => console.log('home:', response.data));
+
     console.log("Sun Mounted");
+    console.log('Planets:', this.planets);
     var vm = this;
     var sun = this.$refs.orb.getStage();
     var centerX = sun.attrs.x;
@@ -2362,6 +2471,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var width = window.innerWidth;
 var height = window.innerHeight;
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2375,8 +2496,8 @@ var height = window.innerHeight;
         y: 450
       },
       stageSize: {
-        width: width,
-        height: 900
+        width: 1000,
+        height: 1000
       },
       flip: true,
       circle: {
@@ -2394,11 +2515,18 @@ var height = window.innerHeight;
       list: [],
       text: "",
       paused: false,
-      circ: {}
+      circ: {},
+      systems: [],
+      index: 0
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     this.start();
+    axios.get('/systems').then(function (response) {
+      return _this.systems = response.data;
+    }); // .then(response => console.log('home:', response.data));
   },
   computed: {},
   methods: {
@@ -2460,6 +2588,7 @@ var height = window.innerHeight;
       this.text = message;
     },
     handleMouseMove: function handleMouseMove(event) {
+      console.log('Systems array', this.systems[0]);
       var mousePos = this.$refs.stage.getStage().getPointerPosition();
       var x = mousePos.x;
       var y = mousePos.y;
@@ -49702,7 +49831,82 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_c("superMBH")], 1)
+  return _c("div", [_c("GalacticCenter")], 1)
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/GalacticCenter.vue?vue&type=template&id=303a938c&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/GalacticCenter.vue?vue&type=template&id=303a938c& ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c("h1", [_vm._v("Galactic Lab")]),
+      _vm._v(" "),
+      _c(
+        "v-stage",
+        {
+          ref: "stage",
+          attrs: { config: _vm.stageSize },
+          on: { mousemove: _vm.handleMouseMove }
+        },
+        [
+          _c(
+            "v-layer",
+            [
+              _c("v-circle", { ref: "ord", attrs: { config: _vm.center } }),
+              _vm._v(" "),
+              _c("v-text", {
+                ref: "text",
+                attrs: {
+                  config: {
+                    x: 10,
+                    y: 10,
+                    fontFamily: "Calibri",
+                    fontSize: 24,
+                    text: _vm.text,
+                    fill: "black"
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.systems, function(item) {
+                return _c("sun", {
+                  key: item.id,
+                  attrs: {
+                    xC: _vm.center.x,
+                    yC: _vm.center.y,
+                    ampC: item.YCoordinate,
+                    degreeC: item.XCoordinate
+                  }
+                })
+              })
+            ],
+            2
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -49971,6 +50175,22 @@ var render = function() {
             kY: item.kY,
             ampC: item.amplitude,
             degreeC: item.start
+          }
+        })
+      }),
+      _vm._v(" "),
+      _vm._l(_vm.planets, function(item) {
+        return _c("planet", {
+          key: item.id,
+          ref: "satelite",
+          refInFor: true,
+          attrs: {
+            xC: item.x,
+            yC: item.y,
+            kX: item.kX,
+            kY: item.kY,
+            ampC: item.XCoordinate,
+            degreeC: item.YCoordinate
           }
         })
       })
@@ -62249,8 +62469,11 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Exp', __webpack_require__(/*! ./components/Exp.vue */ "./resources/js/components/Exp.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('superMBH', __webpack_require__(/*! ./components/superMBH.vue */ "./resources/js/components/superMBH.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Exp', __webpack_require__(/*! ./components/Exp.vue */ "./resources/js/components/Exp.vue")["default"]); // A proto type of Galactic Center
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('superMBH', __webpack_require__(/*! ./components/superMBH.vue */ "./resources/js/components/superMBH.vue")["default"]); //
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('GalacticCenter', __webpack_require__(/*! ./components/GalacticCenter.vue */ "./resources/js/components/GalacticCenter.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('sun', __webpack_require__(/*! ./components/sun.vue */ "./resources/js/components/sun.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('planet', __webpack_require__(/*! ./components/planet.vue */ "./resources/js/components/planet.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('moon', __webpack_require__(/*! ./components/moon.vue */ "./resources/js/components/moon.vue")["default"]);
@@ -62458,6 +62681,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Exp_vue_vue_type_template_id_70b068fc___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Exp_vue_vue_type_template_id_70b068fc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/GalacticCenter.vue":
+/*!****************************************************!*\
+  !*** ./resources/js/components/GalacticCenter.vue ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _GalacticCenter_vue_vue_type_template_id_303a938c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GalacticCenter.vue?vue&type=template&id=303a938c& */ "./resources/js/components/GalacticCenter.vue?vue&type=template&id=303a938c&");
+/* harmony import */ var _GalacticCenter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GalacticCenter.vue?vue&type=script&lang=js& */ "./resources/js/components/GalacticCenter.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _GalacticCenter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _GalacticCenter_vue_vue_type_template_id_303a938c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _GalacticCenter_vue_vue_type_template_id_303a938c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/GalacticCenter.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/GalacticCenter.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/GalacticCenter.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GalacticCenter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./GalacticCenter.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/GalacticCenter.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GalacticCenter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/GalacticCenter.vue?vue&type=template&id=303a938c&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/GalacticCenter.vue?vue&type=template&id=303a938c& ***!
+  \***********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GalacticCenter_vue_vue_type_template_id_303a938c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./GalacticCenter.vue?vue&type=template&id=303a938c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/GalacticCenter.vue?vue&type=template&id=303a938c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GalacticCenter_vue_vue_type_template_id_303a938c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GalacticCenter_vue_vue_type_template_id_303a938c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

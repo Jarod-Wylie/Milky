@@ -12,7 +12,7 @@
                     fill: 'yellow',
                 }"
         />
-
+        <!---Planets added on click -->
         <planet
         v-for="item in list"
         ref="satelite"
@@ -23,6 +23,19 @@
         :kY="item.kY"
         :ampC="item.amplitude"
         :degreeC="item.start"
+        ></planet>
+
+        <!-- Planets added on load from database-->
+        <planet
+        v-for="item in planets"
+        ref="satelite"
+        :key="item.id"
+        :xC="item.x"
+        :yC="item.y"
+        :kX="item.kX"
+        :kY="item.kY"
+        :ampC="item.XCoordinate"
+        :degreeC="item.YCoordinate"
         ></planet>
     </div>
     </template>
@@ -41,13 +54,24 @@
         return {
         amp: 0,
         list: [],
+        planets: [],
         satelites: false,
         inMotion: false
         };
     },
 
     mounted() {
+
+
+
+        axios
+        .get('/planets')
+        .then(response => this.planets = (response.data));
+        // .then(response => console.log('home:', response.data));
+
         console.log("Sun Mounted");
+
+        console.log('Planets:', this.planets)
 
         const vm = this;
         const sun = this.$refs.orb.getStage();

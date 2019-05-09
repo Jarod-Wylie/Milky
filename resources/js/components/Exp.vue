@@ -2,9 +2,11 @@
   <div>
         
         
-    <superMBH>
+    <!-- <superMBH>
         
-    </superMBH>
+    </superMBH> -->
+
+    <GalacticCenter></GalacticCenter>
     
   </div>
 </template>
@@ -15,12 +17,7 @@ export default {
   data() {
     return {
       
-      x:500,
-      y:350,
 
-      message:"trying to draw circle.",
-
-        
     }
   },
 
