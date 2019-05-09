@@ -7,6 +7,11 @@
 
 require('./bootstrap');
 
+import Vue from 'vue';
+import VueKonva from 'vue-konva'
+
+Vue.use(VueKonva)
+
 window.Vue = require('vue');
 
 /**
@@ -21,6 +26,23 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+
+
+Vue.component('Exp', require('./components/Exp.vue').default);
+
+
+// A proto type of Galactic Center
+Vue.component('superMBH', require('./components/superMBH.vue').default);
+
+//
+Vue.component('GalacticCenter', require('./components/GalacticCenter.vue').default);
+
+Vue.component('sun', require('./components/sun.vue').default);
+Vue.component('planet', require('./components/planet.vue').default);
+Vue.component('moon', require('./components/moon.vue').default);
+
+Vue.component('stage', require('./components/stage.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
