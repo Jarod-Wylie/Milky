@@ -30,12 +30,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 // CRUD for making systems
 Route::get('/home', 'GalaxyController@create');
 Route::post('/home', 'GalaxyController@store');
-Route::get('/home', 'GalaxyController@index');
+Route::get('/systems', 'GalaxyController@index');
+Route::get('/home', 'GalaxyController@indexForHomeViewing');
 //
 Route::get('/editObj/{id}', 'GalaxyController@edit');
 Route::patch('/editObj/{id}', 'GalaxyController@update');
 Route::delete('/editObj/{id}', 'GalaxyController@destroy');
-Route::get('/systems', 'GalaxyController@index');
-Route::get('/planets', 'GalaxyController@planetsIndex');
+
 
 

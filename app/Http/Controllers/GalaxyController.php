@@ -10,8 +10,17 @@ class GalaxyController extends Controller
     public function index()
     {
         $systems = System::all();
+
+        // return view("/Home", compact('systems'));
         return $systems;
 
+    }
+   
+    public function indexForHomeViewing()
+    {
+        $systems = System::all();
+
+        return view("/Home", compact('systems'));
     }
 
 
@@ -32,6 +41,11 @@ class GalaxyController extends Controller
         $system->name = request('name');
         $system->XCoordinate = request('XCoordinate');
         $system->YCoordinate = request('YCoordinate');
+        $system->Satelites = '[{"name" : "PlanetA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0 ,"moons": 
+            [
+                {"name": "moonA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0 }
+            ] },{"name" : "PlanetB", "amp":110, "degree":180, "trackX": 0 , "trackY": 0}]';
+        
         $system->save();
 
         return redirect('home');

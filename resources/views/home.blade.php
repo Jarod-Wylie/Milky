@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+
+
+
+
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -23,9 +28,10 @@
                         <div>
                             <input type="text" name="name" placeholder="Add a System">
 
-                            <input type="text" name="XCoordinate" placeholder="X">
+                            <input type="text" name="XCoordinate" placeholder="How far away?">
 
-                            <input type="text" name="YCoordinate" placeholder="Y">
+                            <input type="text" name="YCoordinate" placeholder="Where in is it in it's orbit?">
+
                         </div>
 
                         <div>
