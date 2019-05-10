@@ -32,7 +32,7 @@ Vue.component('Exp', require('./components/Exp.vue').default);
 
 
 // A proto type of Galactic Center
-Vue.component('superMBH', require('./components/superMBH.vue').default);
+// Vue.component('superMBH', require('./components/superMBH.vue').default);
 
 //
 Vue.component('GalacticCenter', require('./components/GalacticCenter.vue').default);

@@ -7,7 +7,7 @@
       :config="{
             x:xC,
             y:yC,
-            radius: 2,
+            radius: 4,
             fill: 'blue',
             trackX: kX,
             trackY: kY,
@@ -40,7 +40,7 @@ export default {
   },
 
   mounted() {
-    console.log("Mounting Moon");
+    // console.log("Mounting Moon");
     const vm = this;
     const amplitude = 100;
     const period = 1000;
@@ -50,7 +50,8 @@ export default {
     const centerX = sun.attrs.x;
 
     const centerY = sun.attrs.y;
-    console.log("ord:", this.$refs.orb.getStage().attrs.x);
+
+    // console.log("ord:", this.$refs.orb.getStage().attrs.x);
 
     const anim = new Konva.Animation(function(frame) {
 
@@ -60,12 +61,8 @@ export default {
       radians = (frame.time * 2 * Math.PI) / period;
 
       sun.setX(vm.amp * Math.sin(radians) + parseInt(centerX));
-
       sun.setY(vm.amp * Math.cos(radians) + parseInt(centerY));
 
-      if (vm.satelites) {
-        vm.addPlanet(obj);
-      }
     }, sun.getLayer());
 
     anim.start();

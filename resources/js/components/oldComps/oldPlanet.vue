@@ -17,7 +17,7 @@
     }"
     />
     <!-- Child of Planet and the props being passed to it -->
-    <!-- <moon
+    <moon
       v-for="item in list"
       ref="satelite"
       :key="item.id"
@@ -25,14 +25,6 @@
       :yC="item.y"
       :kX="item.kX"
       :kY="item.kY"
-    ></moon> -->
-
-    <moon
-      v-for="item in sati"
-      ref="satelite"
-      :key="item.id"
-      :kX="item.trackX"
-      :kY="item.trackY"
     ></moon>
   </div>
 </template>
@@ -47,35 +39,47 @@ export default {
     kY: Number,
     ampC: Number,
     degreeC: Number,
-    sati: Array,
   },
 
   data() {
     return {
       degree: 360,
       amp: 0,
-      moons: [],
-
+      satelites: false,
+      list: []
     };
   },
 
   methods: {
 
-  
+    // Pushes to list to make planet object
+    addPlanet(obj) {
+      this.satelites = false;
+      console.log("hoi", obj.nuX);
+      this.list.push({
+        x: obj.nuX,
+        y: obj.nuY,
+        radius: 20,
+        fill: "brown",
+        kX: obj.nuX,
+        kY: obj.nuY
+      });
+
+
+      this.inMotion = true;
+    },
 
     // Updates each object in the list of moons a planet has
     move(obj) {
-      for (let moon in this.sati) {
-        this.sati[moon].trackX = obj.nuX;
-        this.sati[moon].trackY = obj.nuY;
+      for (let planet in this.list) {
+        this.list[planet].kX = obj.nuX;
+        this.list[planet].kY = obj.nuY;
       }
 
     }
   },
 
   mounted() {
-
-    
 
     // console.log("planet mounted");
     const vm = this;
@@ -116,11 +120,16 @@ export default {
       planet.setX(vm.amp * Math.sin(radians) + parseInt(centerX));
       planet.setY(vm.amp * Math.cos(radians) + parseInt(centerY));
 
-      // console.log("moons:",vm.sati);
-      
-      // When a moon is initiated it will be in motion by default. Run move() every frame
-        vm.move(obj);
 
+      // If a planet is desired by user initiated execute addPlanet() once
+      if (vm.satelites) {
+        vm.addPlanet(obj);
+      }
+
+      // When a moon is initiated it will be in motion by default. Run move() every frame
+      if (vm.inMotion) {
+        vm.move(obj);
+      }
     }, planet.getLayer());
 
     anim.start();

@@ -1856,6 +1856,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 var width = window.innerWidth;
 var height = window.innerHeight;
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1892,6 +1896,9 @@ var height = window.innerHeight;
       var x = mousePos.x;
       var y = mousePos.y;
       this.writeMessage("x: " + x + ", y: " + y);
+    },
+    log: function log() {
+      console.log;
     }
   }
 });
@@ -1943,25 +1950,21 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {},
   mounted: function mounted() {
-    console.log("Mounting Moon");
+    // console.log("Mounting Moon");
     var vm = this;
     var amplitude = 100;
     var period = 1000;
     var radians = 1;
     var sun = this.$refs.orb.getStage();
     var centerX = sun.attrs.x;
-    var centerY = sun.attrs.y;
-    console.log("ord:", this.$refs.orb.getStage().attrs.x);
+    var centerY = sun.attrs.y; // console.log("ord:", this.$refs.orb.getStage().attrs.x);
+
     var anim = new Konva.Animation(function (frame) {
       var centerX = sun.attrs.trackX;
       var centerY = sun.attrs.trackY;
       radians = frame.time * 2 * Math.PI / period;
       sun.setX(vm.amp * Math.sin(radians) + parseInt(centerX));
       sun.setY(vm.amp * Math.cos(radians) + parseInt(centerY));
-
-      if (vm.satelites) {
-        vm.addPlanet(obj);
-      }
     }, sun.getLayer());
     anim.start();
   }
@@ -2009,6 +2012,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     xC: Number,
@@ -2017,41 +2028,27 @@ __webpack_require__.r(__webpack_exports__);
     kX: Number,
     kY: Number,
     ampC: Number,
-    degreeC: Number
+    degreeC: Number,
+    sati: Array
   },
   data: function data() {
     return {
       degree: 360,
       amp: 0,
-      satelites: false,
-      list: []
+      moons: []
     };
   },
   methods: {
-    // Pushes to list to make planet object
-    addPlanet: function addPlanet(obj) {
-      this.satelites = false;
-      console.log("hoi", obj.nuX);
-      this.list.push({
-        x: obj.nuX,
-        y: obj.nuY,
-        radius: 20,
-        fill: "brown",
-        kX: obj.nuX,
-        kY: obj.nuY
-      });
-      this.inMotion = true;
-    },
     // Updates each object in the list of moons a planet has
     move: function move(obj) {
-      for (var planet in this.list) {
-        this.list[planet].kX = obj.nuX;
-        this.list[planet].kY = obj.nuY;
+      for (var moon in this.sati) {
+        this.sati[moon].trackX = obj.nuX;
+        this.sati[moon].trackY = obj.nuY;
       }
     }
   },
   mounted: function mounted() {
-    console.log("planet mounted");
+    // console.log("planet mounted");
     var vm = this;
     var planet = this.$refs.orb.getStage();
     var centerX = planet.attrs.x;
@@ -2060,8 +2057,8 @@ __webpack_require__.r(__webpack_exports__);
       nuX: 0,
       nuY: 0
     };
-    var radians = planet.attrs.start * (Math.PI / 180);
-    console.log('radians:', radians);
+    var radians = planet.attrs.start * (Math.PI / 180); // console.log('radians:', radians);
+
     vm.amp = planet.attrs.amplitude;
     var period = 200 * vm.amp / 1.5; //small period = fast speed
     //large period = slow speed
@@ -2079,16 +2076,10 @@ __webpack_require__.r(__webpack_exports__);
       obj.nuY = vm.amp * Math.cos(radians) + centerY; //Calculates the orbit path
 
       planet.setX(vm.amp * Math.sin(radians) + parseInt(centerX));
-      planet.setY(vm.amp * Math.cos(radians) + parseInt(centerY)); // If a planet is desired by user initiated execute addPlanet() once
+      planet.setY(vm.amp * Math.cos(radians) + parseInt(centerY)); // console.log("moons:",vm.sati);
+      // When a moon is initiated it will be in motion by default. Run move() every frame
 
-      if (vm.satelites) {
-        vm.addPlanet(obj);
-      } // When a moon is initiated it will be in motion by default. Run move() every frame
-
-
-      if (vm.inMotion) {
-        vm.move(obj);
-      }
+      vm.move(obj);
     }, planet.getLayer());
     anim.start();
   }
@@ -2317,30 +2308,20 @@ __webpack_require__.r(__webpack_exports__);
     yC: Number,
     ord: Object,
     ampC: Number,
-    degreeC: Number
+    degreeC: Number,
+    SunID: Number
   },
   data: function data() {
     return {
-      amp: 0,
-      list: [],
-      planets: [],
-      satelites: false,
-      inMotion: false,
-      temp: {
-        x: 650,
-        y: 450
-      }
+      planets: []
     };
   },
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('/planets').then(function (response) {
-      return _this.planets = response.data;
-    }); // .then(response => console.log('home:', response.data));
-
-    console.log("Sun Mounted");
-    console.log('Planets:', this.planets);
+    axios.get('/systems').then(function (response) {
+      return _this.planets = JSON.parse(response.data[_this.SunID - 1].Satelites);
+    });
     var vm = this;
     var sun = this.$refs.orb.getStage();
     var centerX = sun.attrs.x;
@@ -2365,238 +2346,23 @@ __webpack_require__.r(__webpack_exports__);
       obj.nuX = vm.amp * Math.sin(radians) + centerX;
       obj.nuY = vm.amp * Math.cos(radians) + centerY; // radians = (frame.time * 2 * Math.PI) / period;
 
-      radians = radians + 60 * 2 * Math.PI / period; // checks for desired planets
-
-      if (vm.satelites) {
-        vm.addPlanet(obj);
-      } // Allows this sun's x and y to be known by its children
-
-
-      if (vm.inMotion) {
-        vm.move(obj);
-      }
+      radians = radians + 60 * 2 * Math.PI / period;
+      vm.move(obj);
     }, sun.getLayer());
     anim.start();
   },
   methods: {
-    // Pushes to list to make planet object
-    addPlanet: function addPlanet(obj) {
-      // add: 
-      //amplitude - distance away from black hole
-      var amp = parseInt(prompt("How far away is this star?")); // degree - where in is the planet in it's orbit right now
-
-      var degree = parseInt(prompt("Where is it right now in it's orbit?"));
-      this.satelites = false;
-      console.log("hoi", obj.nuX);
-      this.list.push({
-        x: obj.nuX,
-        y: obj.nuY,
-        kX: obj.nuX,
-        kY: obj.nuY,
-        amplitude: amp,
-        start: degree
-      }); // Sets the conditon in
-
-      this.inMotion = true;
-    },
     // Updates each object in the list of planets a Sun has
     move: function move(obj) {
-      for (var planet in this.list) {
-        this.list[planet].kX = obj.nuX;
-        this.list[planet].kY = obj.nuY;
+      for (var planet in this.planets) {
+        this.planets[planet].trackX = obj.nuX;
+        this.planets[planet].trackY = obj.nuY;
       }
-    }
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/superMBH.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/superMBH.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var width = window.innerWidth;
-var height = window.innerHeight;
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      ani: false,
-      degree: 270,
-      amp: 100,
-      origin: {
-        x: 650,
-        y: 450
-      },
-      stageSize: {
-        width: 1000,
-        height: 1000
-      },
-      flip: true,
-      circle: {
-        x: 650,
-        y: 100,
-        radius: 10,
-        fill: "blue"
-      },
-      center: {
-        x: 650,
-        y: 450,
-        radius: 10,
-        fill: "black"
-      },
-      list: [],
-      text: "",
-      paused: false,
-      circ: {},
-      systems: [],
-      index: 0
-    };
-  },
-  mounted: function mounted() {
-    var _this = this;
-
-    this.start();
-    axios.get('/systems').then(function (response) {
-      return _this.systems = response.data;
-    }); // .then(response => console.log('home:', response.data));
-  },
-  computed: {},
-  methods: {
-    start: function start() {
-      var vm = this;
-      var amplitude = 100;
-      var period = 10000;
-      var centerX = this.$refs.ord.getStage().attrs.x;
-      var centerY = this.$refs.ord.getStage().attrs.y; // Formula to translate degrees selceted by user to radians. see changeDegree()
-
-      var radians = vm.degree * (Math.PI / 180);
-      var circ = this.$refs.circ.getStage();
-      var anim = new Konva.Animation(function (frame) {
-        // Calculates object's position in its orbit
-        circ.setX(vm.amp * Math.sin(radians) + centerX);
-        circ.setY(vm.amp * Math.cos(radians) + centerY); // retains the original degree->radian set in the data to begin motion from
-        // rather than: radians = (frame.time * 2 * Math.PI) / period;
-
-        radians = radians + 60 * 2 * Math.PI / period;
-      }, circ.getLayer());
-      anim.start();
     },
-    addSun: function addSun() {
-      // add: 
-      //amplitude - distance away from black hole
-      var amp = parseInt(prompt("How far away is this star?")); // degree - where in is the planet in it's orbit right now
-
-      var degree = parseInt(prompt("Where is it right now in it's orbit?"));
-      this.list.push({
-        x: this.origin.x,
-        y: this.origin.y,
-        paused: false,
-        radius: 20,
-        amplitude: amp,
-        start: degree
-      });
-      console.log("Sun1:", this.list[0]);
-    },
-    pushSun: function pushSun(obj) {
-      this.list.push(obj);
-    },
-    changeAmp: function changeAmp() {
-      this.amp = prompt("Enter a number 1 - 100");
-      console.log(this.amp);
-    },
-    changeDegree: function changeDegree() {
-      this.degree = prompt("Enter a number 1 - 100");
-    },
-    distance: function distance() {
-      var dist = prompt("Enter a number 1 - 100");
-      dist = parseInt(dist);
-      dist += this.origin;
-      this.list.push({
-        x: dist,
-        y: 100
-      });
-    },
-    writeMessage: function writeMessage(message) {
-      this.text = message;
-    },
-    handleMouseMove: function handleMouseMove(event) {
-      console.log('Systems array', this.systems[0]);
-      var mousePos = this.$refs.stage.getStage().getPointerPosition();
-      var x = mousePos.x;
-      var y = mousePos.y;
-      this.writeMessage("x: " + x + ", y: " + y);
+    log: function log() {
+      // this.planets = JSON.parse(this.planets[0].Satelites);
+      console.log("Planets:", this.planets[0].moons[0]);
+      console.log("SunID:", this.SunID);
     }
   }
 });
@@ -49875,7 +49641,11 @@ var render = function() {
           _c(
             "v-layer",
             [
-              _c("v-circle", { ref: "ord", attrs: { config: _vm.center } }),
+              _c("v-circle", {
+                ref: "ord",
+                attrs: { config: _vm.center },
+                on: { click: _vm.log }
+              }),
               _vm._v(" "),
               _c("v-text", {
                 ref: "text",
@@ -49895,10 +49665,12 @@ var render = function() {
                 return _c("sun", {
                   key: item.id,
                   attrs: {
+                    SunID: item.id,
                     xC: _vm.center.x,
                     yC: _vm.center.y,
                     ampC: item.YCoordinate,
-                    degreeC: item.XCoordinate
+                    degreeC: item.XCoordinate,
+                    sati: item.id
                   }
                 })
               })
@@ -49943,7 +49715,7 @@ var render = function() {
           config: {
             x: _vm.xC,
             y: _vm.yC,
-            radius: 2,
+            radius: 4,
             fill: "blue",
             trackX: _vm.kX,
             trackY: _vm.kY
@@ -50005,12 +49777,12 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _vm._l(_vm.list, function(item) {
+      _vm._l(_vm.sati, function(item) {
         return _c("moon", {
           key: item.id,
           ref: "satelite",
           refInFor: true,
-          attrs: { xC: item.x, yC: item.y, kX: item.kX, kY: item.kY }
+          attrs: { kX: item.trackX, kY: item.trackY }
         })
       })
     ],
@@ -50157,30 +49929,15 @@ var render = function() {
             amplitude: _vm.ampC,
             start: _vm.degreeC,
             radius: 20,
-            fill: "yellow"
+            fill: "yellow",
+            SunID: _vm.SunID
           }
         },
         on: {
           click: function($event) {
-            _vm.satelites = true
+            return _vm.log()
           }
         }
-      }),
-      _vm._v(" "),
-      _vm._l(_vm.list, function(item) {
-        return _c("planet", {
-          key: item.id,
-          ref: "satelite",
-          refInFor: true,
-          attrs: {
-            xC: item.x,
-            yC: item.y,
-            kX: item.kX,
-            kY: item.kY,
-            ampC: item.amplitude,
-            degreeC: item.start
-          }
-        })
       }),
       _vm._v(" "),
       _vm._l(_vm.planets, function(item) {
@@ -50189,110 +49946,16 @@ var render = function() {
           ref: "satelite",
           refInFor: true,
           attrs: {
-            xC: _vm.temp.x,
-            yC: _vm.temp.y,
-            kX: _vm.temp.x,
-            kY: _vm.temp.y,
-            ampC: item.XCoordinate,
-            degreeC: item.YCoordinate
+            kX: item.trackX,
+            kY: item.trackY,
+            ampC: item.amp,
+            degreeC: item.degree,
+            sati: item.moons
           }
         })
       })
     ],
     2
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/superMBH.vue?vue&type=template&id=ddc76d7a&":
-/*!***********************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/superMBH.vue?vue&type=template&id=ddc76d7a& ***!
-  \***********************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h1", [_vm._v("Orbit Lab")]),
-      _vm._v(" "),
-      _c("div", [
-        _c("button", { on: { click: _vm.distance } }, [
-          _vm._v("How far away?")
-        ]),
-        _vm._v(" "),
-        _c("button", { on: { click: _vm.changeAmp } }, [_vm._v("Change Amp")]),
-        _vm._v(" "),
-        _c("button", { on: { click: _vm.changeDegree } }, [
-          _vm._v("Change Degree")
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "v-stage",
-        {
-          ref: "stage",
-          attrs: { config: _vm.stageSize },
-          on: { mousemove: _vm.handleMouseMove }
-        },
-        [
-          _c(
-            "v-layer",
-            [
-              _c("v-circle", { ref: "circ", attrs: { config: _vm.circle } }),
-              _vm._v(" "),
-              _c("v-circle", {
-                ref: "ord",
-                attrs: { config: _vm.center },
-                on: { onOrbSelected: _vm.pushSun, click: _vm.addSun }
-              }),
-              _vm._v(" "),
-              _c("v-text", {
-                ref: "text",
-                attrs: {
-                  config: {
-                    x: 10,
-                    y: 10,
-                    fontFamily: "Calibri",
-                    fontSize: 24,
-                    text: _vm.text,
-                    fill: "black"
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _vm._l(_vm.list, function(item) {
-                return _c("sun", {
-                  key: item.id,
-                  attrs: {
-                    xC: item.x,
-                    yC: item.y,
-                    ampC: item.amplitude,
-                    degreeC: item.start
-                  }
-                })
-              })
-            ],
-            2
-          )
-        ],
-        1
-      )
-    ],
-    1
   )
 }
 var staticRenderFns = []
@@ -62474,8 +62137,8 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Exp', __webpack_require__(/*! ./components/Exp.vue */ "./resources/js/components/Exp.vue")["default"]); // A proto type of Galactic Center
-
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('superMBH', __webpack_require__(/*! ./components/superMBH.vue */ "./resources/js/components/superMBH.vue")["default"]); //
+// Vue.component('superMBH', require('./components/superMBH.vue').default);
+//
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('GalacticCenter', __webpack_require__(/*! ./components/GalacticCenter.vue */ "./resources/js/components/GalacticCenter.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('sun', __webpack_require__(/*! ./components/sun.vue */ "./resources/js/components/sun.vue")["default"]);
@@ -63030,75 +62693,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_sun_vue_vue_type_template_id_43cbb851___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_sun_vue_vue_type_template_id_43cbb851___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/superMBH.vue":
-/*!**********************************************!*\
-  !*** ./resources/js/components/superMBH.vue ***!
-  \**********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _superMBH_vue_vue_type_template_id_ddc76d7a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./superMBH.vue?vue&type=template&id=ddc76d7a& */ "./resources/js/components/superMBH.vue?vue&type=template&id=ddc76d7a&");
-/* harmony import */ var _superMBH_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./superMBH.vue?vue&type=script&lang=js& */ "./resources/js/components/superMBH.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _superMBH_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _superMBH_vue_vue_type_template_id_ddc76d7a___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _superMBH_vue_vue_type_template_id_ddc76d7a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/superMBH.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/superMBH.vue?vue&type=script&lang=js&":
-/*!***********************************************************************!*\
-  !*** ./resources/js/components/superMBH.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_superMBH_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./superMBH.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/superMBH.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_superMBH_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/superMBH.vue?vue&type=template&id=ddc76d7a&":
-/*!*****************************************************************************!*\
-  !*** ./resources/js/components/superMBH.vue?vue&type=template&id=ddc76d7a& ***!
-  \*****************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_superMBH_vue_vue_type_template_id_ddc76d7a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./superMBH.vue?vue&type=template&id=ddc76d7a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/superMBH.vue?vue&type=template&id=ddc76d7a&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_superMBH_vue_vue_type_template_id_ddc76d7a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_superMBH_vue_vue_type_template_id_ddc76d7a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

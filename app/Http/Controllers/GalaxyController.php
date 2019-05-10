@@ -9,21 +9,20 @@ class GalaxyController extends Controller
 { 
     public function index()
     {
-        // $systems = System::leftJoin('planets', 'systems.id', '=','planets.system_id')
-        //             ->select('systems.id', 'systems.name', 'systems.XCoordinate', 'systems.YCoordinate', 'planets.id as satelite', 'planets.name as sateliteName', 'planets.XCoordinate as sateliteX', 'planets.YCoordinate as sateliteY')
-        //             ->get();
-        // return json_encode($systems);
-        Log::debug('getting systems');
         $systems = System::all();
+
+        // return view("/Home", compact('systems'));
         return $systems;
 
     }
-
-    public function planetsIndex()
+   
+    public function indexForHomeViewing()
     {
-        $planets = Planet::all();
-        return $planets;
+        $systems = System::all();
+
+        return view("/Home", compact('systems'));
     }
+
 
     public function create()
     {
@@ -42,6 +41,11 @@ class GalaxyController extends Controller
         $system->name = request('name');
         $system->XCoordinate = request('XCoordinate');
         $system->YCoordinate = request('YCoordinate');
+        $system->Satelites = '[{"name" : "PlanetA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0 ,"moons": 
+            [
+                {"name": "moonA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0 }
+            ] },{"name" : "PlanetB", "amp":110, "degree":180, "trackX": 0 , "trackY": 0}]';
+        
         $system->save();
 
         return redirect('home');
