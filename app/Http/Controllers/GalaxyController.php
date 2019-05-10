@@ -9,21 +9,11 @@ class GalaxyController extends Controller
 { 
     public function index()
     {
-        // $systems = System::leftJoin('planets', 'systems.id', '=','planets.system_id')
-        //             ->select('systems.id', 'systems.name', 'systems.XCoordinate', 'systems.YCoordinate', 'planets.id as satelite', 'planets.name as sateliteName', 'planets.XCoordinate as sateliteX', 'planets.YCoordinate as sateliteY')
-        //             ->get();
-        // return json_encode($systems);
-        Log::debug('getting systems');
         $systems = System::all();
         return $systems;
 
     }
 
-    public function planetsIndex()
-    {
-        $planets = Planet::all();
-        return $planets;
-    }
 
     public function create()
     {

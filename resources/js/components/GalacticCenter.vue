@@ -4,12 +4,14 @@
 
     <h1>Galactic Lab</h1>
 
+
+
     <!-- Stage can report x and y coordinate values of mouse
     position and will render a blue square at position mouse is clicked-->
     <v-stage ref="stage" :config="stageSize" @mousemove="handleMouseMove">
       <v-layer>
 
-        <v-circle :config="center" ref="ord"/>
+        <v-circle @click="log" :config="center" ref="ord"/>
 
         <v-text
           ref="text"
@@ -25,11 +27,13 @@
 
         <sun 
           v-for="item in systems" 
-          :key="item.id" 
+          :key="item.id"
+          :SunID="item.id" 
           :xC="center.x" 
           :yC="center.y" 
           :ampC="item.YCoordinate"
-          :degreeC="item.XCoordinate">
+          :degreeC="item.XCoordinate"
+          :sati="item.id">
         </sun>
 
       </v-layer>
@@ -70,7 +74,7 @@ export default {
     .then(response => this.systems = (response.data));
     // .then(response => console.log('home:', response.data));
 
-
+    
   },
 
   methods: {
@@ -86,6 +90,10 @@ export default {
       const y = mousePos.y;
       this.writeMessage("x: " + x + ", y: " + y);
     },
+
+    log(){
+      console.log
+    }
 
   }
 };
