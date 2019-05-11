@@ -42,7 +42,7 @@ class GalaxyController extends Controller
         $system->name = request('name');
         $system->XCoordinate = request('XCoordinate');
         $system->YCoordinate = request('YCoordinate');
-        // $system->Satelites = request('Satelites');
+        $system->Satelites = request('Satelites');
 
         
         $system->save();

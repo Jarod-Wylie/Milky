@@ -1845,9 +1845,10 @@ __webpack_require__.r(__webpack_exports__);
       content: [],
       mouseXY: {},
       star: {
-        name: "",
+        name: "Jukebox",
         XCoordinate: 0,
-        YCoordinate: 0
+        YCoordinate: 0,
+        Satelites: "PLZZZZZ"
       }
     };
   },
@@ -1870,7 +1871,8 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("Atlas", {
         name: self.star.name,
         XCoordinate: self.star.XCoordinate,
-        YCoordinate: self.star.YCoordinate
+        YCoordinate: self.star.YCoordinate,
+        Satelites: '[{"name" : "PlanetA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0}]'
       }).then(function (response) {
         console.log("Post attempted");
       });
@@ -78182,87 +78184,85 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("b-modal", { attrs: { id: "modal-2", title: "Input" } }, [
-                _c("form", { attrs: { method: "POST", action: "/Atlas" } }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.star.name,
-                        expression: "star.name"
-                      }
-                    ],
-                    attrs: {
-                      type: "text",
-                      name: "name",
-                      placeholder: "Add a System"
-                    },
-                    domProps: { value: _vm.star.name },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.star, "name", $event.target.value)
-                      }
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.star.name,
+                      expression: "star.name"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.star.XCoordinate,
-                        expression: "star.XCoordinate"
+                  ],
+                  attrs: {
+                    type: "text",
+                    name: "name",
+                    placeholder: "Add a System"
+                  },
+                  domProps: { value: _vm.star.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
                       }
-                    ],
-                    attrs: {
-                      type: "text",
-                      name: "XCoordinate",
-                      placeholder: "How far away?"
-                    },
-                    domProps: { value: _vm.star.XCoordinate },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.star, "XCoordinate", $event.target.value)
-                      }
+                      _vm.$set(_vm.star, "name", $event.target.value)
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.star.YCoordinate,
-                        expression: "star.YCoordinate"
-                      }
-                    ],
-                    attrs: {
-                      type: "text",
-                      name: "YCoordinate",
-                      placeholder: "Where in is it in it's orbit?"
-                    },
-                    domProps: { value: _vm.star.YCoordinate },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.star, "YCoordinate", $event.target.value)
-                      }
+                  }
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.star.XCoordinate,
+                      expression: "star.XCoordinate"
                     }
-                  }),
-                  _vm._v(" "),
-                  _c("input", {
-                    attrs: { type: "button", value: "+" },
-                    on: { click: _vm.updateAtlas }
-                  })
-                ])
+                  ],
+                  attrs: {
+                    type: "text",
+                    name: "XCoordinate",
+                    placeholder: "How far away?"
+                  },
+                  domProps: { value: _vm.star.XCoordinate },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.star, "XCoordinate", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.star.YCoordinate,
+                      expression: "star.YCoordinate"
+                    }
+                  ],
+                  attrs: {
+                    type: "text",
+                    name: "YCoordinate",
+                    placeholder: "Where in is it in it's orbit?"
+                  },
+                  domProps: { value: _vm.star.YCoordinate },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.star, "YCoordinate", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: { type: "button", value: "+" },
+                  on: { click: _vm.updateAtlas }
+                })
               ]),
               _vm._v(" "),
               _c("button", { on: { click: _vm.log } }, [_vm._v("LOG")]),

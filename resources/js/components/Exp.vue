@@ -28,7 +28,7 @@
 
       <b-modal id="modal-2" title="Input">
 
-          <form method="POST" action="/Atlas">
+
                             <input v-model="star.name" type="text" name="name" placeholder="Add a System">
 
                             <input v-model="star.XCoordinate" type="text" name="XCoordinate" placeholder="How far away?">
@@ -36,11 +36,11 @@
                             <input v-model="star.YCoordinate" type="text" name="YCoordinate" placeholder="Where in is it in it's orbit?">
 
                             <input type="button" value="+" @click="updateAtlas">
-          </form>
+
                         
       </b-modal>
 
-    </b-navbar-item>
+
 
       <button @click="log">LOG</button>
 
@@ -66,9 +66,7 @@ export default {
 
       mouseXY: {},
 
-      star: {name: "", XCoordinate: 0, YCoordinate: 0},
-      
-
+      star: {name: "Jukebox", XCoordinate: 0, YCoordinate: 0, Satelites: "PLZZZZZ"},
 
     }
   },
@@ -101,6 +99,7 @@ export default {
                   name: self.star.name,
                   XCoordinate: self.star.XCoordinate,
                   YCoordinate: self.star.YCoordinate,
+                  Satelites: '[{"name" : "PlanetA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0}]',
                 })
                 .then( function(response){
                   console.log("Post attempted");
