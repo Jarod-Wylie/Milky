@@ -1,29 +1,14 @@
 
 <template>
   <div>
-
-    <h1>Galactic Lab</h1>
-
-
-
     <!-- Stage can report x and y coordinate values of mouse
     position and will render a blue square at position mouse is clicked-->
     <v-stage ref="stage" :config="stageSize" @mousemove="handleMouseMove">
       <v-layer>
 
-        <v-circle @click="log" :config="center" ref="ord"/>
+         <!-- <rocket></rocket> -->
 
-        <v-text
-          ref="text"
-          :config="{
-              x: 10,
-              y: 10,
-              fontFamily: 'Calibri',
-              fontSize: 24,
-              text: text,
-              fill: 'black'
-            }"
-        />
+        <v-circle @click="log" :config="center" ref="ord"/>
 
         <sun 
           v-for="item in systems" 
@@ -50,7 +35,7 @@ export default {
     return {
 
       stageSize: {
-        width: 10000,
+        width: 1500,
         height: 1000
       },
 
@@ -61,9 +46,9 @@ export default {
         fill: "black"
       },
 
-      text: "",
-
       systems: [],
+
+      mousePos: {},
 
     };
   },
@@ -73,8 +58,6 @@ export default {
     .get('/systems')
     .then(response => this.systems = (response.data));
     // .then(response => console.log('home:', response.data));
-
-    
   },
 
   methods: {
@@ -84,11 +67,8 @@ export default {
     },
 
     handleMouseMove(event) {
-      // console.log('systems', this.systems)
-      const mousePos = this.$refs.stage.getStage().getPointerPosition();
-      const x = mousePos.x;
-      const y = mousePos.y;
-      this.writeMessage("x: " + x + ", y: " + y);
+      this.mousePos = this.$refs.stage.getStage().getPointerPosition();
+      this.$emit("reportedStageCoordinates", {x: this.mousePos.x, y: this.mousePos.y});
     },
 
     log(){

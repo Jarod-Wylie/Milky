@@ -19,8 +19,14 @@ Route::get('/Milk', function () {
     return view('Milk');
 });
 
+Route::get('/testing', function () {
+    return view('testing');
+});
 
 
+Route::get('skills', function(){
+    return ['A','B','C'];
+});
 
 Auth::routes();
 
@@ -36,6 +42,8 @@ Route::get('/home', 'GalaxyController@indexForHomeViewing');
 Route::get('/editObj/{id}', 'GalaxyController@edit');
 Route::patch('/editObj/{id}', 'GalaxyController@update');
 Route::delete('/editObj/{id}', 'GalaxyController@destroy');
+
+Route::resource('Atlas', 'GalaxyController');
 
 
 

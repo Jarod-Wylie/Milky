@@ -32,6 +32,16 @@
 
                             <input type="text" name="YCoordinate" placeholder="Where in is it in it's orbit?">
 
+                            <ul>
+
+                            <input type="radio" name="Satelites" value='[{"name" : "PlanetA", "amp":50, "degree":180, "trackX":0, "trackY":0, "moons": 
+                                [
+                                    {"name": "moonA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0 }
+                                ] 
+                                }]'>Planets<br>
+                            <input type="radio" name="Satelites" value='[]'>No Planets<br>
+
+                            </ul>
                         </div>
 
                         <div>
