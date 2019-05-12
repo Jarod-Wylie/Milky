@@ -67,7 +67,9 @@ export default {
     },
 
     handleMouseMove(event) {
+
       this.mousePos = this.$refs.stage.getStage().getPointerPosition();
+
       this.$emit("reportedStageCoordinates", {x: this.mousePos.x, y: this.mousePos.y});
     },
 

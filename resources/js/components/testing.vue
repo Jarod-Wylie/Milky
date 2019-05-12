@@ -1,15 +1,27 @@
 <template>
     <div>
-        hoi testing
-        {{skills}}
+        <b-button @click="change"> Submit</b-button>
+
+   
+
+
     </div>
 </template>
 
 <script>
     export default {
 
+        props:{
+
+            editable: Object,
+
+        },
+
         data(){
             return {
+
+
+                patchPath:"/editObj/",
 
                 message: "",
 
@@ -18,11 +30,20 @@
             }
         },
 
-        created(){
+        mounted(){
 
-            let vm = this;
+            console.log("testing:", this.editable);
+        },
 
-            axios.get("/skills").then(response => vm.skills = response.data);
+        methods:{
+            
+            change(){
+                 
+
+                    this.$emit("change", {edit: this.editable.id});
+
+              
+            }
         }
         
     }
