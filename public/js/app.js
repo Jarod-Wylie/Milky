@@ -1849,6 +1849,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1860,17 +1887,22 @@ __webpack_require__.r(__webpack_exports__);
         XCoordinate: null,
         YCoordinate: null
       },
-      planets: {
+      planet: {
         name: "",
-        XCoordinate: null,
-        YCoordinate: null
+        amp: null,
+        degree: null,
+        trackX: 0,
+        trackY: 0
       },
+      planets: [],
       moons: {
         name: "",
         XCoordinate: null,
         YCoordinate: null
       },
-      patchPath: "/editObj/"
+      patchPath: "/editObj/",
+      selected: 0,
+      view: false
     };
   },
   mounted: function mounted() {
@@ -1896,17 +1928,29 @@ __webpack_require__.r(__webpack_exports__);
         console.log("Post attempted");
       });
     },
+    editSun: function editSun(obj) {
+      var self = this;
+      self.patchPath = "/editObj/";
+      console.log("changing:", obj);
+      self.patchPath += obj.edit;
+      console.log("Post attempted:", self.patchPath);
+      axios.post(self.patchPath, {
+        name: self.star.name,
+        XCoordinate: self.star.XCoordinate,
+        YCoordinate: self.star.YCoordinate,
+        _method: "patch"
+      }).then(function (response) {});
+    },
     addPlanet: function addPlanet(obj) {
       var self = this;
       self.patchPath = "/editObj/";
       console.log("changing:", obj);
-      self.patchPath += obj.edit.toString();
+      self.patchPath += obj.add.toString();
       console.log("Post attempted:", self.patchPath);
+      self.planets.push(self.planet);
+      console.log("planet:", self.planets);
       axios.post(self.patchPath, {
-        Satelites: '[HOI',
-        name: self.star.name,
-        XCoordinate: self.star.XCoordinate,
-        YCoordinate: self.star.YCoordinate,
+        Satelites: '[{asdas}]',
         _method: "patch"
       }).then(function (response) {});
     },
@@ -2510,6 +2554,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     editable: Object
@@ -2528,6 +2574,11 @@ __webpack_require__.r(__webpack_exports__);
     change: function change() {
       this.$emit("change", {
         edit: this.editable.id
+      });
+    },
+    addPlanet: function addPlanet() {
+      this.$emit("change", {
+        add: this.editable.id
       });
     }
   }
@@ -78195,110 +78246,237 @@ var render = function() {
                 "b-modal",
                 { attrs: { id: "modal-1", title: "Galactic Atlas" } },
                 [
+                  _c("h1", [_vm._v("Suns:")]),
+                  _vm._v(" "),
                   _c(
                     "ul",
                     _vm._l(_vm.content, function(sun) {
                       return _c("li", { key: sun.id }, [
                         _vm._v(
-                          "\n            " + _vm._s(sun.name) + "\n        "
+                          "\n            " + _vm._s(sun.name) + "\n            "
                         ),
                         _c(
-                          "div",
-                          [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.star.name,
-                                  expression: "star.name"
-                                }
-                              ],
-                              attrs: {
-                                type: "text",
-                                name: "name",
-                                placeholder: "Add a System"
-                              },
-                              domProps: { value: _vm.star.name },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.star,
-                                    "name",
-                                    $event.target.value
-                                  )
-                                }
+                          "button",
+                          {
+                            on: {
+                              click: function($event) {
+                                _vm.selected = sun.id
                               }
-                            }),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.star.XCoordinate,
-                                  expression: "star.XCoordinate"
-                                }
-                              ],
-                              attrs: {
-                                type: "text",
-                                name: "XCoordinate",
-                                placeholder: "How far away?"
-                              },
-                              domProps: { value: _vm.star.XCoordinate },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
+                            }
+                          },
+                          [_vm._v("Edit Me")]
+                        ),
+                        _vm._v(" "),
+                        sun.id == _vm.selected
+                          ? _c(
+                              "div",
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.planet.name,
+                                      expression: "planet.name"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "text",
+                                    name: "name",
+                                    placeholder: "Name"
+                                  },
+                                  domProps: { value: _vm.planet.name },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.planet,
+                                        "name",
+                                        $event.target.value
+                                      )
+                                    }
                                   }
-                                  _vm.$set(
-                                    _vm.star,
-                                    "XCoordinate",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.star.YCoordinate,
-                                  expression: "star.YCoordinate"
-                                }
-                              ],
-                              attrs: {
-                                type: "text",
-                                name: "YCoordinate",
-                                placeholder: "Where in is it in it's orbit?"
-                              },
-                              domProps: { value: _vm.star.YCoordinate },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
+                                }),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.planet.XCoordinate,
+                                      expression: "planet.XCoordinate"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "text",
+                                    name: "XCoordinate",
+                                    placeholder: "How far away?"
+                                  },
+                                  domProps: { value: _vm.planet.XCoordinate },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.planet,
+                                        "XCoordinate",
+                                        $event.target.value
+                                      )
+                                    }
                                   }
-                                  _vm.$set(
-                                    _vm.star,
-                                    "YCoordinate",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("testing", {
-                              attrs: { editable: sun },
-                              on: { change: _vm.addPlanet }
-                            })
-                          ],
-                          1
-                        )
+                                }),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.planet.YCoordinate,
+                                      expression: "planet.YCoordinate"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "text",
+                                    name: "YCoordinate",
+                                    placeholder: "Where in is it in it's orbit?"
+                                  },
+                                  domProps: { value: _vm.planet.YCoordinate },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.planet,
+                                        "YCoordinate",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    on: {
+                                      click: function($event) {
+                                        _vm.view = !_vm.view
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Add Planet")]
+                                ),
+                                _vm._v(" "),
+                                _vm.view
+                                  ? _c("div", [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.star.name,
+                                            expression: "star.name"
+                                          }
+                                        ],
+                                        attrs: {
+                                          type: "text",
+                                          name: "name",
+                                          placeholder: "Name"
+                                        },
+                                        domProps: { value: _vm.star.name },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.star,
+                                              "name",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.star.XCoordinate,
+                                            expression: "star.XCoordinate"
+                                          }
+                                        ],
+                                        attrs: {
+                                          type: "text",
+                                          name: "XCoordinate",
+                                          placeholder: "How far away?"
+                                        },
+                                        domProps: {
+                                          value: _vm.star.XCoordinate
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.star,
+                                              "XCoordinate",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.star.YCoordinate,
+                                            expression: "star.YCoordinate"
+                                          }
+                                        ],
+                                        attrs: {
+                                          type: "text",
+                                          name: "YCoordinate",
+                                          placeholder:
+                                            "Where in is it in it's orbit?"
+                                        },
+                                        domProps: {
+                                          value: _vm.star.YCoordinate
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.star,
+                                              "YCoordinate",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c("testing", {
+                                  attrs: { editable: sun },
+                                  on: {
+                                    change: _vm.editSun,
+                                    addPlanet: _vm.addPlanet
+                                  }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e()
                       ])
                     }),
                     0
@@ -78406,7 +78584,7 @@ var render = function() {
               _vm._v(" "),
               _c("p", { staticClass: "navbar-text" }, [
                 _vm._v(
-                  "X:" +
+                  "-------------X:" +
                     _vm._s(_vm.mouseXY.x) +
                     "----Y:" +
                     _vm._s(_vm.mouseXY.y)
@@ -78827,7 +79005,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    [_c("b-button", { on: { click: _vm.change } }, [_vm._v(" Submit")])],
+    [
+      _c("b-button", { on: { click: _vm.change } }, [_vm._v(" Submit")]),
+      _vm._v(" "),
+      _c("button", { on: { click: _vm.addPlanet } }, [_vm._v(" Add")])
+    ],
     1
   )
 }

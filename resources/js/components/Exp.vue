@@ -7,11 +7,32 @@
         <b-button v-b-modal.modal-1>Atlas</b-button>
 
         <b-modal id="modal-1" title="Galactic Atlas">
+
+          <h1>Suns:</h1>
           <ul>
             <li v-for="sun in content" :key="sun.id">
               {{sun.name}}
-          <div>
-              <input v-model="star.name" type="text" name="name" placeholder="Add a System">
+              <button @click="selected = sun.id">Edit Me</button>
+          <div v-if="sun.id == selected">
+              
+              <input v-model="planet.name" type="text" name="name" placeholder="Name">
+
+              <input
+                v-model="planet.XCoordinate"
+                type="text"
+                name="XCoordinate"
+                placeholder="How far away?"
+              >
+
+              <input
+                v-model="planet.YCoordinate"
+                type="text"
+                name="YCoordinate"
+                placeholder="Where in is it in it's orbit?"
+              >
+              <button @click="view = !view">Add Planet</button>
+                <div v-if="view">
+                  <input v-model="star.name" type="text" name="name" placeholder="Name">
 
               <input
                 v-model="star.XCoordinate"
@@ -24,9 +45,15 @@
                 v-model="star.YCoordinate"
                 type="text"
                 name="YCoordinate"
-                placeholder="Where in is it in it's orbit?"
-              >
-              <testing :editable="sun" v-on:change="addPlanet" ></testing>
+                placeholder="Where in is it in it's orbit?">
+
+            </div>
+                  
+
+              <testing :editable="sun" 
+              v-on:change="editSun"
+              v-on:addPlanet="addPlanet"
+              ></testing>
           </div>
 
             </li>
@@ -57,7 +84,7 @@
 
         <button @click="log">LOG</button>
 
-        <p class="navbar-text">X:{{ mouseXY.x}}----Y:{{ mouseXY.y }}</p>
+        <p class="navbar-text">-------------X:{{ mouseXY.x}}----Y:{{ mouseXY.y }}</p>
       </b-navbar>
     </div>
 
@@ -77,11 +104,18 @@ export default {
 
       star: { name: "", XCoordinate: null, YCoordinate: null },
 
-      planets: { name: "", XCoordinate: null, YCoordinate: null },
+      planet: { name: "", amp: null, degree: null, trackX: 0, trackY: 0 },
+      planets:[],
 
       moons: { name: "", XCoordinate: null, YCoordinate: null },
 
-      patchPath: "/editObj/"
+      patchPath: "/editObj/",
+
+      selected: 0,
+
+      view: false,
+
+
 
 
 
@@ -91,6 +125,8 @@ export default {
 
   mounted() {
     axios.get("/systems").then(response => (this.content = response.data));
+
+
   },
 
   methods: {
@@ -114,21 +150,41 @@ export default {
         });
     },
 
+    editSun(obj) {
+      var self = this;
+      self.patchPath = "/editObj/";
+
+      console.log("changing:", obj);
+
+      self.patchPath += obj.edit;
+      console.log("Post attempted:", self.patchPath);
+
+      axios
+        .post(self.patchPath, {
+          name: self.star.name,
+          XCoordinate: self.star.XCoordinate,
+          YCoordinate: self.star.YCoordinate,
+          _method: "patch",
+        })
+        .then(function(response) {});
+    },
+
     addPlanet(obj) {
       var self = this;
       self.patchPath = "/editObj/";
 
       console.log("changing:", obj);
 
-      self.patchPath += obj.edit.toString();
+      self.patchPath += obj.add.toString();
       console.log("Post attempted:", self.patchPath);
+
+      self.planets.push(self.planet);
+
+      console.log("planet:", self.planets);
 
       axios
         .post(self.patchPath, {
-          Satelites:'[HOI',
-          name: self.star.name,
-          XCoordinate: self.star.XCoordinate,
-          YCoordinate: self.star.YCoordinate,
+          Satelites:'[{asdas}]',
           _method: "patch",
         })
         .then(function(response) {});

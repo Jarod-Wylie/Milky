@@ -2,6 +2,8 @@
     <div>
         <b-button @click="change"> Submit</b-button>
 
+        <button @click="addPlanet"> Add</button>
+
    
 
 
@@ -41,6 +43,13 @@
                  
 
                     this.$emit("change", {edit: this.editable.id});
+            },
+
+              
+            addPlanet(){
+                 
+
+                    this.$emit("change", {add: this.editable.id});
 
               
             }

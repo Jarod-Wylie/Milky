@@ -59,8 +59,11 @@ class GalaxyController extends Controller
     {
         $systems = System::find($id);
         $systems->name = request('name');
+        $systems->XCoordinate = request('XCoordinate');
+        $systems->Satelites = request('Satelites');
+        $systems->YCoordinate = request('YCoordinate');
         $systems->save();
-        return redirect('/home');
+        return redirect('home');
     }
     public function destroy($id)
     {
