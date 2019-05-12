@@ -70,7 +70,7 @@ export default {
 
       this.mousePos = this.$refs.stage.getStage().getPointerPosition();
 
-      this.$emit("reportedStageCoordinates", {x: this.mousePos.x, y: this.mousePos.y});
+      // this.$emit("reportedStageCoordinates", {x: this.mousePos.x, y: this.mousePos.y});
     },
 
     log(){

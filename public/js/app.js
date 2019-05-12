@@ -1876,6 +1876,64 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1892,17 +1950,24 @@ __webpack_require__.r(__webpack_exports__);
         amp: null,
         degree: null,
         trackX: 0,
-        trackY: 0
+        trackY: 0,
+        moons: []
       },
       planets: [],
       moons: {
         name: "",
-        XCoordinate: null,
-        YCoordinate: null
+        amp: null,
+        degree: null,
+        trackX: 0,
+        trackY: 0
       },
+      moon: [],
       patchPath: "/editObj/",
       selected: 0,
-      view: false
+      //  rendering conditions
+      view: false,
+      showSunOps: false,
+      showPlanetOps: false
     };
   },
   mounted: function mounted() {
@@ -1918,12 +1983,15 @@ __webpack_require__.r(__webpack_exports__);
     },
     // Creates New Sun and System strawman
     updateAtlas: function updateAtlas() {
-      var self = this;
+      var self = this; // Neccessary for converting the text input of html fields to number.
+
+      self.star.XCoordinate = parseInt(self.star.XCoordinate);
+      self.star.YCoordinate = parseInt(self.star.YCoordinate);
       axios.post("Atlas", {
         name: self.star.name,
         XCoordinate: self.star.XCoordinate,
         YCoordinate: self.star.YCoordinate,
-        Satelites: '[{"name" : "BLUUUU", "amp":50, "degree":180, "trackX": 0 , "trackY": 0}]'
+        Satelites: '[]'
       }).then(function (response) {
         console.log("Post attempted");
       });
@@ -1931,26 +1999,44 @@ __webpack_require__.r(__webpack_exports__);
     editSun: function editSun(obj) {
       var self = this;
       self.patchPath = "/editObj/";
-      console.log("changing:", obj);
+      console.log("changing:", obj.satelites);
       self.patchPath += obj.edit;
       console.log("Post attempted:", self.patchPath);
       axios.post(self.patchPath, {
         name: self.star.name,
         XCoordinate: self.star.XCoordinate,
         YCoordinate: self.star.YCoordinate,
+        Satelites: obj.satelites,
         _method: "patch"
       }).then(function (response) {});
     },
     addPlanet: function addPlanet(obj) {
       var self = this;
+      self.planets = obj.satelites;
       self.patchPath = "/editObj/";
-      console.log("changing:", obj);
+      console.log("changing:", self.satelites);
       self.patchPath += obj.add.toString();
-      console.log("Post attempted:", self.patchPath);
+      console.log("Post attempted:", self.patchPath); //push to an array to give to the Satelites column
+
+      self.planet.amp = parseInt(self.planet.amp);
+      self.planet.degree = parseInt(self.planet.degree);
       self.planets.push(self.planet);
-      console.log("planet:", self.planets);
+      console.log("planet:", self.planets); // self.planets[0].moons = "hoi";
+
       axios.post(self.patchPath, {
-        Satelites: '[{asdas}]',
+        name: obj.name,
+        XCoordinate: obj.x,
+        YCoordinate: obj.y,
+        Satelites: JSON.stringify(self.planets),
+        _method: "patch"
+      }).then(function (response) {});
+    },
+    addMoon: function addMoon(obj) {
+      axios.post(self.patchPath, {
+        name: obj.name,
+        XCoordinate: obj.x,
+        YCoordinate: obj.y,
+        Satelites: JSON.stringify(self.planets),
         _method: "patch"
       }).then(function (response) {});
     },
@@ -2031,14 +2117,127 @@ var height = window.innerHeight;
       this.text = message;
     },
     handleMouseMove: function handleMouseMove(event) {
-      this.mousePos = this.$refs.stage.getStage().getPointerPosition();
-      this.$emit("reportedStageCoordinates", {
-        x: this.mousePos.x,
-        y: this.mousePos.y
-      });
+      this.mousePos = this.$refs.stage.getStage().getPointerPosition(); // this.$emit("reportedStageCoordinates", {x: this.mousePos.x, y: this.mousePos.y});
     },
     log: function log() {
       console.log;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/addMoons.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/addMoons.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    editable: Object
+  },
+  data: function data() {
+    return {};
+  },
+  mounted: function mounted() {
+    console.log("testing:", this.editable);
+  },
+  methods: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/addPlanets.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/addPlanets.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    editable: Object
+  },
+  data: function data() {
+    return {};
+  },
+  mounted: function mounted() {
+    console.log("testing:", this.editable);
+  },
+  methods: {
+    addPlanet: function addPlanet() {
+      this.$emit("addPlanet", {
+        add: this.editable.id,
+        name: this.editable.name,
+        x: this.editable.XCoordinate,
+        y: this.editable.YCoordinate,
+        satelites: JSON.parse(this.editable.Satelites)
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/editSuns.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/editSuns.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    editable: Object
+  },
+  data: function data() {
+    return {};
+  },
+  mounted: function mounted() {
+    console.log("testing:", this.editable);
+  },
+  methods: {
+    edit: function edit() {
+      this.$emit("edit", {
+        edit: this.editable.id,
+        satelites: this.editable.Satelites
+      });
     }
   }
 });
@@ -2562,9 +2761,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      patchPath: "/editObj/",
-      message: "",
-      skills: []
+      patchPath: "/editObj/"
     };
   },
   mounted: function mounted() {
@@ -2573,12 +2770,17 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     change: function change() {
       this.$emit("change", {
-        edit: this.editable.id
+        edit: this.editable.id,
+        satelites: this.editable.Satelites
       });
     },
     addPlanet: function addPlanet() {
-      this.$emit("change", {
-        add: this.editable.id
+      this.$emit("addPlanet", {
+        add: this.editable.id,
+        name: this.editable.name,
+        x: this.editable.XCoordinate,
+        y: this.editable.YCoordinate,
+        satelites: JSON.parse(this.editable.Satelites)
       });
     }
   }
@@ -78234,17 +78436,284 @@ var render = function() {
                   directives: [
                     {
                       name: "b-modal",
-                      rawName: "v-b-modal.modal-1",
-                      modifiers: { "modal-1": true }
+                      rawName: "v-b-modal.modal-Suns",
+                      modifiers: { "modal-Suns": true }
                     }
                   ]
                 },
-                [_vm._v("Atlas")]
+                [_vm._v("Add Suns/Sytems Origin")]
+              ),
+              _vm._v(" "),
+              _c(
+                "b-button",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.showSunOps = !_vm.showSunOps
+                    }
+                  }
+                },
+                [_vm._v("Edit Systems")]
+              ),
+              _vm._v(" "),
+              _vm.showSunOps
+                ? _c(
+                    "div",
+                    [
+                      _c(
+                        "b-button",
+                        {
+                          directives: [
+                            {
+                              name: "b-modal",
+                              rawName: "v-b-modal.modal-editSuns",
+                              modifiers: { "modal-editSuns": true }
+                            }
+                          ]
+                        },
+                        [_vm._v("Edit Origins/Suns")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-button",
+                        {
+                          directives: [
+                            {
+                              name: "b-modal",
+                              rawName: "v-b-modal.modal-Planets",
+                              modifiers: { "modal-Planets": true }
+                            }
+                          ]
+                        },
+                        [_vm._v("Add Planets To Systems")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-button",
+                        {
+                          directives: [
+                            {
+                              name: "b-modal",
+                              rawName: "v-b-modal.modal-Moons",
+                              modifiers: { "modal-Moons": true }
+                            }
+                          ]
+                        },
+                        [_vm._v("Add Moons To Planets")]
+                      )
+                    ],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "b-modal",
+                { attrs: { id: "modal-editSuns", title: "Systems Registry" } },
+                [
+                  _c(
+                    "ul",
+                    _vm._l(_vm.content, function(sun) {
+                      return _c(
+                        "li",
+                        { key: sun.id },
+                        [
+                          _c(
+                            "button",
+                            {
+                              on: {
+                                click: function($event) {
+                                  _vm.selected = sun.id
+                                }
+                              }
+                            },
+                            [_vm._v(_vm._s(sun.name))]
+                          ),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.star.name,
+                                expression: "star.name"
+                              }
+                            ],
+                            attrs: {
+                              type: "text",
+                              name: "name",
+                              placeholder: "Add a System"
+                            },
+                            domProps: { value: _vm.star.name },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.star, "name", $event.target.value)
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.star.XCoordinate,
+                                expression: "star.XCoordinate"
+                              }
+                            ],
+                            attrs: {
+                              type: "number",
+                              name: "XCoordinate",
+                              placeholder: "How far away?"
+                            },
+                            domProps: { value: _vm.star.XCoordinate },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.star,
+                                  "XCoordinate",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.star.YCoordinate,
+                                expression: "star.YCoordinate"
+                              }
+                            ],
+                            attrs: {
+                              type: "number",
+                              name: "YCoordinate",
+                              placeholder: "Where in is it in it's orbit?"
+                            },
+                            domProps: { value: _vm.star.YCoordinate },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.star,
+                                  "YCoordinate",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("editSuns", {
+                            attrs: { editable: sun },
+                            on: { edit: _vm.editSun }
+                          })
+                        ],
+                        1
+                      )
+                    }),
+                    0
+                  )
+                ]
               ),
               _vm._v(" "),
               _c(
                 "b-modal",
-                { attrs: { id: "modal-1", title: "Galactic Atlas" } },
+                { attrs: { id: "modal-Suns", title: "Systems Registry" } },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.star.name,
+                        expression: "star.name"
+                      }
+                    ],
+                    attrs: {
+                      type: "text",
+                      name: "name",
+                      placeholder: "Add a System"
+                    },
+                    domProps: { value: _vm.star.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.star, "name", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.star.XCoordinate,
+                        expression: "star.XCoordinate"
+                      }
+                    ],
+                    attrs: {
+                      type: "number",
+                      name: "XCoordinate",
+                      placeholder: "How far away?"
+                    },
+                    domProps: { value: _vm.star.XCoordinate },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.star, "XCoordinate", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.star.YCoordinate,
+                        expression: "star.YCoordinate"
+                      }
+                    ],
+                    attrs: {
+                      type: "number",
+                      name: "YCoordinate",
+                      placeholder: "Where in is it in it's orbit?"
+                    },
+                    domProps: { value: _vm.star.YCoordinate },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.star, "YCoordinate", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("input", {
+                    attrs: { type: "button", value: "+" },
+                    on: { click: _vm.updateAtlas }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "b-modal",
+                { attrs: { id: "modal-Planets", title: "Systems Registry" } },
                 [
                   _c("h1", [_vm._v("Suns:")]),
                   _vm._v(" "),
@@ -78252,9 +78721,6 @@ var render = function() {
                     "ul",
                     _vm._l(_vm.content, function(sun) {
                       return _c("li", { key: sun.id }, [
-                        _vm._v(
-                          "\n            " + _vm._s(sun.name) + "\n            "
-                        ),
                         _c(
                           "button",
                           {
@@ -78264,7 +78730,7 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Edit Me")]
+                          [_vm._v(_vm._s(sun.name))]
                         ),
                         _vm._v(" "),
                         sun.id == _vm.selected
@@ -78283,7 +78749,7 @@ var render = function() {
                                   attrs: {
                                     type: "text",
                                     name: "name",
-                                    placeholder: "Name"
+                                    placeholder: "Planet Name"
                                   },
                                   domProps: { value: _vm.planet.name },
                                   on: {
@@ -78305,16 +78771,16 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.planet.XCoordinate,
-                                      expression: "planet.XCoordinate"
+                                      value: _vm.planet.amp,
+                                      expression: "planet.amp"
                                     }
                                   ],
                                   attrs: {
-                                    type: "text",
-                                    name: "XCoordinate",
+                                    type: "number",
+                                    name: "amp",
                                     placeholder: "How far away?"
                                   },
-                                  domProps: { value: _vm.planet.XCoordinate },
+                                  domProps: { value: _vm.planet.amp },
                                   on: {
                                     input: function($event) {
                                       if ($event.target.composing) {
@@ -78322,7 +78788,7 @@ var render = function() {
                                       }
                                       _vm.$set(
                                         _vm.planet,
-                                        "XCoordinate",
+                                        "amp",
                                         $event.target.value
                                       )
                                     }
@@ -78334,16 +78800,16 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.planet.YCoordinate,
-                                      expression: "planet.YCoordinate"
+                                      value: _vm.planet.degree,
+                                      expression: "planet.degree"
                                     }
                                   ],
                                   attrs: {
-                                    type: "text",
-                                    name: "YCoordinate",
+                                    type: "number",
+                                    name: "degree",
                                     placeholder: "Where in is it in it's orbit?"
                                   },
-                                  domProps: { value: _vm.planet.YCoordinate },
+                                  domProps: { value: _vm.planet.degree },
                                   on: {
                                     input: function($event) {
                                       if ($event.target.composing) {
@@ -78351,127 +78817,16 @@ var render = function() {
                                       }
                                       _vm.$set(
                                         _vm.planet,
-                                        "YCoordinate",
+                                        "degree",
                                         $event.target.value
                                       )
                                     }
                                   }
                                 }),
                                 _vm._v(" "),
-                                _c(
-                                  "button",
-                                  {
-                                    on: {
-                                      click: function($event) {
-                                        _vm.view = !_vm.view
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("Add Planet")]
-                                ),
-                                _vm._v(" "),
-                                _vm.view
-                                  ? _c("div", [
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.star.name,
-                                            expression: "star.name"
-                                          }
-                                        ],
-                                        attrs: {
-                                          type: "text",
-                                          name: "name",
-                                          placeholder: "Name"
-                                        },
-                                        domProps: { value: _vm.star.name },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.star,
-                                              "name",
-                                              $event.target.value
-                                            )
-                                          }
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.star.XCoordinate,
-                                            expression: "star.XCoordinate"
-                                          }
-                                        ],
-                                        attrs: {
-                                          type: "text",
-                                          name: "XCoordinate",
-                                          placeholder: "How far away?"
-                                        },
-                                        domProps: {
-                                          value: _vm.star.XCoordinate
-                                        },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.star,
-                                              "XCoordinate",
-                                              $event.target.value
-                                            )
-                                          }
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.star.YCoordinate,
-                                            expression: "star.YCoordinate"
-                                          }
-                                        ],
-                                        attrs: {
-                                          type: "text",
-                                          name: "YCoordinate",
-                                          placeholder:
-                                            "Where in is it in it's orbit?"
-                                        },
-                                        domProps: {
-                                          value: _vm.star.YCoordinate
-                                        },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.star,
-                                              "YCoordinate",
-                                              $event.target.value
-                                            )
-                                          }
-                                        }
-                                      })
-                                    ])
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _c("testing", {
+                                _c("addPlanets", {
                                   attrs: { editable: sun },
-                                  on: {
-                                    change: _vm.editSun,
-                                    addPlanet: _vm.addPlanet
-                                  }
+                                  on: { addPlanet: _vm.addPlanet }
                                 })
                               ],
                               1
@@ -78485,111 +78840,132 @@ var render = function() {
               ),
               _vm._v(" "),
               _c(
-                "b-button",
-                {
-                  directives: [
-                    {
-                      name: "b-modal",
-                      rawName: "v-b-modal.modal-2",
-                      modifiers: { "modal-2": true }
-                    }
-                  ]
-                },
-                [_vm._v("Edit Galaxy")]
-              ),
-              _vm._v(" "),
-              _c("b-modal", { attrs: { id: "modal-2", title: "Input" } }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.star.name,
-                      expression: "star.name"
-                    }
-                  ],
-                  attrs: {
-                    type: "text",
-                    name: "name",
-                    placeholder: "Add a System"
-                  },
-                  domProps: { value: _vm.star.name },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.star, "name", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.star.XCoordinate,
-                      expression: "star.XCoordinate"
-                    }
-                  ],
-                  attrs: {
-                    type: "text",
-                    name: "XCoordinate",
-                    placeholder: "How far away?"
-                  },
-                  domProps: { value: _vm.star.XCoordinate },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.star, "XCoordinate", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.star.YCoordinate,
-                      expression: "star.YCoordinate"
-                    }
-                  ],
-                  attrs: {
-                    type: "text",
-                    name: "YCoordinate",
-                    placeholder: "Where in is it in it's orbit?"
-                  },
-                  domProps: { value: _vm.star.YCoordinate },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.star, "YCoordinate", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("input", {
-                  attrs: { type: "button", value: "+" },
-                  on: { click: _vm.updateAtlas }
-                })
-              ]),
-              _vm._v(" "),
-              _c("button", { on: { click: _vm.log } }, [_vm._v("LOG")]),
-              _vm._v(" "),
-              _c("p", { staticClass: "navbar-text" }, [
-                _vm._v(
-                  "-------------X:" +
-                    _vm._s(_vm.mouseXY.x) +
-                    "----Y:" +
-                    _vm._s(_vm.mouseXY.y)
-                )
-              ])
+                "b-modal",
+                { attrs: { id: "modal-Moons", title: "Moons Registry" } },
+                [
+                  _c("h1", [_vm._v("Planets:")]),
+                  _vm._v(" "),
+                  _c(
+                    "ul",
+                    _vm._l(_vm.content, function(planet) {
+                      return _c("li", { key: planet.name }, [
+                        _c(
+                          "button",
+                          {
+                            on: {
+                              click: function($event) {
+                                _vm.selected = planet.id
+                              }
+                            }
+                          },
+                          [_vm._v(_vm._s(planet.name))]
+                        ),
+                        _vm._v(" "),
+                        _vm.sun.id == _vm.selected
+                          ? _c(
+                              "div",
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.moon.name,
+                                      expression: "moon.name"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "text",
+                                    name: "name",
+                                    placeholder: "moon Name"
+                                  },
+                                  domProps: { value: _vm.moon.name },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.moon,
+                                        "name",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.moon.amp,
+                                      expression: "moon.amp"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "number",
+                                    name: "amp",
+                                    placeholder: "How far away?"
+                                  },
+                                  domProps: { value: _vm.moon.amp },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.moon,
+                                        "amp",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                }),
+                                _vm._v("moon\n            "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.moon.degree,
+                                      expression: "moon.degree"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "number",
+                                    name: "degree",
+                                    placeholder: "Where in is it in it's orbit?"
+                                  },
+                                  domProps: { value: _vm.moon.degree },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.moon,
+                                        "degree",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("addPlanets", {
+                                  attrs: { editable: _vm.sun },
+                                  on: { addPlanet: _vm.addPlanet }
+                                })
+                              ],
+                              1
+                            )
+                          : _vm._e()
+                      ])
+                    }),
+                    0
+                  )
+                ]
+              )
             ],
             1
           )
@@ -78664,6 +79040,90 @@ var render = function() {
         1
       )
     ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/addMoons.vue?vue&type=template&id=3412cb88&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/addMoons.vue?vue&type=template&id=3412cb88&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("button", { on: { click: _vm.addMoon } }, [_vm._v(" Add Moon")])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/addPlanets.vue?vue&type=template&id=c94324f6&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/addPlanets.vue?vue&type=template&id=c94324f6&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "button",
+      { attrs: { "data-dismiss": "modal" }, on: { click: _vm.addPlanet } },
+      [_vm._v(" Add")]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/editSuns.vue?vue&type=template&id=415dc99c&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/editSuns.vue?vue&type=template&id=415dc99c&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [_c("b-button", { on: { click: _vm.edit } }, [_vm._v("Submit Changes")])],
     1
   )
 }
@@ -91205,9 +91665,13 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('example-component', __webp
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Exp', __webpack_require__(/*! ./components/Exp.vue */ "./resources/js/components/Exp.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('rocket', __webpack_require__(/*! ./components/rocket.vue */ "./resources/js/components/rocket.vue")["default"]); //Component used for testing how reactivity with vue can submit form data.
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('testing', __webpack_require__(/*! ./components/testing.vue */ "./resources/js/components/testing.vue")["default"]); // A proto type of Galactic Center
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('testing', __webpack_require__(/*! ./components/testing.vue */ "./resources/js/components/testing.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('editSuns', __webpack_require__(/*! ./components/editSuns.vue */ "./resources/js/components/editSuns.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('addPlanets', __webpack_require__(/*! ./components/addPlanets.vue */ "./resources/js/components/addPlanets.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('addMoons', __webpack_require__(/*! ./components/addMoons.vue */ "./resources/js/components/addMoons.vue")["default"]); // A proto type of Galactic Center
 // Vue.component('superMBH', require('./components/superMBH.vue').default);
 //
+// Each components lineage GalacticCenter->sun->planet->moon
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('GalacticCenter', __webpack_require__(/*! ./components/GalacticCenter.vue */ "./resources/js/components/GalacticCenter.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('sun', __webpack_require__(/*! ./components/sun.vue */ "./resources/js/components/sun.vue")["default"]);
@@ -91489,6 +91953,213 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GalacticCenter_vue_vue_type_template_id_303a938c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GalacticCenter_vue_vue_type_template_id_303a938c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/addMoons.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/components/addMoons.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _addMoons_vue_vue_type_template_id_3412cb88_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./addMoons.vue?vue&type=template&id=3412cb88&scoped=true& */ "./resources/js/components/addMoons.vue?vue&type=template&id=3412cb88&scoped=true&");
+/* harmony import */ var _addMoons_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./addMoons.vue?vue&type=script&lang=js& */ "./resources/js/components/addMoons.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _addMoons_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _addMoons_vue_vue_type_template_id_3412cb88_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _addMoons_vue_vue_type_template_id_3412cb88_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "3412cb88",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/addMoons.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/addMoons.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/addMoons.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_addMoons_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./addMoons.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/addMoons.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_addMoons_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/addMoons.vue?vue&type=template&id=3412cb88&scoped=true&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/addMoons.vue?vue&type=template&id=3412cb88&scoped=true& ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_addMoons_vue_vue_type_template_id_3412cb88_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./addMoons.vue?vue&type=template&id=3412cb88&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/addMoons.vue?vue&type=template&id=3412cb88&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_addMoons_vue_vue_type_template_id_3412cb88_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_addMoons_vue_vue_type_template_id_3412cb88_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/addPlanets.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/addPlanets.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _addPlanets_vue_vue_type_template_id_c94324f6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./addPlanets.vue?vue&type=template&id=c94324f6&scoped=true& */ "./resources/js/components/addPlanets.vue?vue&type=template&id=c94324f6&scoped=true&");
+/* harmony import */ var _addPlanets_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./addPlanets.vue?vue&type=script&lang=js& */ "./resources/js/components/addPlanets.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _addPlanets_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _addPlanets_vue_vue_type_template_id_c94324f6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _addPlanets_vue_vue_type_template_id_c94324f6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "c94324f6",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/addPlanets.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/addPlanets.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/addPlanets.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_addPlanets_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./addPlanets.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/addPlanets.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_addPlanets_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/addPlanets.vue?vue&type=template&id=c94324f6&scoped=true&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/addPlanets.vue?vue&type=template&id=c94324f6&scoped=true& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_addPlanets_vue_vue_type_template_id_c94324f6_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./addPlanets.vue?vue&type=template&id=c94324f6&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/addPlanets.vue?vue&type=template&id=c94324f6&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_addPlanets_vue_vue_type_template_id_c94324f6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_addPlanets_vue_vue_type_template_id_c94324f6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/editSuns.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/components/editSuns.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _editSuns_vue_vue_type_template_id_415dc99c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./editSuns.vue?vue&type=template&id=415dc99c&scoped=true& */ "./resources/js/components/editSuns.vue?vue&type=template&id=415dc99c&scoped=true&");
+/* harmony import */ var _editSuns_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editSuns.vue?vue&type=script&lang=js& */ "./resources/js/components/editSuns.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _editSuns_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _editSuns_vue_vue_type_template_id_415dc99c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _editSuns_vue_vue_type_template_id_415dc99c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "415dc99c",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/editSuns.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/editSuns.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/editSuns.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_editSuns_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./editSuns.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/editSuns.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_editSuns_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/editSuns.vue?vue&type=template&id=415dc99c&scoped=true&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/editSuns.vue?vue&type=template&id=415dc99c&scoped=true& ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editSuns_vue_vue_type_template_id_415dc99c_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./editSuns.vue?vue&type=template&id=415dc99c&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/editSuns.vue?vue&type=template&id=415dc99c&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editSuns_vue_vue_type_template_id_415dc99c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editSuns_vue_vue_type_template_id_415dc99c_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
