@@ -37,14 +37,13 @@ class GalaxyController extends Controller
             'name' => 'required',
             'XCoordinate' => 'required',
             'YCoordinate' => 'required',
+
         ]);
         $system->name = request('name');
         $system->XCoordinate = request('XCoordinate');
         $system->YCoordinate = request('YCoordinate');
-        $system->Satelites = '[{"name" : "PlanetA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0 ,"moons": 
-            [
-                {"name": "moonA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0 }
-            ] },{"name" : "PlanetB", "amp":110, "degree":180, "trackX": 0 , "trackY": 0}]';
+        $system->Satelites = request('Satelites');
+
         
         $system->save();
 
@@ -60,8 +59,11 @@ class GalaxyController extends Controller
     {
         $systems = System::find($id);
         $systems->name = request('name');
+        $systems->XCoordinate = request('XCoordinate');
+        $systems->Satelites = request('Satelites');
+        $systems->YCoordinate = request('YCoordinate');
         $systems->save();
-        return redirect('/home');
+        return redirect('home');
     }
     public function destroy($id)
     {

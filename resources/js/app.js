@@ -4,10 +4,17 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+import Vue from 'vue'
+import BootstrapVue from 'bootstrap-vue'
+
+Vue.use(BootstrapVue)
 
 require('./bootstrap');
 
-import Vue from 'vue';
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+
 import VueKonva from 'vue-konva'
 
 Vue.use(VueKonva)
@@ -30,6 +37,13 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 Vue.component('Exp', require('./components/Exp.vue').default);
 
+Vue.component('rocket', require('./components/rocket.vue').default);
+
+
+//Component used for testing how reactivity with vue can submit form data.
+Vue.component('testing', require('./components/testing.vue').default);
+
+
 
 // A proto type of Galactic Center
 // Vue.component('superMBH', require('./components/superMBH.vue').default);
@@ -51,5 +65,8 @@ Vue.component('stage', require('./components/stage.vue').default);
  */
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    data:{
+        skills:[]
+    }
 });
