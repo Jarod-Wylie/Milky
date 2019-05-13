@@ -13,6 +13,13 @@ for hosting the original ordinate for spawning stars.-->
   <div>
 
 
+    <!-- <div class="content">
+              
+                    Milky
+                
+                </div> -->
+
+
       
 <!--       
       <h1 
@@ -78,8 +85,8 @@ export default {
       origin: { x: 650, y: 450 },
 
       stageSize: {
-        width: 1000,
-        height: 1000
+        width: 10,
+        height: 10
       },
       flip: true,
 

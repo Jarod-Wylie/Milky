@@ -10,22 +10,16 @@
 
         <v-circle @click="log" :config="center" ref="ord"/>
 
-        <b-popover
-          :target="`popover-1`"
-          title="Popover!"
-          triggers="hover focus"
-        ></b-popover>
-
         <sun
-          :id="`popover-1`"
           v-for="item in systems" 
           :key="item.id"
-          :SunID="item.id" 
+          :SunID="item.name" 
           :xC="center.x" 
           :yC="center.y" 
           :ampC="item.YCoordinate"
           :degreeC="item.XCoordinate"
-          :sati="item.id">
+          :sati="item.id"
+          :planetObj="item.Satelites">
         </sun>
 
       </v-layer>
@@ -81,7 +75,7 @@ export default {
     },
 
     log(){
-      console.log
+      console.log(this.systems);
     }
 
   }

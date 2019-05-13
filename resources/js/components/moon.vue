@@ -1,10 +1,9 @@
 <template>
   <div>
-<a href="#" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">
+
     <v-circle
       ref="orb"
-      data-toggle="popover" title="Popover Header" data-content="Some content inside the popover"
-
+      @click="satelites = true"
       :config="{
             x:xC,
             y:yC,
@@ -12,7 +11,7 @@
             fill: 'blue',
             trackX: kX,
             trackY: kY,
-        }"/></a>
+        }"/>
 
   </div>
 </template>
@@ -43,7 +42,7 @@ export default {
   mounted() {
     // console.log("Mounting Moon");
     const vm = this;
-    const amplitude = 4000;
+    const amplitude = 4500;
     const period = 1000;
     var radians = 1;
 

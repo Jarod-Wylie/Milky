@@ -2,12 +2,8 @@
   <div>
     <div>
       <b-navbar toggleable="lg" type="dark" variant="Dark" fixed="bottom">
-        <b-popover
-          :target="`popover-1`"
-          title="Popover!"
-          triggers="hover focus"
-        ></b-popover>
-        <b-navbar-brand :id="`popover-1`">Milky</b-navbar-brand>
+
+        <b-navbar-brand>Milky</b-navbar-brand>
 
         <b-button v-b-modal.modal-Suns>Add Suns/Sytems Origin</b-button>
 
@@ -23,6 +19,7 @@
         <b-modal id="modal-editSuns" title="Systems Registry">
           <ul>
             <li v-for="sun in content" :key="sun.id">
+              <!-- button for sun -->
               <button @click="selected = sun.id">{{sun.name}}</button>
               <input v-model="star.name" type="text" name="name" placeholder="Add a System">
               <input
@@ -31,15 +28,16 @@
                 name="XCoordinate"
                 placeholder="How far away?"
               >
-
               <input
                 v-model="star.YCoordinate"
                 type="number"
                 name="YCoordinate"
-                placeholder="Where in is it in it's orbit?"
+                placeholder="Where is it's orbit?"
               >
 
               <editSuns v-on:edit="editSun" :editable="sun"></editSuns>
+              <deleteSystem v-on:delete="deleteSystem" :editable="sun"></deleteSystem>
+
             </li>
           </ul>
         </b-modal>
@@ -53,15 +51,14 @@
             name="XCoordinate"
             placeholder="How far away?"
           >
-
           <input
             v-model="star.YCoordinate"
             type="number"
             name="YCoordinate"
-            placeholder="Where in is it in it's orbit?"
+            placeholder="Where is it's orbit?"
           >
 
-          <input type="button" value="+" @click="updateAtlas">
+          <input type="button" value="+" @click="addSun">
         </b-modal>
 
         <b-modal id="modal-Planets" title="Systems Registry">
@@ -83,11 +80,6 @@
                   name="degree"
                   placeholder="Where in is it in it's orbit?"
                 >
-
-                <!-- <testing :editable="sun" 
-              v-on:addPlanet="addPlanet"
-              v-on:addMoon="addMoon"
-                ></testing>-->
 
                 <addPlanets v-on:addPlanet="addPlanet" :editable="sun"></addPlanets>
                 <!-- <addMoons v-on:addMoon="addMoon" :editable="sun" ></addMoons> -->
@@ -117,10 +109,7 @@
                       placeholder="Where in is it in it's orbit?"
                     >
 
-                    <addMoons 
-                    v-on:addMoon="addMoon" 
-                    :sun="object"
-                    :editable="planets"></addMoons>
+                    <addMoons v-on:addMoon="addMoon" :sun="object" :editable="planets"></addMoons>
                   </div>
                 </li>
               </ul>
@@ -129,7 +118,6 @@
         </b-modal>
 
         <button @click="log">LOG</button>
-        
       </b-navbar>
     </div>
 
@@ -141,8 +129,6 @@
 export default {
   data() {
     return {
-      message: "NAAVY",
-
       content: [],
 
       mouseXY: {},
@@ -181,7 +167,6 @@ export default {
 
     console.log("data:", this.content[0]);
 
-    // parsed = JSON.parse
   },
 
   methods: {
@@ -190,8 +175,8 @@ export default {
       console.log("data:", JSON.parse(this.content[0].Satelites));
     },
 
-    // Creates New Sun and System strawman
-    updateAtlas() {
+    // Post to Create new Sun and System strawman
+    addSun() {
       var self = this;
 
       // Neccessary for converting the text input of html fields to number.
@@ -210,6 +195,7 @@ export default {
         });
     },
 
+    // Post to edit sun name and position
     editSun(obj) {
       var self = this;
       self.patchPath = "/editObj/";
@@ -226,6 +212,26 @@ export default {
           YCoordinate: self.star.YCoordinate,
           Satelites: obj.satelites,
           _method: "patch"
+        })
+        .then(function(response) {});
+    },
+
+    //Post to delete Systems
+    deleteSystem(obj){
+      self.patchPath = "/editObj/";
+
+      console.log("changing:", obj.satelites);
+
+      self.patchPath += obj.edit;
+      console.log("Post attempted:", self.patchPath);
+
+      axios
+        .post(self.patchPath, {
+          // name: self.star.name,
+          // XCoordinate: self.star.XCoordinate,
+          // YCoordinate: self.star.YCoordinate,
+          // Satelites: obj.satelites,
+          _method: "delete"
         })
         .then(function(response) {});
     },
@@ -264,10 +270,7 @@ export default {
     addMoon(obj) {
       var self = this;
 
-
       self.patchPath = "/editObj/" + obj.patchID.toString();
-
-
 
       // self.patchPath += obj.add.toString();
       console.log("Post attempted:", self.patchPath);
@@ -275,7 +278,6 @@ export default {
       //push to an array to give to the Satelites column
       self.moons.amp = parseInt(self.moons.amp);
       self.moons.degree = parseInt(self.moons.degree);
-
 
       console.log("moon to be added:", obj.preserve);
       obj.preserve.moons.push(self.moons);

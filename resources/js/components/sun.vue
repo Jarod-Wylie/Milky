@@ -11,6 +11,7 @@
         }" />
    
     <v-circle
+    @click="log"
       @mouseover="getInfo"
       @mouseleave="getLess"
       ref="orb"
@@ -47,7 +48,8 @@ export default {
     ord: Object,
     ampC: Number,
     degreeC: Number,
-    SunID: Number
+    SunID: String,
+    planetObj : String,
   },
 
   data() {
@@ -59,9 +61,7 @@ export default {
 
    mounted() {
 
-    axios
-    .get('/systems')
-    .then(response => this.planets = JSON.parse(response.data[this.SunID - 1].Satelites));
+    this.planets = JSON.parse(this.planetObj);
 
     const vm = this;
     const sun = this.$refs.orb.getStage();
@@ -113,16 +113,16 @@ export default {
 
     getInfo(){
       this.info = this.SunID;
-      console.log("trying my best", this.SunID);
     },
     getLess(){
       this.info = "";
-      console.log("trying my best", this.SunID);
     },
 
     log() {
       // this.planets = JSON.parse(this.planets[0].Satelites);
-      console.log("Planets:", this.planets[0].moons[0]);
+      console.log("Planets:", this.planets);
+
+      console.log("V:", this.v);
 
       console.log("SunID:", this.SunID);
     }

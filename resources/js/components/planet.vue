@@ -48,6 +48,7 @@ export default {
     ampC: Number,
     degreeC: Number,
     sati: Array,
+    
   },
 
   data() {

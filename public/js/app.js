@@ -1909,22 +1909,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      message: "NAAVY",
       content: [],
       mouseXY: {},
       star: {
@@ -1964,15 +1951,15 @@ __webpack_require__.r(__webpack_exports__);
     axios.get("/systems").then(function (response) {
       return _this.content = response.data;
     });
-    console.log("data:", this.content[0]); // parsed = JSON.parse
+    console.log("data:", this.content[0]);
   },
   methods: {
     log: function log() {
       // console.log(this.content);
       console.log("data:", JSON.parse(this.content[0].Satelites));
     },
-    // Creates New Sun and System strawman
-    updateAtlas: function updateAtlas() {
+    // Post to Create new Sun and System strawman
+    addSun: function addSun() {
       var self = this; // Neccessary for converting the text input of html fields to number.
 
       self.star.XCoordinate = parseInt(self.star.XCoordinate);
@@ -1986,6 +1973,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log("Post attempted");
       });
     },
+    // Post to edit sun name and position
     editSun: function editSun(obj) {
       var self = this;
       self.patchPath = "/editObj/";
@@ -1998,6 +1986,20 @@ __webpack_require__.r(__webpack_exports__);
         YCoordinate: self.star.YCoordinate,
         Satelites: obj.satelites,
         _method: "patch"
+      }).then(function (response) {});
+    },
+    //Post to delete Systems
+    deleteSystem: function deleteSystem(obj) {
+      self.patchPath = "/editObj/";
+      console.log("changing:", obj.satelites);
+      self.patchPath += obj.edit;
+      console.log("Post attempted:", self.patchPath);
+      axios.post(self.patchPath, {
+        // name: self.star.name,
+        // XCoordinate: self.star.XCoordinate,
+        // YCoordinate: self.star.YCoordinate,
+        // Satelites: obj.satelites,
+        _method: "delete"
       }).then(function (response) {});
     },
     addPlanet: function addPlanet(obj) {
@@ -2088,12 +2090,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 var width = window.innerWidth;
 var height = window.innerHeight;
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2128,7 +2124,7 @@ var height = window.innerHeight;
       this.mousePos = this.$refs.stage.getStage().getPointerPosition(); // this.$emit("reportedStageCoordinates", {x: this.mousePos.x, y: this.mousePos.y});
     },
     log: function log() {
-      console.log;
+      console.log(this.systems);
     }
   }
 });
@@ -2202,8 +2198,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    editable: Object,
-    sun: Object
+    editable: Object
   },
   data: function data() {
     return {};
@@ -2219,6 +2214,44 @@ __webpack_require__.r(__webpack_exports__);
         x: this.editable.XCoordinate,
         y: this.editable.YCoordinate,
         satelites: JSON.parse(this.editable.Satelites)
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/deleteSystem.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/deleteSystem.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    editable: Object
+  },
+  data: function data() {
+    return {};
+  },
+  mounted: function mounted() {
+    console.log("testing:", this.editable);
+  },
+  methods: {
+    edit: function edit() {
+      this.$emit("delete", {
+        edit: this.editable.id
       });
     }
   }
@@ -2292,7 +2325,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     xC: Number,
@@ -2313,7 +2345,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     // console.log("Mounting Moon");
     var vm = this;
-    var amplitude = 4000;
+    var amplitude = 4500;
     var period = 1000;
     var radians = 1;
     var sun = this.$refs.orb.getStage();
@@ -2688,6 +2720,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     xC: Number,
@@ -2695,7 +2728,8 @@ __webpack_require__.r(__webpack_exports__);
     ord: Object,
     ampC: Number,
     degreeC: Number,
-    SunID: Number
+    SunID: String,
+    planetObj: String
   },
   data: function data() {
     return {
@@ -2704,11 +2738,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    var _this = this;
-
-    axios.get('/systems').then(function (response) {
-      return _this.planets = JSON.parse(response.data[_this.SunID - 1].Satelites);
-    });
+    this.planets = JSON.parse(this.planetObj);
     var vm = this;
     var sun = this.$refs.orb.getStage();
     var centerX = sun.attrs.x;
@@ -2748,16 +2778,130 @@ __webpack_require__.r(__webpack_exports__);
     },
     getInfo: function getInfo() {
       this.info = this.SunID;
-      console.log("trying my best", this.SunID);
     },
     getLess: function getLess() {
       this.info = "";
-      console.log("trying my best", this.SunID);
     },
     log: function log() {
       // this.planets = JSON.parse(this.planets[0].Satelites);
-      console.log("Planets:", this.planets[0].moons[0]);
+      console.log("Planets:", this.planets);
+      console.log("V:", this.v);
       console.log("SunID:", this.SunID);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/superMBH.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/superMBH.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var width = window.innerWidth;
+var height = window.innerHeight;
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      ani: false,
+      degree: 0,
+      amp: 200,
+      origin: {
+        x: 300,
+        y: 300
+      },
+      stageSize: {
+        width: 600,
+        height: 500
+      },
+      flip: true,
+      circle: {
+        x: 650,
+        y: 50,
+        radius: 15,
+        fill: "blue"
+      },
+      center: {
+        x: 300,
+        y: 250,
+        radius: 20,
+        fill: "black"
+      },
+      line: {
+        points: [],
+        stroke: 'red',
+        strokeWidth: 15,
+        lineCap: 'round',
+        lineJoin: 'round'
+      },
+      list: [],
+      text: "",
+      paused: false,
+      circ: {},
+      systems: [],
+      index: 0,
+      b: 0,
+      c: 0
+    };
+  },
+  mounted: function mounted() {
+    this.start();
+  },
+  computed: {},
+  methods: {
+    start: function start() {
+      var vm = this;
+      var amplitude = 100;
+      var period = 10000;
+      var centerX = this.$refs.ord.getStage().attrs.x;
+      var centerY = this.$refs.ord.getStage().attrs.y; // Formula to translate degrees selceted by user to radians. see changeDegree()
+
+      var radians = vm.degree * (Math.PI / 180);
+      var circ = this.$refs.circ.getStage();
+      var anim = new Konva.Animation(function (frame) {
+        // Calculates object's position in its orbit
+        circ.setX(vm.amp * Math.sin(radians) + centerX);
+        circ.setY(vm.amp * Math.cos(radians) + centerY);
+        vm.line.points.push(vm.amp * Math.sin(radians) + centerX);
+        vm.line.points.push(vm.amp * Math.cos(radians) + centerY);
+
+        if (vm.amp * Math.sin(radians) + centerX == vm.line.points[340] && vm.amp * Math.cos(radians) + centerY == vm.line.points[341]) {
+          console.log("hoi:LOL");
+        } // vm.draw();
+        // retains the original degree->radian set in the data to begin motion from
+        // rather than: radians = (frame.time * 2 * Math.PI) / period;
+
+
+        radians = radians + 60 * 2 * Math.PI / period;
+      }, circ.getLayer());
+      anim.start();
+    },
+    draw: function draw() {
+      this.index++;
+      this.line.points.push(this.b);
+      this.line.points.push(this.c);
     }
   }
 });
@@ -78470,17 +78614,7 @@ var render = function() {
               }
             },
             [
-              _c("b-popover", {
-                attrs: {
-                  target: "popover-1",
-                  title: "Popover!",
-                  triggers: "hover focus"
-                }
-              }),
-              _vm._v(" "),
-              _c("b-navbar-brand", { attrs: { id: "popover-1" } }, [
-                _vm._v("Milky")
-              ]),
+              _c("b-navbar-brand", [_vm._v("Milky")]),
               _vm._v(" "),
               _c(
                 "b-button",
@@ -78647,7 +78781,7 @@ var render = function() {
                             attrs: {
                               type: "number",
                               name: "YCoordinate",
-                              placeholder: "Where in is it in it's orbit?"
+                              placeholder: "Where is it's orbit?"
                             },
                             domProps: { value: _vm.star.YCoordinate },
                             on: {
@@ -78667,6 +78801,11 @@ var render = function() {
                           _c("editSuns", {
                             attrs: { editable: sun },
                             on: { edit: _vm.editSun }
+                          }),
+                          _vm._v(" "),
+                          _c("deleteSystem", {
+                            attrs: { editable: sun },
+                            on: { delete: _vm.deleteSystem }
                           })
                         ],
                         1
@@ -78743,7 +78882,7 @@ var render = function() {
                     attrs: {
                       type: "number",
                       name: "YCoordinate",
-                      placeholder: "Where in is it in it's orbit?"
+                      placeholder: "Where is it's orbit?"
                     },
                     domProps: { value: _vm.star.YCoordinate },
                     on: {
@@ -78758,7 +78897,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("input", {
                     attrs: { type: "button", value: "+" },
-                    on: { click: _vm.updateAtlas }
+                    on: { click: _vm.addSun }
                   })
                 ]
               ),
@@ -79092,25 +79231,17 @@ var render = function() {
                 on: { click: _vm.log }
               }),
               _vm._v(" "),
-              _c("b-popover", {
-                attrs: {
-                  target: "popover-1",
-                  title: "Popover!",
-                  triggers: "hover focus"
-                }
-              }),
-              _vm._v(" "),
               _vm._l(_vm.systems, function(item) {
                 return _c("sun", {
                   key: item.id,
                   attrs: {
-                    id: "popover-1",
-                    SunID: item.id,
+                    SunID: item.name,
                     xC: _vm.center.x,
                     yC: _vm.center.y,
                     ampC: item.YCoordinate,
                     degreeC: item.XCoordinate,
-                    sati: item.id
+                    sati: item.id,
+                    planetObj: item.Satelites
                   }
                 })
               })
@@ -79187,6 +79318,34 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/deleteSystem.vue?vue&type=template&id=68b27a85&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/deleteSystem.vue?vue&type=template&id=68b27a85&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [_c("b-button", { on: { click: _vm.edit } }, [_vm._v("Delete")])],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/editSuns.vue?vue&type=template&id=415dc99c&scoped=true&":
 /*!***********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/editSuns.vue?vue&type=template&id=415dc99c&scoped=true& ***!
@@ -79230,38 +79389,30 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "a",
-      {
+  return _c(
+    "div",
+    [
+      _c("v-circle", {
+        ref: "orb",
         attrs: {
-          href: "#",
-          "data-toggle": "popover",
-          title: "Popover Header",
-          "data-content": "Some content inside the popover"
-        }
-      },
-      [
-        _c("v-circle", {
-          ref: "orb",
-          attrs: {
-            "data-toggle": "popover",
-            title: "Popover Header",
-            "data-content": "Some content inside the popover",
-            config: {
-              x: _vm.xC,
-              y: _vm.yC,
-              radius: 2,
-              fill: "blue",
-              trackX: _vm.kX,
-              trackY: _vm.kY
-            }
+          config: {
+            x: _vm.xC,
+            y: _vm.yC,
+            radius: 2,
+            fill: "blue",
+            trackX: _vm.kX,
+            trackY: _vm.kY
           }
-        })
-      ],
-      1
-    )
-  ])
+        },
+        on: {
+          click: function($event) {
+            _vm.satelites = true
+          }
+        }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -79519,7 +79670,7 @@ var render = function() {
             SunID: _vm.SunID
           }
         },
-        on: { mouseover: _vm.getInfo, mouseleave: _vm.getLess }
+        on: { click: _vm.log, mouseover: _vm.getInfo, mouseleave: _vm.getLess }
       }),
       _vm._v(" "),
       _vm._l(_vm.planets, function(item) {
@@ -79538,6 +79689,57 @@ var render = function() {
       })
     ],
     2
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/superMBH.vue?vue&type=template&id=ddc76d7a&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/superMBH.vue?vue&type=template&id=ddc76d7a& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "v-stage",
+        { ref: "stage", attrs: { config: _vm.stageSize } },
+        [
+          _c(
+            "v-layer",
+            [
+              _c("v-line", { ref: "line", attrs: { config: _vm.line } }),
+              _vm._v(" "),
+              _c("v-circle", { ref: "circ", attrs: { config: _vm.circle } }),
+              _vm._v(" "),
+              _c("v-circle", {
+                ref: "ord",
+                attrs: { config: _vm.center },
+                on: { click: _vm.draw }
+              })
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -91765,11 +91967,13 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('supermbh', __webpack_require__(/*! ./components/superMBH.vue */ "./resources/js/components/superMBH.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Exp', __webpack_require__(/*! ./components/Exp.vue */ "./resources/js/components/Exp.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('rocket', __webpack_require__(/*! ./components/rocket.vue */ "./resources/js/components/rocket.vue")["default"]); //Component used for testing how reactivity with vue can submit form data.
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('testing', __webpack_require__(/*! ./components/testing.vue */ "./resources/js/components/testing.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('editSuns', __webpack_require__(/*! ./components/editSuns.vue */ "./resources/js/components/editSuns.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('deleteSystem', __webpack_require__(/*! ./components/deleteSystem.vue */ "./resources/js/components/deleteSystem.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('addPlanets', __webpack_require__(/*! ./components/addPlanets.vue */ "./resources/js/components/addPlanets.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('addMoons', __webpack_require__(/*! ./components/addMoons.vue */ "./resources/js/components/addMoons.vue")["default"]); // A proto type of Galactic Center
 // Vue.component('superMBH', require('./components/superMBH.vue').default);
@@ -92199,6 +92403,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/deleteSystem.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/components/deleteSystem.vue ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _deleteSystem_vue_vue_type_template_id_68b27a85_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./deleteSystem.vue?vue&type=template&id=68b27a85&scoped=true& */ "./resources/js/components/deleteSystem.vue?vue&type=template&id=68b27a85&scoped=true&");
+/* harmony import */ var _deleteSystem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./deleteSystem.vue?vue&type=script&lang=js& */ "./resources/js/components/deleteSystem.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _deleteSystem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _deleteSystem_vue_vue_type_template_id_68b27a85_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _deleteSystem_vue_vue_type_template_id_68b27a85_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "68b27a85",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/deleteSystem.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/deleteSystem.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/deleteSystem.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_deleteSystem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./deleteSystem.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/deleteSystem.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_deleteSystem_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/deleteSystem.vue?vue&type=template&id=68b27a85&scoped=true&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/deleteSystem.vue?vue&type=template&id=68b27a85&scoped=true& ***!
+  \*********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_deleteSystem_vue_vue_type_template_id_68b27a85_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./deleteSystem.vue?vue&type=template&id=68b27a85&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/deleteSystem.vue?vue&type=template&id=68b27a85&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_deleteSystem_vue_vue_type_template_id_68b27a85_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_deleteSystem_vue_vue_type_template_id_68b27a85_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/editSuns.vue":
 /*!**********************************************!*\
   !*** ./resources/js/components/editSuns.vue ***!
@@ -92608,6 +92881,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_sun_vue_vue_type_template_id_43cbb851___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_sun_vue_vue_type_template_id_43cbb851___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/superMBH.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/components/superMBH.vue ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _superMBH_vue_vue_type_template_id_ddc76d7a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./superMBH.vue?vue&type=template&id=ddc76d7a& */ "./resources/js/components/superMBH.vue?vue&type=template&id=ddc76d7a&");
+/* harmony import */ var _superMBH_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./superMBH.vue?vue&type=script&lang=js& */ "./resources/js/components/superMBH.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _superMBH_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _superMBH_vue_vue_type_template_id_ddc76d7a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _superMBH_vue_vue_type_template_id_ddc76d7a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/superMBH.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/superMBH.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/superMBH.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_superMBH_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./superMBH.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/superMBH.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_superMBH_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/superMBH.vue?vue&type=template&id=ddc76d7a&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/superMBH.vue?vue&type=template&id=ddc76d7a& ***!
+  \*****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_superMBH_vue_vue_type_template_id_ddc76d7a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./superMBH.vue?vue&type=template&id=ddc76d7a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/superMBH.vue?vue&type=template&id=ddc76d7a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_superMBH_vue_vue_type_template_id_ddc76d7a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_superMBH_vue_vue_type_template_id_ddc76d7a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

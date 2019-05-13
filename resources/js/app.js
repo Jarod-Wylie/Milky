@@ -38,6 +38,8 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('supermbh', require('./components/superMBH.vue').default);
+
 
 
 Vue.component('Exp', require('./components/Exp.vue').default);
@@ -51,6 +53,7 @@ Vue.component('testing', require('./components/testing.vue').default);
 
 
 Vue.component('editSuns', require('./components/editSuns.vue').default);
+Vue.component('deleteSystem', require('./components/deleteSystem.vue').default);
 Vue.component('addPlanets', require('./components/addPlanets.vue').default);
 Vue.component('addMoons', require('./components/addMoons.vue').default);
 
