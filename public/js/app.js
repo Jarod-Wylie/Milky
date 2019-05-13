@@ -1916,6 +1916,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2054,6 +2059,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2280,6 +2292,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     xC: Number,
@@ -2300,7 +2313,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     // console.log("Mounting Moon");
     var vm = this;
-    var amplitude = 2800;
+    var amplitude = 4000;
     var period = 1000;
     var radians = 1;
     var sun = this.$refs.orb.getStage();
@@ -2675,8 +2688,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     xC: Number,
@@ -2688,6 +2699,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      info: "",
       planets: []
     };
   },
@@ -2733,6 +2745,14 @@ __webpack_require__.r(__webpack_exports__);
         this.planets[planet].trackX = obj.nuX;
         this.planets[planet].trackY = obj.nuY;
       }
+    },
+    getInfo: function getInfo() {
+      this.info = this.SunID;
+      console.log("trying my best", this.SunID);
+    },
+    getLess: function getLess() {
+      this.info = "";
+      console.log("trying my best", this.SunID);
     },
     log: function log() {
       // this.planets = JSON.parse(this.planets[0].Satelites);
@@ -78450,18 +78470,17 @@ var render = function() {
               }
             },
             [
-              _c(
-                "b-navbar-brand",
-                {
-                  attrs: {
-                    href: "#",
-                    "data-toggle": "popover",
-                    title: "Popover Header",
-                    "data-content": "Some content inside the popover"
-                  }
-                },
-                [_vm._v("Milky")]
-              ),
+              _c("b-popover", {
+                attrs: {
+                  target: "popover-1",
+                  title: "Popover!",
+                  triggers: "hover focus"
+                }
+              }),
+              _vm._v(" "),
+              _c("b-navbar-brand", { attrs: { id: "popover-1" } }, [
+                _vm._v("Milky")
+              ]),
               _vm._v(" "),
               _c(
                 "b-button",
@@ -79073,10 +79092,19 @@ var render = function() {
                 on: { click: _vm.log }
               }),
               _vm._v(" "),
+              _c("b-popover", {
+                attrs: {
+                  target: "popover-1",
+                  title: "Popover!",
+                  triggers: "hover focus"
+                }
+              }),
+              _vm._v(" "),
               _vm._l(_vm.systems, function(item) {
                 return _c("sun", {
                   key: item.id,
                   attrs: {
+                    id: "popover-1",
                     SunID: item.id,
                     xC: _vm.center.x,
                     yC: _vm.center.y,
@@ -79202,30 +79230,38 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("v-circle", {
-        ref: "orb",
+  return _c("div", [
+    _c(
+      "a",
+      {
         attrs: {
-          config: {
-            x: _vm.xC,
-            y: _vm.yC,
-            radius: 4,
-            fill: "blue",
-            trackX: _vm.kX,
-            trackY: _vm.kY
-          }
-        },
-        on: {
-          click: function($event) {
-            _vm.satelites = true
-          }
+          href: "#",
+          "data-toggle": "popover",
+          title: "Popover Header",
+          "data-content": "Some content inside the popover"
         }
-      })
-    ],
-    1
-  )
+      },
+      [
+        _c("v-circle", {
+          ref: "orb",
+          attrs: {
+            "data-toggle": "popover",
+            title: "Popover Header",
+            "data-content": "Some content inside the popover",
+            config: {
+              x: _vm.xC,
+              y: _vm.yC,
+              radius: 2,
+              fill: "blue",
+              trackX: _vm.kX,
+              trackY: _vm.kY
+            }
+          }
+        })
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -79456,12 +79492,23 @@ var render = function() {
   return _c(
     "div",
     [
+      _c("v-text", {
+        ref: "text",
+        attrs: {
+          config: {
+            x: 400,
+            y: 400,
+            fontFamily: "Calibri",
+            fontSize: 24,
+            text: _vm.info,
+            fill: "black"
+          }
+        }
+      }),
+      _vm._v(" "),
       _c("v-circle", {
         ref: "orb",
         attrs: {
-          "data-toggle": "popover",
-          title: "Popover Header",
-          "data-content": "Some content inside the popover",
           config: {
             x: _vm.xC,
             y: _vm.yC,
@@ -79472,11 +79519,7 @@ var render = function() {
             SunID: _vm.SunID
           }
         },
-        on: {
-          click: function($event) {
-            return _vm.log()
-          }
-        }
+        on: { mouseover: _vm.getInfo, mouseleave: _vm.getLess }
       }),
       _vm._v(" "),
       _vm._l(_vm.planets, function(item) {

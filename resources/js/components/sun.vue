@@ -1,8 +1,18 @@
     <template>
   <div>
+
+    <v-text ref="text" :config="{
+          x: 400,
+          y: 400,
+          fontFamily: 'Calibri',
+          fontSize: 24,
+          text: info,
+          fill: 'black'
+        }" />
+   
     <v-circle
-      @click="log()"
-      data-toggle="popover" title="Popover Header" data-content="Some content inside the popover"
+      @mouseover="getInfo"
+      @mouseleave="getLess"
       ref="orb"
       :config="{
                     x:xC,
@@ -14,18 +24,6 @@
                     SunID: SunID,
                 }"
     />
-    <!---Planets added on click -->
-    <!-- <planet
-        v-for="item in list"
-        ref="satelite"
-        :key="item.id"
-        :xC="item.x"
-        :yC="item.y"
-        :kX="item.kX"
-        :kY="item.kY"
-        :ampC="item.amplitude"
-        :degreeC="item.start"
-    ></planet>-->
 
     <!-- Planets added on load from database-->
     <planet
@@ -54,6 +52,7 @@ export default {
 
   data() {
     return {
+      info: "",
       planets: [],
     };
   },
@@ -110,6 +109,15 @@ export default {
         this.planets[planet].trackY = obj.nuY;
 
       }
+    },
+
+    getInfo(){
+      this.info = this.SunID;
+      console.log("trying my best", this.SunID);
+    },
+    getLess(){
+      this.info = "";
+      console.log("trying my best", this.SunID);
     },
 
     log() {

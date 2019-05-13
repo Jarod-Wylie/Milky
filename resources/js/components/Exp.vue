@@ -2,7 +2,12 @@
   <div>
     <div>
       <b-navbar toggleable="lg" type="dark" variant="Dark" fixed="bottom">
-        <b-navbar-brand href="#" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">Milky</b-navbar-brand>
+        <b-popover
+          :target="`popover-1`"
+          title="Popover!"
+          triggers="hover focus"
+        ></b-popover>
+        <b-navbar-brand :id="`popover-1`">Milky</b-navbar-brand>
 
         <b-button v-b-modal.modal-Suns>Add Suns/Sytems Origin</b-button>
 
