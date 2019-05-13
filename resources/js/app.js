@@ -19,6 +19,11 @@ import VueKonva from 'vue-konva'
 
 Vue.use(VueKonva)
 
+
+import Popover  from 'vue-js-popover'
+
+Vue.use(Popover)
+
 window.Vue = require('vue');
 
 /**

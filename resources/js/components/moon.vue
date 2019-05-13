@@ -28,7 +28,7 @@ export default {
 
   data() {
     return {
-      degree: 360,
+      degree: 180,
       amp: 20,
       satelites: false,
       list: []
@@ -42,7 +42,7 @@ export default {
   mounted() {
     // console.log("Mounting Moon");
     const vm = this;
-    const amplitude = 100;
+    const amplitude = 2800;
     const period = 1000;
     var radians = 1;
 

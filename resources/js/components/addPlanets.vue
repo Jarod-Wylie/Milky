@@ -12,6 +12,7 @@
         props:{
 
             editable: Object,
+            sun: Object,
 
         },
 

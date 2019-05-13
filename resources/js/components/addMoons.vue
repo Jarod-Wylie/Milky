@@ -16,6 +16,7 @@
         props:{
 
             editable: Object,
+            sun: Object,
 
         },
 
@@ -31,10 +32,23 @@
 
         mounted(){
 
-            console.log("testing:", this.editable);
+            console.log("Moon testing:", this.editable);
+            console.log('PATCH ID:', this.systemID);
         },
 
         methods:{
+
+            addMoon(){
+                 
+
+                    this.$emit("addMoon", {
+                        patchID: this.sun.id, 
+                        name: this.sun.name, 
+                        x: this.sun.XCoordinate,
+                        y: this.sun.YCoordinate,
+                        preserve: this.editable
+                        });
+            },
               
             }
 

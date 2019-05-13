@@ -2,48 +2,45 @@
   <div>
     <div>
       <b-navbar toggleable="lg" type="dark" variant="Dark" fixed="bottom">
-        <b-navbar-brand>Milky</b-navbar-brand>
+        <b-navbar-brand href="#" data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">Milky</b-navbar-brand>
 
         <b-button v-b-modal.modal-Suns>Add Suns/Sytems Origin</b-button>
 
         <b-button @click="showSunOps = !showSunOps">Edit Systems</b-button>
 
-      <div v-if="showSunOps">
+        <div v-if="showSunOps">
           <b-button v-b-modal.modal-editSuns>Edit Origins/Suns</b-button>
           <b-button v-b-modal.modal-Planets>Add Planets To Systems</b-button>
           <b-button v-b-modal.modal-Moons>Add Moons To Planets</b-button>
-      </div>
-
-
+        </div>
 
         <!--Input for editing Suns -->
-        <b-modal  id="modal-editSuns" title="Systems Registry">
+        <b-modal id="modal-editSuns" title="Systems Registry">
           <ul>
-              <li v-for="sun in content" :key="sun.id">
-                    <button @click="selected = sun.id">{{sun.name}}</button>
-                <input v-model="star.name" type="text" name="name" placeholder="Add a System">
-                <input
-                  v-model="star.XCoordinate"
-                  type="number"
-                  name="XCoordinate"
-                  placeholder="How far away?"
-                >
+            <li v-for="sun in content" :key="sun.id">
+              <button @click="selected = sun.id">{{sun.name}}</button>
+              <input v-model="star.name" type="text" name="name" placeholder="Add a System">
+              <input
+                v-model="star.XCoordinate"
+                type="number"
+                name="XCoordinate"
+                placeholder="How far away?"
+              >
 
-                <input
-                  v-model="star.YCoordinate"
-                  type="number"
-                  name="YCoordinate"
-                  placeholder="Where in is it in it's orbit?"
-                >
+              <input
+                v-model="star.YCoordinate"
+                type="number"
+                name="YCoordinate"
+                placeholder="Where in is it in it's orbit?"
+              >
 
-                  <editSuns v-on:edit="editSun" :editable="sun"></editSuns>
-              </li>
+              <editSuns v-on:edit="editSun" :editable="sun"></editSuns>
+            </li>
           </ul>
-
         </b-modal>
 
         <!--Input for adding Suns -->
-        <b-modal  id="modal-Suns" title="Systems Registry">
+        <b-modal id="modal-Suns" title="Systems Registry">
           <input v-model="star.name" type="text" name="name" placeholder="Add a System">
           <input
             v-model="star.XCoordinate"
@@ -63,86 +60,71 @@
         </b-modal>
 
         <b-modal id="modal-Planets" title="Systems Registry">
-
           <!-- Modal for Adding Planets-->
           <h1>Suns:</h1>
           <ul>
-          <!-- Input for Planets -->
+            <!-- Input for Planets -->
             <li v-for="sun in content" :key="sun.id">
               <button @click="selected = sun.id">{{sun.name}}</button>
 
-          <div v-if="sun.id == selected">
-              <input v-model="planet.name" type="text" name="name" placeholder="Planet Name">
+              <div v-if="sun.id == selected">
+                <input v-model="planet.name" type="text" name="name" placeholder="Planet Name">
 
-              <input
-                v-model="planet.amp"
-                type="number"
-                name="amp"
-                placeholder="How far away?"
-              >
+                <input v-model="planet.amp" type="number" name="amp" placeholder="How far away?">
 
-              <input
-                v-model="planet.degree"
-                type="number"
-                name="degree"
-                placeholder="Where in is it in it's orbit?"
-              >
+                <input
+                  v-model="planet.degree"
+                  type="number"
+                  name="degree"
+                  placeholder="Where in is it in it's orbit?"
+                >
 
-              <!-- <testing :editable="sun" 
+                <!-- <testing :editable="sun" 
               v-on:addPlanet="addPlanet"
               v-on:addMoon="addMoon"
-              ></testing> -->
+                ></testing>-->
 
-              <addPlanets v-on:addPlanet="addPlanet" :editable="sun"></addPlanets>
-              <!-- <addMoons v-on:addMoon="addMoon" :editable="sun" ></addMoons> -->
-          </div>
-
+                <addPlanets v-on:addPlanet="addPlanet" :editable="sun"></addPlanets>
+                <!-- <addMoons v-on:addMoon="addMoon" :editable="sun" ></addMoons> -->
+              </div>
             </li>
           </ul>
         </b-modal>
 
-
-
-          <!-- Modal for Adding moons-->
-          <b-modal id="modal-Moons" title="Moons Registry">
+        <!-- Modal for Adding moons-->
+        <b-modal id="modal-Moons" title="Moons Registry">
           <h1>Planets:</h1>
           <ul>
-          <!-- Input for moon -->
-            <li v-for="planet in content" :key="planet.name">
-              <button @click="selected = planet.id">{{planet.name}}</button>
+            <!-- Input for moon -->
+            <div v-for="object in content" :key="JSON.parse(object.Satelites).name">
+              <ul>
+                <li v-for="planets in JSON.parse(object.Satelites)" :key="planets.name">
+                  <button @click="selected = planets.name">{{planets.name}}</button>
 
-          <div v-if="sun.id == selected">
-              <input v-model="moon.name" type="text" name="name" placeholder="moon Name">
+                  <div v-if="planets.name == selected">
+                    <input v-model="moons.name" type="text" name="name" placeholder="moon Name">
 
-              <input
-                v-model="moon.amp"
-                type="number"
-                name="amp"
-                placeholder="How far away?"
-              >moon
-              <input
-                v-model="moon.degree"
-                type="number"
-                name="degree"
-                placeholder="Where in is it in it's orbit?"
-              >
+                    <input v-model="moons.amp" type="number" name="amp" placeholder="How far away?">
+                    <input
+                      v-model="moons.degree"
+                      type="number"
+                      name="degree"
+                      placeholder="Where in is it in it's orbit?"
+                    >
 
-              <!-- <testing :editable="sun" 
-              v-on:addPlanet="addPlanet"
-              v-on:addMoon="addMoon"
-              ></testing> -->
-
-              <addPlanets v-on:addPlanet="addPlanet" :editable="sun"></addPlanets>
-              <!-- <addMoons v-on:addMoon="addMoon" :editable="sun" ></addMoons> -->
-          </div>
-
-            </li>
+                    <addMoons 
+                    v-on:addMoon="addMoon" 
+                    :sun="object"
+                    :editable="planets"></addMoons>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </ul>
         </b-modal>
 
-
-        <!-- <button @click="log">LOG</button> -->
-
+        <button @click="log">LOG</button>
+        
       </b-navbar>
     </div>
 
@@ -162,16 +144,22 @@ export default {
 
       star: { name: "", XCoordinate: null, YCoordinate: null },
 
-      planet: { name: "", amp: null, degree: null, trackX: 0, trackY: 0 ,moons:[] },
-      planets:[],
+      planet: {
+        name: "",
+        amp: null,
+        degree: null,
+        trackX: 0,
+        trackY: 0,
+        moons: []
+      },
+      planets: [],
 
       moons: { name: "", amp: null, degree: null, trackX: 0, trackY: 0 },
-      moon:[],
+      moon: [],
 
       patchPath: "/editObj/",
 
       selected: 0,
-
 
       //  rendering conditions
 
@@ -179,26 +167,22 @@ export default {
       showSunOps: false,
       showPlanetOps: false,
 
-
-
-
-
-
+      parsed: []
     };
   },
 
   mounted() {
     axios.get("/systems").then(response => (this.content = response.data));
 
+    console.log("data:", this.content[0]);
 
-    
-
-
+    // parsed = JSON.parse
   },
 
   methods: {
     log() {
-      console.log(this.content);
+      // console.log(this.content);
+      console.log("data:", JSON.parse(this.content[0].Satelites));
     },
 
     // Creates New Sun and System strawman
@@ -214,7 +198,7 @@ export default {
           name: self.star.name,
           XCoordinate: self.star.XCoordinate,
           YCoordinate: self.star.YCoordinate,
-          Satelites:'[]'
+          Satelites: "[]"
         })
         .then(function(response) {
           console.log("Post attempted");
@@ -236,15 +220,12 @@ export default {
           XCoordinate: self.star.XCoordinate,
           YCoordinate: self.star.YCoordinate,
           Satelites: obj.satelites,
-          _method: "patch",
+          _method: "patch"
         })
         .then(function(response) {});
     },
 
     addPlanet(obj) {
-
-
-
       var self = this;
 
       self.planets = obj.satelites;
@@ -263,31 +244,50 @@ export default {
       console.log("planet:", self.planets);
 
       // self.planets[0].moons = "hoi";
-      
+
       axios
         .post(self.patchPath, {
           name: obj.name,
           XCoordinate: obj.x,
           YCoordinate: obj.y,
           Satelites: JSON.stringify(self.planets),
-          _method: "patch",
+          _method: "patch"
         })
         .then(function(response) {});
     },
 
+    addMoon(obj) {
+      var self = this;
 
-    addMoon(obj){
 
-       axios
+      self.patchPath = "/editObj/" + obj.patchID.toString();
+
+
+
+      // self.patchPath += obj.add.toString();
+      console.log("Post attempted:", self.patchPath);
+
+      //push to an array to give to the Satelites column
+      self.moons.amp = parseInt(self.moons.amp);
+      self.moons.degree = parseInt(self.moons.degree);
+
+
+      console.log("moon to be added:", obj.preserve);
+      obj.preserve.moons.push(self.moons);
+
+      // self.planets.push(obj.preserve);
+
+      // self.planets[0].moons = "hoi";
+
+      axios
         .post(self.patchPath, {
           name: obj.name,
           XCoordinate: obj.x,
           YCoordinate: obj.y,
-          Satelites: JSON.stringify(self.planets),
-          _method: "patch",
+          Satelites: JSON.stringify([obj.preserve]),
+          _method: "patch"
         })
         .then(function(response) {});
-
     },
 
     // Reports the X and Y of the stage created in the component: GalacticCenter

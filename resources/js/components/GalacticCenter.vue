@@ -10,7 +10,7 @@
 
         <v-circle @click="log" :config="center" ref="ord"/>
 
-        <sun 
+        <sun
           v-for="item in systems" 
           :key="item.id"
           :SunID="item.id" 

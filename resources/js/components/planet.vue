@@ -90,7 +90,7 @@ export default {
 
     vm.amp = planet.attrs.amplitude;
 
-    const period = ((200 * vm.amp)/1.5);
+    const period = ((2000 * vm.amp)/1.5);
     //small period = fast speed
     //large period = slow speed
 

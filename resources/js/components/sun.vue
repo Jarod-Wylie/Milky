@@ -2,6 +2,7 @@
   <div>
     <v-circle
       @click="log()"
+      data-toggle="popover" title="Popover Header" data-content="Some content inside the popover"
       ref="orb"
       :config="{
                     x:xC,
@@ -70,7 +71,7 @@ export default {
 
     vm.amp = sun.attrs.amplitude;
 
-    const period = (200 * vm.amp) / 1.5;
+    const period = (2000 * vm.amp) / 1.5;
 
     // Translates degrees -> radians and is the where the sun first starts its orbit
     var radians = sun.attrs.start * (Math.PI / 180);
