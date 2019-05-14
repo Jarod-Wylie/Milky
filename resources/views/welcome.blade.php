@@ -88,12 +88,16 @@
                 </div>
 
 
+                @guest
 
+                @else
                 <div id="app">
 
                     <supermbh></supermbh>
 
                 </div>
+
+                @endguest
             </div>
         </div>
     </body>

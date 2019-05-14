@@ -1917,6 +1917,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1926,7 +1931,8 @@ __webpack_require__.r(__webpack_exports__);
         name: "",
         XCoordinate: null,
         YCoordinate: null,
-        Description: null
+        Description: null,
+        Satelites: '[]'
       },
       planet: {
         name: "",
@@ -1938,6 +1944,7 @@ __webpack_require__.r(__webpack_exports__);
         moons: []
       },
       planets: [],
+      nowSystemsAr: [],
       moons: {
         name: "",
         amp: null,
@@ -1971,15 +1978,20 @@ __webpack_require__.r(__webpack_exports__);
     },
     // Post to Create new Sun and System strawman
     addSun: function addSun() {
-      var self = this; // Neccessary for converting the text input of html fields to number.
+      var self = this;
+      self.star.XCoordinate = parseInt(self.star.XCoordinate);
+      self.star.YCoordinate = parseInt(self.star.YCoordinate);
+      self.nowSystemsAr.push(self.star);
+      console.log('star:', self.nowSystemsAr); // Neccessary for converting the text input of html fields to number.
 
       self.star.XCoordinate = parseInt(self.star.XCoordinate);
       self.star.YCoordinate = parseInt(self.star.YCoordinate);
+      console.log("iuhfsohceo:", self.star.YCoordinate);
       axios.post("Atlas", {
         name: self.star.name,
         XCoordinate: self.star.XCoordinate,
         YCoordinate: self.star.YCoordinate,
-        Satelites: "[]",
+        Satelites: self.star.Satelites,
         Description: self.star.Description
       }).then(function (response) {
         console.log("Post attempted");
@@ -1992,6 +2004,9 @@ __webpack_require__.r(__webpack_exports__);
       console.log("changing:", obj.satelites);
       self.patchPath += obj.edit;
       console.log("Post attempted:", self.patchPath);
+      self.star.XCoordinate = parseInt(self.star.XCoordinate);
+      self.star.YCoordinate = parseInt(self.star.YCoordinate);
+      console.log("iuhfsohceo:", self.star.XCoordinate);
       axios.post(self.patchPath, {
         name: self.star.name,
         XCoordinate: self.star.XCoordinate,
@@ -2104,15 +2119,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var width = window.innerWidth;
 var height = window.innerHeight;
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    nowSystems: Array
+  },
   data: function data() {
     return {
       stageSize: {
         width: 1500,
         height: 1000
       },
+      info: "",
       center: {
         x: 750,
         y: 500,
@@ -2120,7 +2162,55 @@ var height = window.innerHeight;
         fill: "black",
         stroke: "white"
       },
+      line: {
+        points: [120, 300, 220, 300],
+        stroke: 'white',
+        strokeWidth: 13,
+        lineCap: 'round',
+        lineJoin: 'round'
+      },
+      scaleText: {
+        x: 120,
+        y: 260,
+        fontFamily: 'Calibri',
+        fontSize: 20,
+        text: "This is 100 units.",
+        fill: 'white'
+      },
+      zero: {
+        x: 750,
+        y: 900,
+        fontFamily: 'Calibri',
+        fontSize: 20,
+        text: "0°",
+        fill: 'white'
+      },
+      ninety: {
+        x: 1400,
+        y: 500,
+        fontFamily: 'Calibri',
+        fontSize: 20,
+        text: "90°",
+        fill: 'white'
+      },
+      oneEighty: {
+        x: 750,
+        y: 40,
+        fontFamily: 'Calibri',
+        fontSize: 20,
+        text: "180°",
+        fill: 'white'
+      },
+      twoSeventy: {
+        x: 50,
+        y: 500,
+        fontFamily: 'Calibri',
+        fontSize: 20,
+        text: "270°",
+        fill: 'white'
+      },
       systems: [],
+      // Array to render 
       mousePos: {}
     };
   },
@@ -2130,6 +2220,8 @@ var height = window.innerHeight;
     axios.get('/systems').then(function (response) {
       return _this.systems = response.data;
     }); // .then(response => console.log('home:', response.data));
+
+    console.log("now:", this.nowSystems);
   },
   methods: {
     writeMessage: function writeMessage(message) {
@@ -2138,10 +2230,22 @@ var height = window.innerHeight;
     handleMouseMove: function handleMouseMove(event) {
       this.mousePos = this.$refs.stage.getStage().getPointerPosition(); // this.$emit("reportedStageCoordinates", {x: this.mousePos.x, y: this.mousePos.y});
     },
+    draw: function draw() {
+      this.line.points.push(this.$refs.stage.getStage().getPointerPosition().x);
+      this.line.points.push(this.$refs.stage.getStage().getPointerPosition().y);
+      console.log(this.line.points);
+    },
     log: function log() {
       var vm = this;
       vm.$forceUpdate();
       console.log(this.systems);
+    },
+    getInfo: function getInfo() {
+      this.info = "";
+      this.info = "I represent the super massive blackhole holding our galaxy together!";
+    },
+    getLess: function getLess() {
+      this.info = "";
     }
   }
 });
@@ -78764,16 +78868,16 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.star.XCoordinate,
-                                expression: "star.XCoordinate"
+                                value: _vm.star.YCoordinate,
+                                expression: "star.YCoordinate"
                               }
                             ],
                             attrs: {
                               type: "number",
-                              name: "XCoordinate",
+                              name: "YCoordinate",
                               placeholder: "How far away?"
                             },
-                            domProps: { value: _vm.star.XCoordinate },
+                            domProps: { value: _vm.star.YCoordinate },
                             on: {
                               input: function($event) {
                                 if ($event.target.composing) {
@@ -78781,7 +78885,7 @@ var render = function() {
                                 }
                                 _vm.$set(
                                   _vm.star,
-                                  "XCoordinate",
+                                  "YCoordinate",
                                   $event.target.value
                                 )
                               }
@@ -78793,16 +78897,16 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.star.YCoordinate,
-                                expression: "star.YCoordinate"
+                                value: _vm.star.XCoordinate,
+                                expression: "star.XCoordinate"
                               }
                             ],
                             attrs: {
                               type: "number",
-                              name: "YCoordinate",
+                              name: "XCoordinate",
                               placeholder: "Where is it's orbit?"
                             },
-                            domProps: { value: _vm.star.YCoordinate },
+                            domProps: { value: _vm.star.XCoordinate },
                             on: {
                               input: function($event) {
                                 if ($event.target.composing) {
@@ -78810,7 +78914,7 @@ var render = function() {
                                 }
                                 _vm.$set(
                                   _vm.star,
-                                  "YCoordinate",
+                                  "XCoordinate",
                                   $event.target.value
                                 )
                               }
@@ -79298,9 +79402,7 @@ var render = function() {
                     0
                   )
                 ]
-              ),
-              _vm._v(" "),
-              _c("button", { on: { click: _vm.log } }, [_vm._v("LOG")])
+              )
             ],
             1
           )
@@ -79308,7 +79410,10 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("GalacticCenter", { on: { reportedStageCoordinates: _vm.reportXY } })
+      _c("GalacticCenter", {
+        attrs: { nowSystems: _vm.nowSystemsAr },
+        on: { reportedStageCoordinates: _vm.reportXY }
+      })
     ],
     1
   )
@@ -79340,19 +79445,45 @@ var render = function() {
     [
       _c(
         "v-stage",
-        {
-          ref: "stage",
-          attrs: { config: _vm.stageSize },
-          on: { mousemove: _vm.handleMouseMove }
-        },
+        { ref: "stage", attrs: { config: _vm.stageSize } },
         [
           _c(
             "v-layer",
             [
+              _c("v-line", { ref: "line", attrs: { config: _vm.line } }),
+              _vm._v(" "),
+              _c("v-text", {
+                ref: "text",
+                attrs: {
+                  config: {
+                    x: 250,
+                    y: 400,
+                    fontFamily: "Calibri",
+                    fontSize: 40,
+                    text: _vm.info,
+                    fill: "white"
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("v-text", { ref: "text", attrs: { config: _vm.scaleText } }),
+              _vm._v(" "),
+              _c("v-text", { ref: "text", attrs: { config: _vm.zero } }),
+              _vm._v(" "),
+              _c("v-text", { ref: "text", attrs: { config: _vm.ninety } }),
+              _vm._v(" "),
+              _c("v-text", { ref: "text", attrs: { config: _vm.oneEighty } }),
+              _vm._v(" "),
+              _c("v-text", { ref: "text", attrs: { config: _vm.twoSeventy } }),
+              _vm._v(" "),
               _c("v-circle", {
                 ref: "ord",
                 attrs: { config: _vm.center },
-                on: { click: _vm.log }
+                on: {
+                  mouseover: _vm.getInfo,
+                  mouseleave: _vm.getLess,
+                  click: _vm.log
+                }
               }),
               _vm._v(" "),
               _vm._l(_vm.systems, function(item) {

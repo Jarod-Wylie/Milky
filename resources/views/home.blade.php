@@ -19,7 +19,7 @@
                         </div>
                     @endif
                     {{Auth::user()->name}}
-                    is a cool guy.
+
 
 
                     <form method="POST" action="/home">

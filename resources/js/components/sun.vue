@@ -84,6 +84,7 @@ export default {
 
     // Animation of Sun starts here
     const anim = new Konva.Animation(function(frame) {
+      
       sun.setX(vm.amp * Math.sin(radians) + centerX);
       sun.setY(vm.amp * Math.cos(radians) + centerY);
 
@@ -116,6 +117,7 @@ export default {
       this.info = "";
       this.info = this.sunObj.name + ": " + this.sunObj.Description;
     },
+
     getLess(){
       this.info = "";
     },

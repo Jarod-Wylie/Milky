@@ -23,15 +23,15 @@
               <button @click="selected = sun.id">{{sun.name}}</button>
               <input v-model="star.name" type="text" name="name" placeholder="Add a System">
               <input
-                v-model="star.XCoordinate"
-                type="number"
-                name="XCoordinate"
-                placeholder="How far away?"
-              >
-              <input
                 v-model="star.YCoordinate"
                 type="number"
                 name="YCoordinate"
+                placeholder="How far away?"
+              >
+              <input
+                v-model="star.XCoordinate"
+                type="number"
+                name="XCoordinate"
                 placeholder="Where is it's orbit?"
               >
 
@@ -124,12 +124,17 @@
           </ul>
         </b-modal>
 
-        <button @click="log">LOG</button>
+        <!-- <a href="/logout">Logout</a> -->
+
+        <!-- <button @click="log">LOG</button> -->
       </b-navbar>
 
     </div>
 
-    <GalacticCenter v-on:reportedStageCoordinates="reportXY"></GalacticCenter>
+    <GalacticCenter 
+          v-on:reportedStageCoordinates="reportXY"
+          :nowSystems="nowSystemsAr"
+    ></GalacticCenter>
   </div>
 </template>
 
@@ -141,7 +146,7 @@ export default {
 
       mouseXY: {},
 
-      star: { name: "", XCoordinate: null, YCoordinate: null, Description: null },
+      star: { name: "", XCoordinate: null, YCoordinate: null, Description: null ,Satelites: '[]' },
 
       planet: {
         name: "",
@@ -153,6 +158,8 @@ export default {
         moons: []
       },
       planets: [],
+
+      nowSystemsAr: [],
 
       moons: { name: "", amp: null, degree: null, trackX: 0, trackY: 0, Description: null },
       moon: [],
@@ -188,16 +195,25 @@ export default {
     addSun() {
       var self = this;
 
+
+      self.star.XCoordinate = parseInt(self.star.XCoordinate)
+      self.star.YCoordinate = parseInt(self.star.YCoordinate)
+      
+      self.nowSystemsAr.push(self.star);
+      console.log('star:', self.nowSystemsAr)
+
       // Neccessary for converting the text input of html fields to number.
       self.star.XCoordinate = parseInt(self.star.XCoordinate);
       self.star.YCoordinate = parseInt(self.star.YCoordinate);
+
+      console.log("iuhfsohceo:",self.star.YCoordinate);
 
       axios
         .post("Atlas", {
           name: self.star.name,
           XCoordinate: self.star.XCoordinate,
           YCoordinate: self.star.YCoordinate,
-          Satelites: "[]",
+          Satelites: self.star.Satelites,
           Description: self.star.Description
         })
         .then(function(response) {
@@ -214,6 +230,10 @@ export default {
 
       self.patchPath += obj.edit;
       console.log("Post attempted:", self.patchPath);
+
+      self.star.XCoordinate = parseInt(self.star.XCoordinate);
+      self.star.YCoordinate = parseInt(self.star.YCoordinate);
+      console.log("iuhfsohceo:",self.star.XCoordinate);
 
       axios
         .post(self.patchPath, {

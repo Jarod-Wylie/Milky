@@ -32,6 +32,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/logout', 'LoginController@__construct');
 
 // CRUD for making systems
 Route::get('/home', 'GalaxyController@create');
