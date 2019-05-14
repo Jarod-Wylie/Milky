@@ -43,6 +43,7 @@ class GalaxyController extends Controller
         $system->XCoordinate = request('XCoordinate');
         $system->YCoordinate = request('YCoordinate');
         $system->Satelites = request('Satelites');
+        $system->Description = request('Description');
 
         
         $system->save();
@@ -60,8 +61,9 @@ class GalaxyController extends Controller
         $systems = System::find($id);
         $systems->name = request('name');
         $systems->XCoordinate = request('XCoordinate');
-        $systems->Satelites = request('Satelites');
         $systems->YCoordinate = request('YCoordinate');
+        $systems->Description = request('Description');
+        $systems->Satelites = request('Satelites');
         $systems->save();
         return redirect('home');
     }

@@ -7,8 +7,8 @@
       :config="{
             x:xC,
             y:yC,
-            radius: 2,
-            fill: 'blue',
+            radius: 1,
+            fill: '#BEC5AD',
             trackX: kX,
             trackY: kY,
         }"/>
@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       degree: 180,
-      amp: 20,
+      amp: 13,
       satelites: false,
       list: []
     };
@@ -42,8 +42,8 @@ export default {
   mounted() {
     // console.log("Mounting Moon");
     const vm = this;
-    const amplitude = 4500;
-    const period = 1000;
+    const amplitude = 400;
+    const period = 2000;
     var radians = 1;
 
     const sun = this.$refs.orb.getStage();

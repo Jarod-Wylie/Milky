@@ -19,7 +19,8 @@
           :ampC="item.YCoordinate"
           :degreeC="item.XCoordinate"
           :sati="item.id"
-          :planetObj="item.Satelites">
+          :planetObj="item.Satelites"
+          :sunObj="item">
         </sun>
 
       </v-layer>
@@ -41,10 +42,11 @@ export default {
       },
 
       center: {
-        x: 650,
-        y: 450,
+        x: 750,
+        y: 500,
         radius: 10,
-        fill: "black"
+        fill: "black",
+        stroke: "white",
       },
 
       systems: [],
@@ -71,10 +73,15 @@ export default {
 
       this.mousePos = this.$refs.stage.getStage().getPointerPosition();
 
+
+
       // this.$emit("reportedStageCoordinates", {x: this.mousePos.x, y: this.mousePos.y});
     },
 
     log(){
+      var vm = this;
+
+      vm.$forceUpdate();
       console.log(this.systems);
     }
 

@@ -12,29 +12,56 @@ class SystemsSeeder extends Seeder
     public function run()
     {
         DB::table('systems')->insert([
-            'name' => "BLAzer Kitchen",
-            'XCoordinate' => 0,
-            'YCoordinate' => 200, 
+            'name' => "The Sun",
+            'XCoordinate' => 500,
+            'YCoordinate' => 180, 
+            'Description' => "The Sun, Its nice and keeps you warm.",
             'Satelites' => '[
                 {
-                    "name" : "PlanetA",
-                    "amp":50,
-                    "degree":180,
+                    "name" : "Mercury",
+                    "amp": 20,
+                    "degree":92,
                     "trackX": 0 ,
                     "trackY": 0 ,
                     "moons": 
                                         [
-                                            {"name": "moonA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0 }
+                                            {}
                                         ] 
                             },
                 {   
-                    "name" : "PlanetB",
-                    "amp":110,
-                    "degree":180,
+                    "name" : "Venus",
+                    "amp":30,
+                    "degree":80,
                     "trackX": 0 ,
-                    "trackY": 0
-                }
-            ]',
+                    "trackY": 0,
+                    "moons": 
+                                        [
+                                            
+                                        ] 
+                },
+                {
+                    "name" : "Earth",
+                    "amp": 56,
+                    "degree": 326,
+                    "trackX": 0 ,
+                    "trackY": 0 ,
+                    "moons": 
+                                        [
+                                            {"name": "Luna", "amp":10, "degree":180, "trackX": 0 , "trackY": 0 }
+                                        ] 
+                            },
+                {   
+                    "name" : "Mars",
+                    "amp":70,
+                    "degree":200,
+                    "trackX": 0 ,
+                    "trackY": 0,
+                    "moons": 
+                                        [
+                                            {"name": "Phobos", "amp":10, "degree":180, "trackX": 0 , "trackY": 0 }
+                                            {"name": "Deimos", "amp":10, "degree":180, "trackX": 0 , "trackY": 0 }
+                                        ] 
+                }]',
         ]);
 
         
@@ -42,6 +69,7 @@ class SystemsSeeder extends Seeder
             'name' => "JAR",
             'XCoordinate' => 180,
             'YCoordinate' => 400,
+            'Description' => "A star that does not exist",
             'Satelites' => '[{"name" : "PlanetA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0,"moons": 
                                         [
                                             {"name": "moonA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0 }
@@ -52,6 +80,7 @@ class SystemsSeeder extends Seeder
             'name' => "Bumber",
             'XCoordinate' => 90,
             'YCoordinate' => 40,
+            'Description' => "A star that does not exist",
             'Satelites' => '[{"name" : "PlanetA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0,"moons": 
                                         [
                                             {"name": "moonA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0 }
@@ -62,6 +91,7 @@ class SystemsSeeder extends Seeder
             'name' => "Bumber",
             'XCoordinate' => 180,
             'YCoordinate' => 400,
+            'Description' => "A star that does not exist",
             'Satelites' => '[{"name" : "PlanetA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0 ,"moons": 
                                         [
                                             {"name": "moonA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0 }
@@ -71,6 +101,7 @@ class SystemsSeeder extends Seeder
             'name' => "Bumber",
             'XCoordinate' => 270,
             'YCoordinate' => 430,
+            'Description' => "A star that does not exist",
             'Satelites' => '[{"name" : "PlanetA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0,"moons": 
                                         [
                                             {"name": "moonA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0 }
@@ -80,6 +111,7 @@ class SystemsSeeder extends Seeder
             'name' => "Bumber",
             'XCoordinate' => 90,
             'YCoordinate' => 700,
+            'Description' => "A star that does not exist",
             'Satelites' => '[{"name" : "PlanetA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0 ,"moons": 
                                         [
                                             {"name": "moonA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0 }
@@ -89,6 +121,7 @@ class SystemsSeeder extends Seeder
             'name' => "Bumber",
             'XCoordinate' => 40,
             'YCoordinate' => 105,
+            'Description' => "A star that does not exist",
             'Satelites' => '[{"name" : "PlanetA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0,"moons": 
                                         [
                                             {"name": "moonA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0 }
@@ -98,6 +131,7 @@ class SystemsSeeder extends Seeder
             'name' => "Bumber",
             'XCoordinate' => 49,
             'YCoordinate' => 290,
+            'Description' => "A star that does not exist",
             'Satelites' => '[{"name" : "PlanetA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0 ,"moons": 
                                         [
                                             {"name": "moonA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0 }
@@ -107,6 +141,7 @@ class SystemsSeeder extends Seeder
             'name' => "Bumber",
             'XCoordinate' => 37,
             'YCoordinate' => 550,
+            'Description' => "A star that does not exist",
             'Satelites' => '[{"name" : "PlanetA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0 ,"moons": 
                                         [
                                             {"name": "moonA", "amp":50, "degree":180, "trackX": 0 , "trackY": 0 }

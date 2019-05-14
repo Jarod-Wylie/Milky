@@ -50,8 +50,8 @@ export default {
 
       line: {
         points: [],
-        stroke: 'red',
-        strokeWidth: 15,
+        stroke: 'white',
+        strokeWidth: 40,
         lineCap: 'round',
         lineJoin: 'round'
 
@@ -104,8 +104,8 @@ export default {
         vm.line.points.push(vm.amp * Math.sin(radians) + centerX);
         vm.line.points.push(vm.amp * Math.cos(radians) + centerY);
 
-        if(vm.amp * Math.sin(radians) + centerX == vm.line.points[340] && vm.amp * Math.cos(radians) + centerY == vm.line.points[341]){
-          console.log("hoi:LOL");
+        if(vm.amp * Math.sin(radians) + centerX == vm.line.points[290] && vm.amp * Math.cos(radians) + centerY == vm.line.points[291]){
+            window.location.href = '/Milk';
         }
         // vm.draw();
 

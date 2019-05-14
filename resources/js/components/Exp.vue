@@ -35,6 +35,8 @@
                 placeholder="Where is it's orbit?"
               >
 
+              <textarea v-model="star.Description" placeholder="Short Description of System"></textarea>
+
               <editSuns v-on:edit="editSun" :editable="sun"></editSuns>
               <deleteSystem v-on:delete="deleteSystem" :editable="sun"></deleteSystem>
 
@@ -46,17 +48,19 @@
         <b-modal id="modal-Suns" title="Systems Registry">
           <input v-model="star.name" type="text" name="name" placeholder="Add a System">
           <input
-            v-model="star.XCoordinate"
-            type="number"
-            name="XCoordinate"
-            placeholder="How far away?"
-          >
-          <input
             v-model="star.YCoordinate"
             type="number"
             name="YCoordinate"
+            placeholder="How far awar?"
+          >
+          <input
+            v-model="star.XCoordinate"
+            type="number"
+            name="XCoordinate"
             placeholder="Where is it's orbit?"
           >
+
+          <textarea v-model="star.Description" placeholder="Short Description of System"></textarea>
 
           <input type="button" value="+" @click="addSun">
         </b-modal>
@@ -80,6 +84,8 @@
                   name="degree"
                   placeholder="Where in is it in it's orbit?"
                 >
+
+                <textarea v-model="planet.Description" placeholder="Short Description of Planet"></textarea>
 
                 <addPlanets v-on:addPlanet="addPlanet" :editable="sun"></addPlanets>
                 <!-- <addMoons v-on:addMoon="addMoon" :editable="sun" ></addMoons> -->
@@ -108,6 +114,7 @@
                       name="degree"
                       placeholder="Where in is it in it's orbit?"
                     >
+                    <textarea v-model="moons.Description" placeholder="Short description of the moon"></textarea>
 
                     <addMoons v-on:addMoon="addMoon" :sun="object" :editable="planets"></addMoons>
                   </div>
@@ -119,6 +126,7 @@
 
         <button @click="log">LOG</button>
       </b-navbar>
+
     </div>
 
     <GalacticCenter v-on:reportedStageCoordinates="reportXY"></GalacticCenter>
@@ -133,7 +141,7 @@ export default {
 
       mouseXY: {},
 
-      star: { name: "", XCoordinate: null, YCoordinate: null },
+      star: { name: "", XCoordinate: null, YCoordinate: null, Description: null },
 
       planet: {
         name: "",
@@ -141,11 +149,12 @@ export default {
         degree: null,
         trackX: 0,
         trackY: 0,
+        description: null,
         moons: []
       },
       planets: [],
 
-      moons: { name: "", amp: null, degree: null, trackX: 0, trackY: 0 },
+      moons: { name: "", amp: null, degree: null, trackX: 0, trackY: 0, Description: null },
       moon: [],
 
       patchPath: "/editObj/",
@@ -188,7 +197,8 @@ export default {
           name: self.star.name,
           XCoordinate: self.star.XCoordinate,
           YCoordinate: self.star.YCoordinate,
-          Satelites: "[]"
+          Satelites: "[]",
+          Description: self.star.Description
         })
         .then(function(response) {
           console.log("Post attempted");
@@ -211,6 +221,7 @@ export default {
           XCoordinate: self.star.XCoordinate,
           YCoordinate: self.star.YCoordinate,
           Satelites: obj.satelites,
+          Description: self.star.Description,
           _method: "patch"
         })
         .then(function(response) {});

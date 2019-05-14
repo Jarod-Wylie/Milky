@@ -43,6 +43,7 @@
 
             .content {
                 text-align: center;
+                color: white;
             }
 
             .title {
@@ -62,6 +63,7 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
         </style>
     </head>
     <body>
@@ -81,9 +83,10 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
+                <div class="title m-b-md ">
                     Milky
                 </div>
+
 
 
                 <div id="app">

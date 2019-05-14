@@ -1909,6 +1909,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1917,7 +1925,8 @@ __webpack_require__.r(__webpack_exports__);
       star: {
         name: "",
         XCoordinate: null,
-        YCoordinate: null
+        YCoordinate: null,
+        Description: null
       },
       planet: {
         name: "",
@@ -1925,6 +1934,7 @@ __webpack_require__.r(__webpack_exports__);
         degree: null,
         trackX: 0,
         trackY: 0,
+        description: null,
         moons: []
       },
       planets: [],
@@ -1933,7 +1943,8 @@ __webpack_require__.r(__webpack_exports__);
         amp: null,
         degree: null,
         trackX: 0,
-        trackY: 0
+        trackY: 0,
+        Description: null
       },
       moon: [],
       patchPath: "/editObj/",
@@ -1968,7 +1979,8 @@ __webpack_require__.r(__webpack_exports__);
         name: self.star.name,
         XCoordinate: self.star.XCoordinate,
         YCoordinate: self.star.YCoordinate,
-        Satelites: "[]"
+        Satelites: "[]",
+        Description: self.star.Description
       }).then(function (response) {
         console.log("Post attempted");
       });
@@ -1985,6 +1997,7 @@ __webpack_require__.r(__webpack_exports__);
         XCoordinate: self.star.XCoordinate,
         YCoordinate: self.star.YCoordinate,
         Satelites: obj.satelites,
+        Description: self.star.Description,
         _method: "patch"
       }).then(function (response) {});
     },
@@ -2090,6 +2103,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 var width = window.innerWidth;
 var height = window.innerHeight;
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2100,10 +2114,11 @@ var height = window.innerHeight;
         height: 1000
       },
       center: {
-        x: 650,
-        y: 450,
+        x: 750,
+        y: 500,
         radius: 10,
-        fill: "black"
+        fill: "black",
+        stroke: "white"
       },
       systems: [],
       mousePos: {}
@@ -2124,6 +2139,8 @@ var height = window.innerHeight;
       this.mousePos = this.$refs.stage.getStage().getPointerPosition(); // this.$emit("reportedStageCoordinates", {x: this.mousePos.x, y: this.mousePos.y});
     },
     log: function log() {
+      var vm = this;
+      vm.$forceUpdate();
       console.log(this.systems);
     }
   }
@@ -2336,7 +2353,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       degree: 180,
-      amp: 20,
+      amp: 13,
       satelites: false,
       list: []
     };
@@ -2345,8 +2362,8 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     // console.log("Mounting Moon");
     var vm = this;
-    var amplitude = 4500;
-    var period = 1000;
+    var amplitude = 400;
+    var period = 2000;
     var radians = 1;
     var sun = this.$refs.orb.getStage();
     var centerX = sun.attrs.x;
@@ -2729,7 +2746,8 @@ __webpack_require__.r(__webpack_exports__);
     ampC: Number,
     degreeC: Number,
     SunID: String,
-    planetObj: String
+    planetObj: String,
+    sunObj: Object
   },
   data: function data() {
     return {
@@ -2777,7 +2795,8 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     getInfo: function getInfo() {
-      this.info = this.SunID;
+      this.info = "";
+      this.info = this.sunObj.name + ": " + this.sunObj.Description;
     },
     getLess: function getLess() {
       this.info = "";
@@ -2851,8 +2870,8 @@ var height = window.innerHeight;
       },
       line: {
         points: [],
-        stroke: 'red',
-        strokeWidth: 15,
+        stroke: 'white',
+        strokeWidth: 40,
         lineCap: 'round',
         lineJoin: 'round'
       },
@@ -2887,8 +2906,8 @@ var height = window.innerHeight;
         vm.line.points.push(vm.amp * Math.sin(radians) + centerX);
         vm.line.points.push(vm.amp * Math.cos(radians) + centerY);
 
-        if (vm.amp * Math.sin(radians) + centerX == vm.line.points[340] && vm.amp * Math.cos(radians) + centerY == vm.line.points[341]) {
-          console.log("hoi:LOL");
+        if (vm.amp * Math.sin(radians) + centerX == vm.line.points[290] && vm.amp * Math.cos(radians) + centerY == vm.line.points[291]) {
+          window.location.href = '/Milk';
         } // vm.draw();
         // retains the original degree->radian set in the data to begin motion from
         // rather than: radians = (frame.time * 2 * Math.PI) / period;
@@ -78798,6 +78817,33 @@ var render = function() {
                             }
                           }),
                           _vm._v(" "),
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.star.Description,
+                                expression: "star.Description"
+                              }
+                            ],
+                            attrs: {
+                              placeholder: "Short Description of System"
+                            },
+                            domProps: { value: _vm.star.Description },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.star,
+                                  "Description",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
                           _c("editSuns", {
                             attrs: { editable: sun },
                             on: { edit: _vm.editSun }
@@ -78850,6 +78896,31 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
+                        value: _vm.star.YCoordinate,
+                        expression: "star.YCoordinate"
+                      }
+                    ],
+                    attrs: {
+                      type: "number",
+                      name: "YCoordinate",
+                      placeholder: "How far awar?"
+                    },
+                    domProps: { value: _vm.star.YCoordinate },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.star, "YCoordinate", $event.target.value)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
                         value: _vm.star.XCoordinate,
                         expression: "star.XCoordinate"
                       }
@@ -78857,7 +78928,7 @@ var render = function() {
                     attrs: {
                       type: "number",
                       name: "XCoordinate",
-                      placeholder: "How far away?"
+                      placeholder: "Where is it's orbit?"
                     },
                     domProps: { value: _vm.star.XCoordinate },
                     on: {
@@ -78870,27 +78941,23 @@ var render = function() {
                     }
                   }),
                   _vm._v(" "),
-                  _c("input", {
+                  _c("textarea", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.star.YCoordinate,
-                        expression: "star.YCoordinate"
+                        value: _vm.star.Description,
+                        expression: "star.Description"
                       }
                     ],
-                    attrs: {
-                      type: "number",
-                      name: "YCoordinate",
-                      placeholder: "Where is it's orbit?"
-                    },
-                    domProps: { value: _vm.star.YCoordinate },
+                    attrs: { placeholder: "Short Description of System" },
+                    domProps: { value: _vm.star.Description },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(_vm.star, "YCoordinate", $event.target.value)
+                        _vm.$set(_vm.star, "Description", $event.target.value)
                       }
                     }
                   }),
@@ -79009,6 +79076,33 @@ var render = function() {
                                       _vm.$set(
                                         _vm.planet,
                                         "degree",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("textarea", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.planet.Description,
+                                      expression: "planet.Description"
+                                    }
+                                  ],
+                                  attrs: {
+                                    placeholder: "Short Description of Planet"
+                                  },
+                                  domProps: { value: _vm.planet.Description },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.planet,
+                                        "Description",
                                         $event.target.value
                                       )
                                     }
@@ -79153,6 +79247,36 @@ var render = function() {
                                           }
                                         }),
                                         _vm._v(" "),
+                                        _c("textarea", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.moons.Description,
+                                              expression: "moons.Description"
+                                            }
+                                          ],
+                                          attrs: {
+                                            placeholder:
+                                              "Short description of the moon"
+                                          },
+                                          domProps: {
+                                            value: _vm.moons.Description
+                                          },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                _vm.moons,
+                                                "Description",
+                                                $event.target.value
+                                              )
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(" "),
                                         _c("addMoons", {
                                           attrs: {
                                             sun: object,
@@ -79241,7 +79365,8 @@ var render = function() {
                     ampC: item.YCoordinate,
                     degreeC: item.XCoordinate,
                     sati: item.id,
-                    planetObj: item.Satelites
+                    planetObj: item.Satelites,
+                    sunObj: item
                   }
                 })
               })
@@ -79398,8 +79523,8 @@ var render = function() {
           config: {
             x: _vm.xC,
             y: _vm.yC,
-            radius: 2,
-            fill: "blue",
+            radius: 1,
+            fill: "#BEC5AD",
             trackX: _vm.kX,
             trackY: _vm.kY
           }
@@ -79450,7 +79575,7 @@ var render = function() {
             start: _vm.degreeC,
             trackX: _vm.kX,
             trackY: _vm.kY,
-            fill: "red"
+            fill: "#176087"
           }
         },
         on: {
@@ -79650,9 +79775,9 @@ var render = function() {
             x: 400,
             y: 400,
             fontFamily: "Calibri",
-            fontSize: 24,
+            fontSize: 40,
             text: _vm.info,
-            fill: "black"
+            fill: "white"
           }
         }
       }),
@@ -79666,7 +79791,7 @@ var render = function() {
             amplitude: _vm.ampC,
             start: _vm.degreeC,
             radius: 20,
-            fill: "yellow",
+            fill: "#F8E4A2",
             SunID: _vm.SunID
           }
         },

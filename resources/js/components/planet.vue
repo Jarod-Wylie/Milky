@@ -13,7 +13,7 @@
         start: degreeC,
         trackX: kX,
         trackY: kY,
-        fill: 'red',
+        fill: '#176087',
     }"
     />
     <!-- Child of Planet and the props being passed to it -->

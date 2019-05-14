@@ -19,6 +19,7 @@ class CreateSystemsTable extends Migration
             $table->bigInteger('XCoordinate');
             $table->bigInteger('YCoordinate');
             $table->text('Satelites');
+            $table->text('Description');
             $table->timestamps();
         });
 

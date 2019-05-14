@@ -5,9 +5,9 @@
           x: 400,
           y: 400,
           fontFamily: 'Calibri',
-          fontSize: 24,
+          fontSize: 40,
           text: info,
-          fill: 'black'
+          fill: 'white'
         }" />
    
     <v-circle
@@ -21,7 +21,7 @@
                     amplitude: ampC,
                     start: degreeC,
                     radius: 20,
-                    fill: 'yellow',
+                    fill: '#F8E4A2',
                     SunID: SunID,
                 }"
     />
@@ -50,6 +50,7 @@ export default {
     degreeC: Number,
     SunID: String,
     planetObj : String,
+    sunObj : Object,
   },
 
   data() {
@@ -112,7 +113,8 @@ export default {
     },
 
     getInfo(){
-      this.info = this.SunID;
+      this.info = "";
+      this.info = this.sunObj.name + ": " + this.sunObj.Description;
     },
     getLess(){
       this.info = "";

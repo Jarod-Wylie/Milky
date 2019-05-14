@@ -6,7 +6,12 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
        
 
-
+        <style>
+.background {
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+</style>
 
         <title>Laravel</title>
         
@@ -18,7 +23,11 @@
 
     </head>
 
-    <body>
+    <body background="/images/MilkyStars.jpg">
+
+
+
+
 
 
 
