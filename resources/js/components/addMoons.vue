@@ -1,11 +1,9 @@
+
+
 <template>
     <div>
-
-
+        
         <button @click="addMoon"> Add Moon</button>
-
-   
-
 
     </div>
 </template>

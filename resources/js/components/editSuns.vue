@@ -2,7 +2,6 @@
     <div>
 
         <b-button @click="edit">Submit Changes</b-button>
-
     </div>
 </template>
 

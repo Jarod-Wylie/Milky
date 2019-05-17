@@ -1,71 +1,105 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+#Milky
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+##Table of Contents
+- MoSCoW	1
+-
+Personas Analysis:	3
+Galaxy Specs:	4
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Introduction/Background
+To create a visual interface that brings more awareness to how much we don’t know about the Milky Way Galaxy and the objects it contains.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost you and your team's skills by digging into our comprehensive video library.
+MoSCoW
+	
+	Must Have:
+A way to users can make profiles that contain their name and their education credentials.
+Input fields that that add positions of objects: Systems; Black Holes; Planets; Moons; Belts
+This information is saved and the Milky Way is Generated on load of the page.
+A visual interface that displays the types of objects - see specifications for Galaxy
 
-## Laravel Sponsors
+	
+	Should Have:
+A favorite button that adds an object to a list.
+Be able to zoom in/ click to sections of the galaxy -> quadrants -> systems -> objects.
+Objects are clickable and bring up information and pictures created by users.
+Paths and speeds of the objects around each other.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+	Could Have:
+Color coding button that shows a hierarchy of how much information we have on regions of the Milky (shown in saturation of red with Earth as the highest standard).
+Could have a future simulator showing place of objects in their paths.
+Could Have a little rocket image that you choose speeds and can move towards other objects in real time(tries to simulate how long it would take to get between places).
+Rocket and planets have rigid bodys
+Some kind of simulated gravity that is exerted on the rocket
+Add fantasy systems that only the user views.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
+	Won’t Have:
 
-## Contributing
+The map will not have a way to represent a three dimensional Milky Way.
+A way for interstellar users to have access to the application
+This will not be accurate to the real position of objects in the Milky and their location.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Personas:
 
-## License
+Qualified Hobbyists: Really likes astronomy and knows enough to edit the information with some degree of accuracy - finds the interface fun to use and likes to feel smart.
 
-The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Teachers: Wants a fun interactive website their students can use exploring space and get a better feel on what we know about our distant neighbors.
+
+Alien Bablap: Likes to travel the universe and an app that helps it find near systems and planets in orbit to his location would be great.
+
+Astronomers: Annoyed such a inaccurate application exists and want to critique it’s user’s contributions and the relative accuracy of the web app.
+
+
+
+Personas Analysis:
+
+This project’s aim is to lay a foundation for fulfilling the desires of the personas. The personas are the ideal audience for which I would hope the web app to be used by.
+
+Qualified Hobbyists: 
+Is tech savvy but interface needs some amount of teaching to use an make content.
+Has most common objects for them to add: black holes, sun, etc.
+
+Teachers: 
+The exploration interface is needs to be very easy to use for children.
+Interface is colorful and attention grabbing
+Displays content clearly.
+
+Astronomer:
+A way to clearly identify astronomer based on profile type and the educational credentials.
+Astronomer can rate how accurate a the description of an object in space is. 1-100
+Astronomer can obviously edit information.
+
+Alien Bablap:
+Calculates the positions of objects their orbit for a specified time.
+
+
+
+Stories:
+VIew a flat model Galaxy - 2pts
+https://konvajs.org/docs/vue/ ←-- Learn how to use for drawing galaxy and its object -- 6pts
+Galaxy is represented geometrically as a circle with measurements of 360 degrees around it - 2pts
+Galaxy is represented as having a radius of 50,000 light years - must be represented somehow - spike!
+User Profiles Input Form - 5pts
+Preserve profiles - 5pts
+Input field  objects to Sequel Pro database - 4pts
+Translate every item into a shape associated with the object - SPIKE!!
+Draw each item to canvas where it is specified to go - SPIKE!
+
+
+
+
+Galaxy Specs:
+Is geometrically a circle with 360 degree trackable radius
+Center is the supermassive black hole at the galactic center
+4 quadrants that zone in on the inner systems
+
+Wire Frames:
+
+
+

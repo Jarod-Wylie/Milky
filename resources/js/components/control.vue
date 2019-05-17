@@ -124,9 +124,7 @@
           </ul>
         </b-modal>
 
-        <!-- <a href="/logout">Logout</a> -->
-
-        <!-- <button @click="log">LOG</button> -->
+        <!-- <button @click="debugLog">LOG</button> -->
       </b-navbar>
 
     </div>
@@ -186,7 +184,7 @@ export default {
   },
 
   methods: {
-    log() {
+    debugLog() {
       // console.log(this.content);
       console.log("data:", JSON.parse(this.content[0].Satelites));
     },
@@ -285,8 +283,6 @@ export default {
 
       console.log("planet:", self.planets);
 
-      // self.planets[0].moons = "hoi";
-
       axios
         .post(self.patchPath, {
           name: obj.name,
@@ -303,7 +299,6 @@ export default {
 
       self.patchPath = "/editObj/" + obj.patchID.toString();
 
-      // self.patchPath += obj.add.toString();
       console.log("Post attempted:", self.patchPath);
 
       //push to an array to give to the Satelites column
@@ -312,8 +307,6 @@ export default {
 
       console.log("moon to be added:", obj.preserve);
       obj.preserve.moons.push(self.moons);
-
-      // self.planets.push(obj.preserve);
 
       // self.planets[0].moons = "hoi";
 

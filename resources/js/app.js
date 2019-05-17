@@ -37,14 +37,15 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('supermbh', require('./components/superMBH.vue').default);
 
 
 
-Vue.component('Exp', require('./components/Exp.vue').default);
-
 Vue.component('rocket', require('./components/rocket.vue').default);
+
+
+Vue.component('control', require('./components/control.vue').default);
+
 
 
 //Component used for testing how reactivity with vue can submit form data.
@@ -64,7 +65,6 @@ Vue.component('addMoons', require('./components/addMoons.vue').default);
 // A proto type of Galactic Center
 // Vue.component('superMBH', require('./components/superMBH.vue').default);
 
-//
 
 
 // Each components lineage GalacticCenter->sun->planet->moon
