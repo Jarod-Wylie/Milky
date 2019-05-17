@@ -12,7 +12,7 @@ Three sprints planned:
 Status: Green is completed
 
 See these links for more info:
-MVP [https://docs.google.com/document/d/e/2PACX-1vTVO4FjdlAnIuGaYr1c45jPjvTHuSAXWM09SRgMDz_QIc50fVXpbE4WTNNTk2SPs9DablKFboLSrOAE/pub]
+- MVP [https://docs.google.com/document/d/e/2PACX-1vTVO4FjdlAnIuGaYr1c45jPjvTHuSAXWM09SRgMDz_QIc50fVXpbE4WTNNTk2SPs9DablKFboLSrOAE/pub]
 
-Trello board [https://trello.com/b/uNMGMlUj]
+- Trello board [https://trello.com/b/uNMGMlUj]
 
