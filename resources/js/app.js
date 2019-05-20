@@ -40,27 +40,16 @@ window.Vue = require('vue');
 Vue.component('supermbh', require('./components/superMBH.vue').default);
 
 
-
-Vue.component('rocket', require('./components/rocket.vue').default);
-
-
 Vue.component('control', require('./components/control.vue').default);
-
 
 
 //Component used for testing how reactivity with vue can submit form data.
 Vue.component('testing', require('./components/testing.vue').default);
 
-
-
 Vue.component('editSuns', require('./components/editSuns.vue').default);
 Vue.component('deleteSystem', require('./components/deleteSystem.vue').default);
 Vue.component('addPlanets', require('./components/addPlanets.vue').default);
 Vue.component('addMoons', require('./components/addMoons.vue').default);
-
-
-
-
 
 // A proto type of Galactic Center
 // Vue.component('superMBH', require('./components/superMBH.vue').default);
@@ -73,7 +62,6 @@ Vue.component('sun', require('./components/sun.vue').default);
 Vue.component('planet', require('./components/planet.vue').default);
 Vue.component('moon', require('./components/moon.vue').default);
 
-Vue.component('stage', require('./components/stage.vue').default);
 
 
 /**

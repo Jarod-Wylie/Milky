@@ -3,10 +3,6 @@
         <b-button @click="change"> Submit</b-button>
 
         <button @click="addPlanet"> Add</button>
-
-   
-
-
     </div>
 </template>
 
@@ -22,9 +18,7 @@
         data(){
             return {
 
-
                 patchPath:"/editObj/",
-
 
             }
         },
@@ -37,7 +31,6 @@
         methods:{
             
             change(){
-                 
 
                     this.$emit("change", {
                         edit: this.editable.id,
@@ -46,8 +39,6 @@
 
               
             addPlanet(){
-                 
-
                     this.$emit("addPlanet", {
                         add: this.editable.id, 
                         name: this.editable.name, 
@@ -56,7 +47,6 @@
                         satelites: JSON.parse(this.editable.Satelites),
                         });
 
-              
             }
         }
         

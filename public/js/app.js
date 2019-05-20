@@ -1884,7 +1884,6 @@ var height = window.innerHeight;
         fill: 'white'
       },
       systems: [],
-      // Array to render 
       mousePos: {}
     };
   },
@@ -2233,7 +2232,8 @@ __webpack_require__.r(__webpack_exports__);
         Satelites: self.star.Satelites,
         Description: self.star.Description
       }).then(function (response) {
-        console.log("Post attempted");
+        window.location.href = '/Milk';
+        console.log("Post attempted", "What?");
       });
     },
     // Post to edit sun name and position
@@ -2253,7 +2253,9 @@ __webpack_require__.r(__webpack_exports__);
         Satelites: obj.satelites,
         Description: self.star.Description,
         _method: "patch"
-      }).then(function (response) {});
+      }).then(function (response) {
+        window.location.href = '/Milk';
+      });
     },
     //Post to delete Systems
     deleteSystem: function deleteSystem(obj) {
@@ -2267,7 +2269,9 @@ __webpack_require__.r(__webpack_exports__);
         // YCoordinate: self.star.YCoordinate,
         // Satelites: obj.satelites,
         _method: "delete"
-      }).then(function (response) {});
+      }).then(function (response) {
+        window.location.href = '/Milk';
+      });
     },
     addPlanet: function addPlanet(obj) {
       var self = this;
@@ -2287,7 +2291,9 @@ __webpack_require__.r(__webpack_exports__);
         YCoordinate: obj.y,
         Satelites: JSON.stringify(self.planets),
         _method: "patch"
-      }).then(function (response) {});
+      }).then(function (response) {
+        window.location.href = '/Milk';
+      });
     },
     addMoon: function addMoon(obj) {
       var self = this;
@@ -2305,7 +2311,9 @@ __webpack_require__.r(__webpack_exports__);
         YCoordinate: obj.y,
         Satelites: JSON.stringify([obj.preserve]),
         _method: "patch"
-      }).then(function (response) {});
+      }).then(function (response) {
+        window.location.href = '/Milk';
+      });
     },
     // Reports the X and Y of the stage created in the component: GalacticCenter
     reportXY: function reportXY(obj) {
@@ -2497,16 +2505,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     xC: Number,
@@ -2570,196 +2568,6 @@ __webpack_require__.r(__webpack_exports__);
     }, planet.getLayer());
     anim.start();
   }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/rocket.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/rocket.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/stage.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/stage.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var width = window.innerWidth;
-var height = window.innerHeight;
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      ani: false,
-      degree: 0,
-      amp: 100,
-      origin: 650,
-      max: 100,
-      stageSize: {
-        width: width,
-        height: height
-      },
-      flip: true,
-      circle: {
-        x: 650,
-        y: 100,
-        radius: 10,
-        fill: 'blue'
-      },
-      center: {
-        x: 300,
-        y: 200,
-        radius: 10,
-        fill: 'black'
-      },
-      text: "",
-      list: [{
-        x: 650,
-        y: 100,
-        radius: 50,
-        fill: 'blue'
-      }]
-    };
-  },
-  mounted: function mounted() {
-    var vm = this;
-    var amplitude = 100;
-    var period = 1000; // in ms
-
-    var centerX = this.$refs.ord.getStage().attrs.x;
-    var centerY = this.$refs.ord.getStage().attrs.y;
-    console.log("ord:", this.$refs.ord.getStage().attrs.x);
-    var circ = this.$refs.circ.getStage();
-    console.log("mounted"); // example of Konva.Animation
-
-    var anim = new Konva.Animation(function (frame) {
-      if (vm.ani == true) {
-        radians = frame.time * 2 * 3.14 / period;
-      } else {
-        var radians = vm.degree * 0.0174532925;
-      }
-
-      circ.setX(vm.amp * Math.sin(radians) + centerX);
-      circ.setY(vm.amp * Math.cos(radians) + centerY);
-    }, circ.getLayer());
-    anim.start();
-  },
-  methods: {
-    changeAmp: function changeAmp() {
-      this.amp = prompt("Enter a number 1 - 100");
-      console.log(this.amp);
-    },
-    changeDegree: function changeDegree() {
-      this.degree = prompt("Enter a number 1 - 100");
-    },
-    distance: function distance() {
-      var dist = prompt("Enter a number 1 - 100");
-      dist = parseInt(dist);
-      dist += this.origin;
-      this.list.push({
-        x: dist,
-        y: 100
-      });
-    },
-    handleClick: function handleClick(evt) {
-      var stage = evt.target.getStage();
-      var pos = stage.getPointerPosition();
-      this.list.push(pos);
-      console.log(pos);
-    },
-    writeMessage: function writeMessage(message) {
-      this.text = message;
-    },
-    handleMouseMove: function handleMouseMove(event) {
-      var mousePos = this.$refs.stage.getStage().getPointerPosition();
-      var x = mousePos.x;
-      var y = mousePos.y;
-      this.writeMessage('x: ' + x + ', y: ' + y);
-    }
-  } //     frame.time * 2 * 3.14) / period
-
 });
 
 /***/ }),
@@ -2916,6 +2724,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 var width = window.innerWidth;
 var height = window.innerHeight;
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2981,14 +2793,11 @@ var height = window.innerHeight;
         circ.setX(vm.amp * Math.sin(radians) + centerX);
         circ.setY(vm.amp * Math.cos(radians) + centerY);
         vm.line.points.push(vm.amp * Math.sin(radians) + centerX);
-        vm.line.points.push(vm.amp * Math.cos(radians) + centerY);
+        vm.line.points.push(vm.amp * Math.cos(radians) + centerY); // Go to the control and map view after user has signed on.
 
         if (vm.amp * Math.sin(radians) + centerX == vm.line.points[290] && vm.amp * Math.cos(radians) + centerY == vm.line.points[291]) {
           window.location.href = '/Milk';
-        } // vm.draw();
-        // retains the original degree->radian set in the data to begin motion from
-        // rather than: radians = (frame.time * 2 * Math.PI) / period;
-
+        }
 
         radians = radians + 60 * 2 * Math.PI / period;
       }, circ.getLayer());
@@ -3013,10 +2822,6 @@ var height = window.innerHeight;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
 //
 //
 //
@@ -78915,7 +78720,13 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "b-modal",
-                { attrs: { id: "modal-editSuns", title: "Systems Registry" } },
+                {
+                  attrs: {
+                    id: "modal-editSuns",
+                    title: "Systems Registry",
+                    "hide-footer": ""
+                  }
+                },
                 [
                   _c(
                     "ul",
@@ -79066,7 +78877,13 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "b-modal",
-                { attrs: { id: "modal-Suns", title: "Systems Registry" } },
+                {
+                  attrs: {
+                    id: "modal-Suns",
+                    title: "Systems Registry",
+                    "hide-footer": ""
+                  }
+                },
                 [
                   _c("input", {
                     directives: [
@@ -79165,7 +78982,7 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("input", {
-                    attrs: { type: "button", value: "+" },
+                    attrs: { type: "button", value: "Add System" },
                     on: { click: _vm.addSun }
                   })
                 ]
@@ -79173,7 +78990,13 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "b-modal",
-                { attrs: { id: "modal-Planets", title: "Systems Registry" } },
+                {
+                  attrs: {
+                    id: "modal-Planets",
+                    title: "Systems Registry",
+                    "hide-footer": ""
+                  }
+                },
                 [
                   _c("h1", [_vm._v("Suns:")]),
                   _vm._v(" "),
@@ -79328,7 +79151,13 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "b-modal",
-                { attrs: { id: "modal-Moons", title: "Moons Registry" } },
+                {
+                  attrs: {
+                    id: "modal-Moons",
+                    title: "Moons Registry",
+                    "hide-footer": ""
+                  }
+                },
                 [
                   _c("h1", [_vm._v("Planets:")]),
                   _vm._v(" "),
@@ -79675,152 +79504,6 @@ var render = function() {
       })
     ],
     2
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/rocket.vue?vue&type=template&id=11418edf&scoped=true&":
-/*!*********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/rocket.vue?vue&type=template&id=11418edf&scoped=true& ***!
-  \*********************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("v-regular-polygon", {
-        attrs: {
-          config: {
-            x: 70,
-            y: 600,
-            fill: "green",
-            sides: 3,
-            radius: 40
-          }
-        }
-      })
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/stage.vue?vue&type=template&id=6f3d267a&":
-/*!********************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/stage.vue?vue&type=template&id=6f3d267a& ***!
-  \********************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h1", [_vm._v("Orbit Lab")]),
-      _vm._v(" "),
-      _c("div", [
-        _c("button", { on: { click: _vm.distance } }, [
-          _vm._v("How far away?")
-        ]),
-        _vm._v(" "),
-        _c("button", { on: { click: _vm.changeAmp } }, [_vm._v("Change Amp")]),
-        _vm._v(" "),
-        _c("button", { on: { click: _vm.changeDegree } }, [
-          _vm._v("Change Degree")
-        ]),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            on: {
-              click: function($event) {
-                _vm.ani = !_vm.ani
-              }
-            }
-          },
-          [_vm._v("Orbit on")]
-        )
-      ]),
-      _vm._v(" "),
-      _c(
-        "v-stage",
-        {
-          ref: "stage",
-          attrs: { config: _vm.stageSize },
-          on: { mousemove: _vm.handleMouseMove, click: _vm.handleClick }
-        },
-        [
-          _c(
-            "v-layer",
-            [
-              _c("v-circle", { ref: "circ", attrs: { config: _vm.circle } }),
-              _vm._v(" "),
-              _c("v-circle", { ref: "ord", attrs: { config: _vm.center } }),
-              _vm._v(" "),
-              _vm._l(_vm.list, function(item) {
-                return _c("v-rect", {
-                  key: item.id,
-                  attrs: {
-                    config: {
-                      x: item.x,
-                      y: item.y,
-                      width: 10,
-                      height: 10,
-                      fill: "blue"
-                    }
-                  }
-                })
-              }),
-              _vm._v(" "),
-              _c("v-text", {
-                ref: "text",
-                attrs: {
-                  config: {
-                    x: 10,
-                    y: 10,
-                    fontFamily: "Calibri",
-                    fontSize: 24,
-                    text: _vm.text,
-                    fill: "black"
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("orbiter")
-            ],
-            2
-          )
-        ],
-        1
-      )
-    ],
-    1
   )
 }
 var staticRenderFns = []
@@ -92172,7 +91855,6 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('supermbh', __webpack_require__(/*! ./components/superMBH.vue */ "./resources/js/components/superMBH.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('rocket', __webpack_require__(/*! ./components/rocket.vue */ "./resources/js/components/rocket.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('control', __webpack_require__(/*! ./components/control.vue */ "./resources/js/components/control.vue")["default"]); //Component used for testing how reactivity with vue can submit form data.
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('testing', __webpack_require__(/*! ./components/testing.vue */ "./resources/js/components/testing.vue")["default"]);
@@ -92187,7 +91869,6 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('GalacticCenter', __webpack
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('sun', __webpack_require__(/*! ./components/sun.vue */ "./resources/js/components/sun.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('planet', __webpack_require__(/*! ./components/planet.vue */ "./resources/js/components/planet.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('moon', __webpack_require__(/*! ./components/moon.vue */ "./resources/js/components/moon.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('stage', __webpack_require__(/*! ./components/stage.vue */ "./resources/js/components/stage.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -92808,144 +92489,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_planet_vue_vue_type_template_id_3ad1b7a3___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_planet_vue_vue_type_template_id_3ad1b7a3___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/rocket.vue":
-/*!********************************************!*\
-  !*** ./resources/js/components/rocket.vue ***!
-  \********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _rocket_vue_vue_type_template_id_11418edf_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./rocket.vue?vue&type=template&id=11418edf&scoped=true& */ "./resources/js/components/rocket.vue?vue&type=template&id=11418edf&scoped=true&");
-/* harmony import */ var _rocket_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./rocket.vue?vue&type=script&lang=js& */ "./resources/js/components/rocket.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _rocket_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _rocket_vue_vue_type_template_id_11418edf_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _rocket_vue_vue_type_template_id_11418edf_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  "11418edf",
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/rocket.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/rocket.vue?vue&type=script&lang=js&":
-/*!*********************************************************************!*\
-  !*** ./resources/js/components/rocket.vue?vue&type=script&lang=js& ***!
-  \*********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_rocket_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./rocket.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/rocket.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_rocket_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/rocket.vue?vue&type=template&id=11418edf&scoped=true&":
-/*!***************************************************************************************!*\
-  !*** ./resources/js/components/rocket.vue?vue&type=template&id=11418edf&scoped=true& ***!
-  \***************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_rocket_vue_vue_type_template_id_11418edf_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./rocket.vue?vue&type=template&id=11418edf&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/rocket.vue?vue&type=template&id=11418edf&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_rocket_vue_vue_type_template_id_11418edf_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_rocket_vue_vue_type_template_id_11418edf_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/stage.vue":
-/*!*******************************************!*\
-  !*** ./resources/js/components/stage.vue ***!
-  \*******************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _stage_vue_vue_type_template_id_6f3d267a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./stage.vue?vue&type=template&id=6f3d267a& */ "./resources/js/components/stage.vue?vue&type=template&id=6f3d267a&");
-/* harmony import */ var _stage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stage.vue?vue&type=script&lang=js& */ "./resources/js/components/stage.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _stage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _stage_vue_vue_type_template_id_6f3d267a___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _stage_vue_vue_type_template_id_6f3d267a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/stage.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/stage.vue?vue&type=script&lang=js&":
-/*!********************************************************************!*\
-  !*** ./resources/js/components/stage.vue?vue&type=script&lang=js& ***!
-  \********************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_stage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./stage.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/stage.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_stage_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/stage.vue?vue&type=template&id=6f3d267a&":
-/*!**************************************************************************!*\
-  !*** ./resources/js/components/stage.vue?vue&type=template&id=6f3d267a& ***!
-  \**************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_stage_vue_vue_type_template_id_6f3d267a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./stage.vue?vue&type=template&id=6f3d267a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/stage.vue?vue&type=template&id=6f3d267a&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_stage_vue_vue_type_template_id_6f3d267a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_stage_vue_vue_type_template_id_6f3d267a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

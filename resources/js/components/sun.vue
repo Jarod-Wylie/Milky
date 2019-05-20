@@ -103,7 +103,6 @@ export default {
 
   methods: {
 
-
     // Updates each object in the list of planets a Sun has
     move(obj) {
       for (let planet in this.planets) {
@@ -125,9 +124,7 @@ export default {
     log() {
       // this.planets = JSON.parse(this.planets[0].Satelites);
       console.log("Planets:", this.planets);
-
       console.log("V:", this.v);
-
       console.log("SunID:", this.SunID);
     }
   }

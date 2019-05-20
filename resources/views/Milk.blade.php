@@ -4,7 +4,7 @@
 
 
 <div id="app">
-    <exp></exp>
+    <control></control>
 
 
    

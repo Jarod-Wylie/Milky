@@ -9,9 +9,6 @@
             <button @click="ani = !ani">Orbit on</button>
         </div>
 
-
-
-
     <!-- Stage can report x and y coordinate values of mouse
      position and will render a blue square at position mouse is clicked-->
       <v-stage 
@@ -45,11 +42,9 @@
             }" />
 
             <orbiter></orbiter>
-
-                 
+        
       </v-layer>
 
-      
     </v-stage>
 
     </div>
@@ -61,8 +56,6 @@ const width = window.innerWidth;
 const height = window.innerHeight;
 
     export default {
-
-        
 
         data(){
 
@@ -97,7 +90,6 @@ const height = window.innerHeight;
                 fill: 'black',
                 
             },
-
 
             text: "",
             list: [{ x: 650, y: 100, radius: 50, fill: 'blue' }],
@@ -161,8 +153,7 @@ const height = window.innerHeight;
                 dist = parseInt(dist);
                 dist += this.origin;
                 this.list.push({x: dist, y: 100});
-
-                
+  
             },
 
             handleClick(evt) {
@@ -185,9 +176,6 @@ const height = window.innerHeight;
         }
         
     }
-
-
-//     frame.time * 2 * 3.14) / period
 
 </script>
 

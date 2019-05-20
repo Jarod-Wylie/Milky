@@ -1,5 +1,9 @@
 
 
+
+
+<!-- This component is the animation on the splash 
+screen that draws the cirle once signed in -->
 <template>
   <div>
 
@@ -92,7 +96,6 @@ export default {
       // Formula to translate degrees selceted by user to radians. see changeDegree()
       var radians = vm.degree * (Math.PI/180);
 
-
       const circ = this.$refs.circ.getStage();
       
       const anim = new Konva.Animation(function(frame) {
@@ -104,13 +107,11 @@ export default {
         vm.line.points.push(vm.amp * Math.sin(radians) + centerX);
         vm.line.points.push(vm.amp * Math.cos(radians) + centerY);
 
+        // Go to the control and map view after user has signed on.
         if(vm.amp * Math.sin(radians) + centerX == vm.line.points[290] && vm.amp * Math.cos(radians) + centerY == vm.line.points[291]){
             window.location.href = '/Milk';
         }
-        // vm.draw();
-
-        // retains the original degree->radian set in the data to begin motion from
-        // rather than: radians = (frame.time * 2 * Math.PI) / period;
+      
         radians = radians + (((60 * 2 * Math.PI)) / period);
         
       }, circ.getLayer());

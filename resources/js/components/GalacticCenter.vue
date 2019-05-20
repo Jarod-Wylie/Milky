@@ -133,11 +133,7 @@ export default {
 
       systems: [],
 
-      // Array to render 
-
       mousePos: {},
-
-
 
     };
   },
@@ -147,7 +143,6 @@ export default {
     .get('/systems')
     .then(response => this.systems = (response.data));
     // .then(response => console.log('home:', response.data));
-
     console.log("now:", this.nowSystems)
   },
 
@@ -161,8 +156,6 @@ export default {
 
       this.mousePos = this.$refs.stage.getStage().getPointerPosition();
 
-
-
       // this.$emit("reportedStageCoordinates", {x: this.mousePos.x, y: this.mousePos.y});
     },
 
@@ -171,6 +164,7 @@ export default {
       this.line.points.push(this.$refs.stage.getStage().getPointerPosition().x);
       this.line.points.push(this.$refs.stage.getStage().getPointerPosition().y);
       console.log(this.line.points);
+
     },
 
     log(){ 
