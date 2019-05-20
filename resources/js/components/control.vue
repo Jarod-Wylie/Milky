@@ -220,6 +220,8 @@ export default {
           console.log("Post attempted", "What?");
         });
 
+    window.location.href = '/Milk'
+
     },
 
     // Post to edit sun name and position
