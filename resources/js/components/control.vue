@@ -16,7 +16,7 @@
         </div>
 
         <!--Input for editing Suns -->
-        <b-modal id="modal-editSuns" title="Systems Registry">
+        <b-modal id="modal-editSuns" title="Systems Registry" hide-footer>
           <ul>
             <li v-for="sun in content" :key="sun.id">
               <!-- button for sun -->
@@ -45,7 +45,7 @@
         </b-modal>
 
         <!--Input for adding Suns -->
-        <b-modal id="modal-Suns" title="Systems Registry">
+        <b-modal id="modal-Suns" title="Systems Registry" hide-footer>
           <input v-model="star.name" type="text" name="name" placeholder="Add a System">
           <input
             v-model="star.YCoordinate"
@@ -62,10 +62,10 @@
 
           <textarea v-model="star.Description" placeholder="Short Description of System"></textarea>
 
-          <input type="button" value="+" @click="addSun">
+          <input type="button" value="Add System" @click="addSun">
         </b-modal>
 
-        <b-modal id="modal-Planets" title="Systems Registry">
+        <b-modal id="modal-Planets" title="Systems Registry" hide-footer>
           <!-- Modal for Adding Planets-->
           <h1>Suns:</h1>
           <ul>
@@ -95,7 +95,7 @@
         </b-modal>
 
         <!-- Modal for Adding moons-->
-        <b-modal id="modal-Moons" title="Moons Registry">
+        <b-modal id="modal-Moons" title="Moons Registry" hide-footer>
           <h1>Planets:</h1>
           <ul>
             <!-- Input for moon -->
@@ -204,6 +204,7 @@ export default {
       self.star.XCoordinate = parseInt(self.star.XCoordinate);
       self.star.YCoordinate = parseInt(self.star.YCoordinate);
 
+
       console.log("iuhfsohceo:",self.star.YCoordinate);
 
       axios
@@ -215,8 +216,10 @@ export default {
           Description: self.star.Description
         })
         .then(function(response) {
-          console.log("Post attempted");
+      window.location.href = '/Milk';
+          console.log("Post attempted", "What?");
         });
+
     },
 
     // Post to edit sun name and position
@@ -242,7 +245,7 @@ export default {
           Description: self.star.Description,
           _method: "patch"
         })
-        .then(function(response) {});
+        .then(function(response) {window.location.href = '/Milk';});
     },
 
     //Post to delete Systems
@@ -262,7 +265,7 @@ export default {
           // Satelites: obj.satelites,
           _method: "delete"
         })
-        .then(function(response) {});
+        .then(function(response) {window.location.href = '/Milk';});
     },
 
     addPlanet(obj) {
@@ -291,7 +294,7 @@ export default {
           Satelites: JSON.stringify(self.planets),
           _method: "patch"
         })
-        .then(function(response) {});
+        .then(function(response) {window.location.href = '/Milk';});
     },
 
     addMoon(obj) {
@@ -318,7 +321,7 @@ export default {
           Satelites: JSON.stringify([obj.preserve]),
           _method: "patch"
         })
-        .then(function(response) {});
+        .then(function(response) {window.location.href = '/Milk';});
     },
 
     // Reports the X and Y of the stage created in the component: GalacticCenter

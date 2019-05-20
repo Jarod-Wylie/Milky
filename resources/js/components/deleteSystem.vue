@@ -12,7 +12,6 @@
         props:{
 
             editable: Object,
-
         },
 
         data(){

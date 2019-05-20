@@ -16,16 +16,6 @@
         fill: '#176087',
     }"
     />
-    <!-- Child of Planet and the props being passed to it -->
-    <!-- <moon
-      v-for="item in list"
-      ref="satelite"
-      :key="item.id"
-      :xC="item.x"
-      :yC="item.y"
-      :kX="item.kX"
-      :kY="item.kY"
-    ></moon> -->
 
     <moon
       v-for="item in sati"
