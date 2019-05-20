@@ -1754,332 +1754,6 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Exp.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Exp.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      content: [],
-      mouseXY: {},
-      star: {
-        name: "",
-        XCoordinate: null,
-        YCoordinate: null,
-        Description: null,
-        Satelites: '[]'
-      },
-      planet: {
-        name: "",
-        amp: null,
-        degree: null,
-        trackX: 0,
-        trackY: 0,
-        description: null,
-        moons: []
-      },
-      planets: [],
-      nowSystemsAr: [],
-      moons: {
-        name: "",
-        amp: null,
-        degree: null,
-        trackX: 0,
-        trackY: 0,
-        Description: null
-      },
-      moon: [],
-      patchPath: "/editObj/",
-      selected: 0,
-      //  rendering conditions
-      view: false,
-      showSunOps: false,
-      showPlanetOps: false,
-      parsed: []
-    };
-  },
-  mounted: function mounted() {
-    var _this = this;
-
-    axios.get("/systems").then(function (response) {
-      return _this.content = response.data;
-    });
-    console.log("data:", this.content[0]);
-  },
-  methods: {
-    log: function log() {
-      // console.log(this.content);
-      console.log("data:", JSON.parse(this.content[0].Satelites));
-    },
-    // Post to Create new Sun and System strawman
-    addSun: function addSun() {
-      var self = this;
-      self.star.XCoordinate = parseInt(self.star.XCoordinate);
-      self.star.YCoordinate = parseInt(self.star.YCoordinate);
-      self.nowSystemsAr.push(self.star);
-      console.log('star:', self.nowSystemsAr); // Neccessary for converting the text input of html fields to number.
-
-      self.star.XCoordinate = parseInt(self.star.XCoordinate);
-      self.star.YCoordinate = parseInt(self.star.YCoordinate);
-      console.log("iuhfsohceo:", self.star.YCoordinate);
-      axios.post("Atlas", {
-        name: self.star.name,
-        XCoordinate: self.star.XCoordinate,
-        YCoordinate: self.star.YCoordinate,
-        Satelites: self.star.Satelites,
-        Description: self.star.Description
-      }).then(function (response) {
-        console.log("Post attempted");
-      });
-    },
-    // Post to edit sun name and position
-    editSun: function editSun(obj) {
-      var self = this;
-      self.patchPath = "/editObj/";
-      console.log("changing:", obj.satelites);
-      self.patchPath += obj.edit;
-      console.log("Post attempted:", self.patchPath);
-      self.star.XCoordinate = parseInt(self.star.XCoordinate);
-      self.star.YCoordinate = parseInt(self.star.YCoordinate);
-      console.log("iuhfsohceo:", self.star.XCoordinate);
-      axios.post(self.patchPath, {
-        name: self.star.name,
-        XCoordinate: self.star.XCoordinate,
-        YCoordinate: self.star.YCoordinate,
-        Satelites: obj.satelites,
-        Description: self.star.Description,
-        _method: "patch"
-      }).then(function (response) {});
-    },
-    //Post to delete Systems
-    deleteSystem: function deleteSystem(obj) {
-      self.patchPath = "/editObj/";
-      console.log("changing:", obj.satelites);
-      self.patchPath += obj.edit;
-      console.log("Post attempted:", self.patchPath);
-      axios.post(self.patchPath, {
-        // name: self.star.name,
-        // XCoordinate: self.star.XCoordinate,
-        // YCoordinate: self.star.YCoordinate,
-        // Satelites: obj.satelites,
-        _method: "delete"
-      }).then(function (response) {});
-    },
-    addPlanet: function addPlanet(obj) {
-      var self = this;
-      self.planets = obj.satelites;
-      self.patchPath = "/editObj/";
-      console.log("changing:", self.satelites);
-      self.patchPath += obj.add.toString();
-      console.log("Post attempted:", self.patchPath); //push to an array to give to the Satelites column
-
-      self.planet.amp = parseInt(self.planet.amp);
-      self.planet.degree = parseInt(self.planet.degree);
-      self.planets.push(self.planet);
-      console.log("planet:", self.planets); // self.planets[0].moons = "hoi";
-
-      axios.post(self.patchPath, {
-        name: obj.name,
-        XCoordinate: obj.x,
-        YCoordinate: obj.y,
-        Satelites: JSON.stringify(self.planets),
-        _method: "patch"
-      }).then(function (response) {});
-    },
-    addMoon: function addMoon(obj) {
-      var self = this;
-      self.patchPath = "/editObj/" + obj.patchID.toString(); // self.patchPath += obj.add.toString();
-
-      console.log("Post attempted:", self.patchPath); //push to an array to give to the Satelites column
-
-      self.moons.amp = parseInt(self.moons.amp);
-      self.moons.degree = parseInt(self.moons.degree);
-      console.log("moon to be added:", obj.preserve);
-      obj.preserve.moons.push(self.moons); // self.planets.push(obj.preserve);
-      // self.planets[0].moons = "hoi";
-
-      axios.post(self.patchPath, {
-        name: obj.name,
-        XCoordinate: obj.x,
-        YCoordinate: obj.y,
-        Satelites: JSON.stringify([obj.preserve]),
-        _method: "patch"
-      }).then(function (response) {});
-    },
-    // Reports the X and Y of the stage created in the component: GalacticCenter
-    reportXY: function reportXY(obj) {
-      this.mouseXY = obj;
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/GalacticCenter.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/GalacticCenter.vue?vue&type=script&lang=js& ***!
@@ -2271,8 +1945,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     editable: Object,
@@ -2342,6 +2014,308 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/control.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/control.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      content: [],
+      mouseXY: {},
+      star: {
+        name: "",
+        XCoordinate: null,
+        YCoordinate: null,
+        Description: null,
+        Satelites: '[]'
+      },
+      planet: {
+        name: "",
+        amp: null,
+        degree: null,
+        trackX: 0,
+        trackY: 0,
+        description: null,
+        moons: []
+      },
+      planets: [],
+      nowSystemsAr: [],
+      moons: {
+        name: "",
+        amp: null,
+        degree: null,
+        trackX: 0,
+        trackY: 0,
+        Description: null
+      },
+      moon: [],
+      patchPath: "/editObj/",
+      selected: 0,
+      //  rendering conditions
+      view: false,
+      showSunOps: false,
+      showPlanetOps: false,
+      parsed: []
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get("/systems").then(function (response) {
+      return _this.content = response.data;
+    });
+    console.log("data:", this.content[0]);
+  },
+  methods: {
+    debugLog: function debugLog() {
+      // console.log(this.content);
+      console.log("data:", JSON.parse(this.content[0].Satelites));
+    },
+    // Post to Create new Sun and System strawman
+    addSun: function addSun() {
+      var self = this;
+      self.star.XCoordinate = parseInt(self.star.XCoordinate);
+      self.star.YCoordinate = parseInt(self.star.YCoordinate);
+      self.nowSystemsAr.push(self.star);
+      console.log('star:', self.nowSystemsAr); // Neccessary for converting the text input of html fields to number.
+
+      self.star.XCoordinate = parseInt(self.star.XCoordinate);
+      self.star.YCoordinate = parseInt(self.star.YCoordinate);
+      console.log("iuhfsohceo:", self.star.YCoordinate);
+      axios.post("Atlas", {
+        name: self.star.name,
+        XCoordinate: self.star.XCoordinate,
+        YCoordinate: self.star.YCoordinate,
+        Satelites: self.star.Satelites,
+        Description: self.star.Description
+      }).then(function (response) {
+        console.log("Post attempted");
+      });
+    },
+    // Post to edit sun name and position
+    editSun: function editSun(obj) {
+      var self = this;
+      self.patchPath = "/editObj/";
+      console.log("changing:", obj.satelites);
+      self.patchPath += obj.edit;
+      console.log("Post attempted:", self.patchPath);
+      self.star.XCoordinate = parseInt(self.star.XCoordinate);
+      self.star.YCoordinate = parseInt(self.star.YCoordinate);
+      console.log("iuhfsohceo:", self.star.XCoordinate);
+      axios.post(self.patchPath, {
+        name: self.star.name,
+        XCoordinate: self.star.XCoordinate,
+        YCoordinate: self.star.YCoordinate,
+        Satelites: obj.satelites,
+        Description: self.star.Description,
+        _method: "patch"
+      }).then(function (response) {});
+    },
+    //Post to delete Systems
+    deleteSystem: function deleteSystem(obj) {
+      self.patchPath = "/editObj/";
+      console.log("changing:", obj.satelites);
+      self.patchPath += obj.edit;
+      console.log("Post attempted:", self.patchPath);
+      axios.post(self.patchPath, {
+        // name: self.star.name,
+        // XCoordinate: self.star.XCoordinate,
+        // YCoordinate: self.star.YCoordinate,
+        // Satelites: obj.satelites,
+        _method: "delete"
+      }).then(function (response) {});
+    },
+    addPlanet: function addPlanet(obj) {
+      var self = this;
+      self.planets = obj.satelites;
+      self.patchPath = "/editObj/";
+      console.log("changing:", self.satelites);
+      self.patchPath += obj.add.toString();
+      console.log("Post attempted:", self.patchPath); //push to an array to give to the Satelites column
+
+      self.planet.amp = parseInt(self.planet.amp);
+      self.planet.degree = parseInt(self.planet.degree);
+      self.planets.push(self.planet);
+      console.log("planet:", self.planets);
+      axios.post(self.patchPath, {
+        name: obj.name,
+        XCoordinate: obj.x,
+        YCoordinate: obj.y,
+        Satelites: JSON.stringify(self.planets),
+        _method: "patch"
+      }).then(function (response) {});
+    },
+    addMoon: function addMoon(obj) {
+      var self = this;
+      self.patchPath = "/editObj/" + obj.patchID.toString();
+      console.log("Post attempted:", self.patchPath); //push to an array to give to the Satelites column
+
+      self.moons.amp = parseInt(self.moons.amp);
+      self.moons.degree = parseInt(self.moons.degree);
+      console.log("moon to be added:", obj.preserve);
+      obj.preserve.moons.push(self.moons); // self.planets[0].moons = "hoi";
+
+      axios.post(self.patchPath, {
+        name: obj.name,
+        XCoordinate: obj.x,
+        YCoordinate: obj.y,
+        Satelites: JSON.stringify([obj.preserve]),
+        _method: "patch"
+      }).then(function (response) {});
+    },
+    // Reports the X and Y of the stage created in the component: GalacticCenter
+    reportXY: function reportXY(obj) {
+      this.mouseXY = obj;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/deleteSystem.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/deleteSystem.vue?vue&type=script&lang=js& ***!
@@ -2389,7 +2363,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
 //
 //
 //
@@ -78681,10 +78654,10 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&":
-/*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e& ***!
-  \*******************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/GalacticCenter.vue?vue&type=template&id=303a938c&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/GalacticCenter.vue?vue&type=template&id=303a938c& ***!
+  \*****************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -78696,7 +78669,76 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    HOI\n")])
+  return _c(
+    "div",
+    [
+      _c(
+        "v-stage",
+        { ref: "stage", attrs: { config: _vm.stageSize } },
+        [
+          _c(
+            "v-layer",
+            [
+              _c("v-line", { ref: "line", attrs: { config: _vm.line } }),
+              _vm._v(" "),
+              _c("v-text", {
+                ref: "text",
+                attrs: {
+                  config: {
+                    x: 250,
+                    y: 400,
+                    fontFamily: "Calibri",
+                    fontSize: 40,
+                    text: _vm.info,
+                    fill: "white"
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("v-text", { ref: "text", attrs: { config: _vm.scaleText } }),
+              _vm._v(" "),
+              _c("v-text", { ref: "text", attrs: { config: _vm.zero } }),
+              _vm._v(" "),
+              _c("v-text", { ref: "text", attrs: { config: _vm.ninety } }),
+              _vm._v(" "),
+              _c("v-text", { ref: "text", attrs: { config: _vm.oneEighty } }),
+              _vm._v(" "),
+              _c("v-text", { ref: "text", attrs: { config: _vm.twoSeventy } }),
+              _vm._v(" "),
+              _c("v-circle", {
+                ref: "ord",
+                attrs: { config: _vm.center },
+                on: {
+                  mouseover: _vm.getInfo,
+                  mouseleave: _vm.getLess,
+                  click: _vm.log
+                }
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.systems, function(item) {
+                return _c("sun", {
+                  key: item.id,
+                  attrs: {
+                    SunID: item.name,
+                    xC: _vm.center.x,
+                    yC: _vm.center.y,
+                    ampC: item.YCoordinate,
+                    degreeC: item.XCoordinate,
+                    sati: item.id,
+                    planetObj: item.Satelites,
+                    sunObj: item
+                  }
+                })
+              })
+            ],
+            2
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -78705,10 +78747,66 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Exp.vue?vue&type=template&id=70b068fc&":
-/*!******************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Exp.vue?vue&type=template&id=70b068fc& ***!
-  \******************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/addMoons.vue?vue&type=template&id=3412cb88&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/addMoons.vue?vue&type=template&id=3412cb88&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("button", { on: { click: _vm.addMoon } }, [_vm._v(" Add Moon")])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/addPlanets.vue?vue&type=template&id=c94324f6&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/addPlanets.vue?vue&type=template&id=c94324f6&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "button",
+      { attrs: { "data-dismiss": "modal" }, on: { click: _vm.addPlanet } },
+      [_vm._v(" Add")]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/control.vue?vue&type=template&id=0dd6f062&":
+/*!**********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/control.vue?vue&type=template&id=0dd6f062& ***!
+  \**********************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -79417,155 +79515,6 @@ var render = function() {
     ],
     1
   )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/GalacticCenter.vue?vue&type=template&id=303a938c&":
-/*!*****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/GalacticCenter.vue?vue&type=template&id=303a938c& ***!
-  \*****************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c(
-        "v-stage",
-        { ref: "stage", attrs: { config: _vm.stageSize } },
-        [
-          _c(
-            "v-layer",
-            [
-              _c("v-line", { ref: "line", attrs: { config: _vm.line } }),
-              _vm._v(" "),
-              _c("v-text", {
-                ref: "text",
-                attrs: {
-                  config: {
-                    x: 250,
-                    y: 400,
-                    fontFamily: "Calibri",
-                    fontSize: 40,
-                    text: _vm.info,
-                    fill: "white"
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("v-text", { ref: "text", attrs: { config: _vm.scaleText } }),
-              _vm._v(" "),
-              _c("v-text", { ref: "text", attrs: { config: _vm.zero } }),
-              _vm._v(" "),
-              _c("v-text", { ref: "text", attrs: { config: _vm.ninety } }),
-              _vm._v(" "),
-              _c("v-text", { ref: "text", attrs: { config: _vm.oneEighty } }),
-              _vm._v(" "),
-              _c("v-text", { ref: "text", attrs: { config: _vm.twoSeventy } }),
-              _vm._v(" "),
-              _c("v-circle", {
-                ref: "ord",
-                attrs: { config: _vm.center },
-                on: {
-                  mouseover: _vm.getInfo,
-                  mouseleave: _vm.getLess,
-                  click: _vm.log
-                }
-              }),
-              _vm._v(" "),
-              _vm._l(_vm.systems, function(item) {
-                return _c("sun", {
-                  key: item.id,
-                  attrs: {
-                    SunID: item.name,
-                    xC: _vm.center.x,
-                    yC: _vm.center.y,
-                    ampC: item.YCoordinate,
-                    degreeC: item.XCoordinate,
-                    sati: item.id,
-                    planetObj: item.Satelites,
-                    sunObj: item
-                  }
-                })
-              })
-            ],
-            2
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/addMoons.vue?vue&type=template&id=3412cb88&scoped=true&":
-/*!***********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/addMoons.vue?vue&type=template&id=3412cb88&scoped=true& ***!
-  \***********************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("button", { on: { click: _vm.addMoon } }, [_vm._v(" Add Moon")])
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/addPlanets.vue?vue&type=template&id=c94324f6&scoped=true&":
-/*!*************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/addPlanets.vue?vue&type=template&id=c94324f6&scoped=true& ***!
-  \*************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "button",
-      { attrs: { "data-dismiss": "modal" }, on: { click: _vm.addPlanet } },
-      [_vm._v(" Add")]
-    )
-  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -92222,10 +92171,9 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('supermbh', __webpack_require__(/*! ./components/superMBH.vue */ "./resources/js/components/superMBH.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('Exp', __webpack_require__(/*! ./components/Exp.vue */ "./resources/js/components/Exp.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('rocket', __webpack_require__(/*! ./components/rocket.vue */ "./resources/js/components/rocket.vue")["default"]); //Component used for testing how reactivity with vue can submit form data.
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('rocket', __webpack_require__(/*! ./components/rocket.vue */ "./resources/js/components/rocket.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('control', __webpack_require__(/*! ./components/control.vue */ "./resources/js/components/control.vue")["default"]); //Component used for testing how reactivity with vue can submit form data.
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('testing', __webpack_require__(/*! ./components/testing.vue */ "./resources/js/components/testing.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('editSuns', __webpack_require__(/*! ./components/editSuns.vue */ "./resources/js/components/editSuns.vue")["default"]);
@@ -92233,7 +92181,6 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('deleteSystem', __webpack_r
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('addPlanets', __webpack_require__(/*! ./components/addPlanets.vue */ "./resources/js/components/addPlanets.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('addMoons', __webpack_require__(/*! ./components/addMoons.vue */ "./resources/js/components/addMoons.vue")["default"]); // A proto type of Galactic Center
 // Vue.component('superMBH', require('./components/superMBH.vue').default);
-//
 // Each components lineage GalacticCenter->sun->planet->moon
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('GalacticCenter', __webpack_require__(/*! ./components/GalacticCenter.vue */ "./resources/js/components/GalacticCenter.vue")["default"]);
@@ -92311,144 +92258,6 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
-
-/***/ }),
-
-/***/ "./resources/js/components/ExampleComponent.vue":
-/*!******************************************************!*\
-  !*** ./resources/js/components/ExampleComponent.vue ***!
-  \******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ExampleComponent.vue?vue&type=template&id=299e239e& */ "./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&");
-/* harmony import */ var _ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ExampleComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/ExampleComponent.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
-/*!*******************************************************************************!*\
-  !*** ./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
-  \*******************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ExampleComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&":
-/*!*************************************************************************************!*\
-  !*** ./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e& ***!
-  \*************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ExampleComponent.vue?vue&type=template&id=299e239e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/components/Exp.vue":
-/*!*****************************************!*\
-  !*** ./resources/js/components/Exp.vue ***!
-  \*****************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Exp_vue_vue_type_template_id_70b068fc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Exp.vue?vue&type=template&id=70b068fc& */ "./resources/js/components/Exp.vue?vue&type=template&id=70b068fc&");
-/* harmony import */ var _Exp_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Exp.vue?vue&type=script&lang=js& */ "./resources/js/components/Exp.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Exp_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Exp_vue_vue_type_template_id_70b068fc___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Exp_vue_vue_type_template_id_70b068fc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/Exp.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/Exp.vue?vue&type=script&lang=js&":
-/*!******************************************************************!*\
-  !*** ./resources/js/components/Exp.vue?vue&type=script&lang=js& ***!
-  \******************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Exp_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Exp.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Exp.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Exp_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/Exp.vue?vue&type=template&id=70b068fc&":
-/*!************************************************************************!*\
-  !*** ./resources/js/components/Exp.vue?vue&type=template&id=70b068fc& ***!
-  \************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Exp_vue_vue_type_template_id_70b068fc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Exp.vue?vue&type=template&id=70b068fc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Exp.vue?vue&type=template&id=70b068fc&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Exp_vue_vue_type_template_id_70b068fc___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Exp_vue_vue_type_template_id_70b068fc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
 
 /***/ }),
 
@@ -92654,6 +92463,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_addPlanets_vue_vue_type_template_id_c94324f6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_addPlanets_vue_vue_type_template_id_c94324f6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/control.vue":
+/*!*********************************************!*\
+  !*** ./resources/js/components/control.vue ***!
+  \*********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _control_vue_vue_type_template_id_0dd6f062___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./control.vue?vue&type=template&id=0dd6f062& */ "./resources/js/components/control.vue?vue&type=template&id=0dd6f062&");
+/* harmony import */ var _control_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./control.vue?vue&type=script&lang=js& */ "./resources/js/components/control.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _control_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _control_vue_vue_type_template_id_0dd6f062___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _control_vue_vue_type_template_id_0dd6f062___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/control.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/control.vue?vue&type=script&lang=js&":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/control.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_control_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./control.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/control.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_control_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/control.vue?vue&type=template&id=0dd6f062&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/control.vue?vue&type=template&id=0dd6f062& ***!
+  \****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_control_vue_vue_type_template_id_0dd6f062___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./control.vue?vue&type=template&id=0dd6f062& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/control.vue?vue&type=template&id=0dd6f062&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_control_vue_vue_type_template_id_0dd6f062___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_control_vue_vue_type_template_id_0dd6f062___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
