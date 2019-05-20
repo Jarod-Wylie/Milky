@@ -20,7 +20,7 @@ class GalaxyController extends Controller
     {
         $systems = System::all();
 
-        return view("/Home", compact('systems'));
+        return view("/home", compact('systems'));
     }
 
 
